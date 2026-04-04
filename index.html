@@ -57,8 +57,9 @@ button,
   left: 0;
   top: 0;
   transform: translate(-50%, -50%);
-  transition: all 0.05s ease-out;
+  transition: width 0.2s ease, height 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
   display: block;
+  will-change: transform;
 }
 
 .cursor.hovered {
@@ -1251,23 +1252,23 @@ button,
 }
 
 /* Desktop only custom cursor */
-@media (min-width: 1024px) {
+@media (min-width: 1025px) {
   body {
     cursor: none !important;
   }
-  .cursor,
-  .cursor-text {
+  #cursor,
+  #cursorText {
     display: block !important;
   }
 }
 
 /* Mobile fix - restore default cursor */
-@media (max-width: 1023px) {
+@media (max-width: 1024px) {
   body {
     cursor: auto !important;
   }
-  .cursor,
-  .cursor-text {
+  #cursor,
+  #cursorText {
     display: none !important;
   }
 }
@@ -1677,32 +1678,41 @@ button,
   </ul>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 // CUSTOM CURSOR
 const cursor = document.getElementById('cursor');
 const cursorText = document.getElementById('cursorText');
 
 if (cursor && cursorText) {
   let cx = 0, cy = 0;
+  let isDesktop = window.innerWidth > 1024;
 
-  // Show cursor on desktop
-  if (window.innerWidth > 768) {
-    cursor.style.display = 'block';
-    cursorText.style.display = 'block';
-  } else {
-    cursor.style.display = 'none';
-    cursorText.style.display = 'none';
+  // Ensure cursor is visible on desktop
+  function updateCursorVisibility() {
+    isDesktop = window.innerWidth > 1024;
+    if (isDesktop) {
+      cursor.style.display = 'block';
+      cursorText.style.display = 'block';
+    } else {
+      cursor.style.display = 'none';
+      cursorText.style.display = 'none';
+    }
   }
 
-  // Initial position
+  updateCursorVisibility();
+  window.addEventListener('resize', updateCursorVisibility);
+
+  // Smooth cursor movement using requestAnimationFrame
   document.addEventListener('mousemove', e => {
-    if (window.innerWidth > 768) {
+    if (isDesktop) {
       cx = e.clientX;
       cy = e.clientY;
-      cursor.style.left = cx + 'px';
-      cursor.style.top = cy + 'px';
-      cursorText.style.left = cx + 'px';
-      cursorText.style.top = cy + 'px';
+      requestAnimationFrame(() => {
+        cursor.style.left = cx + 'px';
+        cursor.style.top = cy + 'px';
+        cursorText.style.left = cx + 'px';
+        cursorText.style.top = cy + 'px';
+      });
     }
   });
 
@@ -1731,6 +1741,7 @@ if (cursor && cursorText) {
     });
   });
 }
+
 
 // HAMBURGER MENU
 const hamburger = document.getElementById('hamburger');
