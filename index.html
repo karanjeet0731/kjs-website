@@ -1441,8 +1441,12 @@ footer {
   nav { padding: 0.9rem 1.2rem; }
   nav::after { left: 1.2rem; right: 1.2rem; }
  
-  .hero { padding: 0 1.2rem 2.5rem; min-height: 85vh; }
-  .hero-top { left: 1.2rem; right: 1.2rem; top: 4.5rem; }
+  .hero {
+    justify-content: flex-start;
+    padding: 8rem 1.2rem 2rem;
+    min-height: auto;
+  }
+  .hero-top { left: 1.2rem; right: 1.2rem; top: 4.2rem; }
   .hero-bg-text { font-size: clamp(56px, 15vw, 120px); }
   .hero-title { font-size: clamp(2rem, 9.5vw, 3.2rem); max-width: 100%; margin-bottom: 1.5rem; }
   .hero-desc { font-size: 0.85rem; }
