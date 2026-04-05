@@ -1640,7 +1640,7 @@ button,
  
 <!-- NAV -->
 <nav>
-  <a href="#" class="nav-logo">KJS Creative</a>
+  <a href="/" class="nav-logo" data-scroll-target="top">KJS Creative</a>
   <button class="hamburger" id="hamburger" aria-label="Toggle menu">
     <span></span>
     <span></span>
@@ -1648,12 +1648,12 @@ button,
   </button>
   <div class="nav-right" id="navRight">
     <ul class="nav-links">
-      <li><a href="#work">Work</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#services">Services</a></li>
-      <li><a href="blog/index.html">Blog</a></li>
+      <li><a href="/" data-scroll-target="work">Work</a></li>
+      <li><a href="/" data-scroll-target="about">About</a></li>
+      <li><a href="/" data-scroll-target="services">Services</a></li>
+      <li><a href="blog/">Blog</a></li>
     </ul>
-    <a href="#contact" class="nav-cta">Let's Talk</a>
+    <a href="/" class="nav-cta" data-scroll-target="contact">Let's Talk</a>
   </div>
 </nav>
  
@@ -1679,7 +1679,7 @@ button,
       <p class="hero-desc">
         A full-service creative agency crafting brand identities, digital experiences, and content that drives real growth.
       </p>
-      <a href="#work" class="hero-cta">
+      <a href="/" class="hero-cta" data-scroll-target="work">
         See our work <span class="hero-cta-arrow">↗</span>
       </a>
     </div>
@@ -1713,7 +1713,7 @@ button,
       <p class="section-eyebrow reveal">Selected Work</p>
       <h2 class="section-title reveal d1">Our <span class="italic">Portfolio</span></h2>
     </div>
-    <a href="#" class="view-all reveal d2">View All →</a>
+    <a href="/" class="view-all reveal d2" data-scroll-target="work">View All →</a>
   </div>
  
   <div class="work-grid reveal d1">
@@ -1797,7 +1797,7 @@ button,
     <p class="reveal"><strong>At KJS Creative, we believe great design isn't just beautiful — it's strategic.</strong> What started as a passion for visual storytelling has evolved into a full-service creative agency working with startups and growing businesses across industries.</p>
     <p class="reveal d1">Our approach is collaborative, detail-driven, and modern. We specialize in brand identity, UI/UX design, and social media creatives, focusing not just on aesthetics but on results.</p>
     <p class="reveal d2">Every project we take on is guided by purpose, simplicity, and a deep understanding of the brand's goals — ensuring every design connects with the right audience and leaves a lasting impression.</p>
-    <a href="#contact" class="hero-cta reveal d3" style="align-self: flex-start; margin-top: 1rem;">
+    <a href="/" class="hero-cta reveal d3" data-scroll-target="contact" style="align-self: flex-start; margin-top: 1rem;">
       Start a project <span class="hero-cta-arrow">↗</span>
     </a>
   </div>
@@ -2058,12 +2058,12 @@ button,
  
 <!-- FOOTER -->
 <footer>
-  <a href="#" class="footer-logo">KJS Creative</a>
+  <a href="/" class="footer-logo" data-scroll-target="top">KJS Creative</a>
   <p class="footer-copy">© 2026 KJS Creative. All rights reserved.</p>
   <ul class="footer-socials">
     <li><a href="https://www.instagram.com/kjscreative.in/" target="_blank">Instagram</a></li>
     <li><a href="https://www.facebook.com/profile.php?id=100092027042143" target="_blank">Facebook</a></li>
-    <li><a href="#">Privacy</a></li>
+    <li><a href="/">Privacy</a></li>
   </ul>
 </footer>
  
@@ -2155,6 +2155,30 @@ document.addEventListener('click', (e) => {
     hamburger.classList.remove('active');
     navRight.classList.remove('active');
   }
+});
+
+// CLEAN SCROLL LINKS
+document.querySelectorAll('[data-scroll-target]').forEach(link => {
+  link.addEventListener('click', (e) => {
+    const targetId = link.getAttribute('data-scroll-target');
+    const target = targetId === 'top' ? document.body : document.getElementById(targetId);
+
+    if (!target) {
+      return;
+    }
+
+    e.preventDefault();
+
+    if (targetId === 'top') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    if (window.location.hash) {
+      history.replaceState(null, '', window.location.pathname);
+    }
+  });
 });
  
 // SCROLL REVEAL
