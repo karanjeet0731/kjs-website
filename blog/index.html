@@ -1,1 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog - KJS Creative</title>
 
+<style>
+body {
+  font-family: Arial;
+  margin: 0;
+  background: #f8f8f8;
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 40px 20px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.blog-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: 0.3s;
+}
+
+.blog-card:hover {
+  transform: translateY(-5px);
+}
+
+.blog-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.blog-content {
+  padding: 15px;
+}
+
+.blog-content h3 {
+  margin: 0 0 10px;
+}
+
+.blog-content p {
+  color: #666;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>Our Blog</h1>
+
+  <div class="blog-grid">
+
+    <div class="blog-card">
+      <img src="https://picsum.photos/400/200" />
+      <div class="blog-content">
+        <h3>Design That Converts</h3>
+        <p>How good UI increases business revenue...</p>
+      </div>
+    </div>
+
+    <div class="blog-card">
+      <img src="https://picsum.photos/401/200" />
+      <div class="blog-content">
+        <h3>Branding Tips</h3>
+        <p>Build a strong brand identity...</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
