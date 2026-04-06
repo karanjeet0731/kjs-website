@@ -3,24 +3,31 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KJS Creative Blog — Uploading Soon</title>
+<title>KJS Creative Blog</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Editorial+New:ital@0;1&family=Archivo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Archivo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 :root {
   --white: #ffffff;
   --black: #0d0d0d;
   --off-white: #f5f4f0;
-  --gray: #888880;
+  --gray: #7b7b74;
   --gray-light: #e8e7e3;
   --accent: #ff3c1f;
   --sans: 'Archivo', 'Helvetica Neue', sans-serif;
-  --serif: 'Editorial New', Georgia, serif;
+  --serif: 'Cormorant Garamond', Georgia, serif;
 }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+}
 
 body {
   background: var(--white);
@@ -41,6 +48,7 @@ nav {
   align-items: center;
   padding: 1.8rem 3rem;
   background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(10px);
 }
 
 nav::after {
@@ -53,162 +61,9 @@ nav::after {
   background: rgba(0, 0, 0, 0.1);
 }
 
-.nav-logo {
-  font-size: 1rem;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--black);
-  text-decoration: none;
-  z-index: 1;
-}
-
-.nav-right {
-  display: flex;
-  align-items: center;
-  gap: 2.5rem;
-}
-
-.nav-links {
-  display: flex;
-  gap: 2rem;
-  list-style: none;
-}
-
-.nav-links a {
-  font-size: 0.78rem;
-  color: var(--black);
-  text-decoration: none;
-  letter-spacing: 0.04em;
-  opacity: 0.6;
-  transition: opacity 0.2s ease, color 0.2s ease;
-}
-
-.nav-links a:hover,
-.nav-links a.active {
-  opacity: 1;
-  color: var(--accent);
-}
-
-.nav-cta {
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--white);
-  background: var(--black);
-  padding: 0.65rem 1.5rem;
-  text-decoration: none;
-  border-radius: 4px;
-  transition: background 0.2s ease;
-}
-
-.nav-cta:hover { background: var(--accent); }
-
-.hamburger {
-  display: none;
-  flex-direction: column;
-  gap: 0.4rem;
-  background: none;
-  border: none;
-  padding: 0;
-}
-
-.hamburger span {
-  display: block;
-  width: 24px;
-  height: 2px;
-  background: var(--black);
-  transition: all 0.3s ease;
-}
-
-.hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(8px, 8px); }
-.hamburger.active span:nth-child(2) { opacity: 0; }
-.hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(7px, -7px); }
-
-.blog-placeholder {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8rem 3rem 3rem;
-  background:
-    radial-gradient(circle at top right, rgba(255, 60, 31, 0.12), transparent 28%),
-    linear-gradient(135deg, rgba(255, 60, 31, 0.02), transparent 55%, rgba(13, 13, 13, 0.03));
-}
-
-.placeholder-card {
-  width: min(100%, 760px);
-  padding: 4rem 3rem;
-  border: 1px solid var(--gray-light);
-  border-radius: 24px;
-  background: rgba(255, 255, 255, 0.92);
-  box-shadow: 0 24px 60px rgba(13, 13, 13, 0.08);
-  text-align: center;
-}
-
-.eyebrow {
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--gray);
-  margin-bottom: 1.2rem;
-}
-
-.placeholder-title {
-  font-size: clamp(2.4rem, 7vw, 5.6rem);
-  line-height: 0.95;
-  letter-spacing: -0.05em;
-  margin-bottom: 1rem;
-}
-
-.placeholder-title .italic {
-  font-family: var(--serif);
-  font-style: italic;
-  font-weight: 400;
-}
-
-.placeholder-copy {
-  max-width: 520px;
-  margin: 0 auto 2rem;
-  color: var(--gray);
-  font-size: 1rem;
-  line-height: 1.8;
-}
-
-.status-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.8rem 1.1rem;
-  border-radius: 999px;
-  background: var(--off-white);
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--black);
-}
-
-.status-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 0 8px rgba(255, 60, 31, 0.08);
-}
-
-footer {
-  padding: 2rem 3rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: var(--off-white);
-}
-
+.nav-logo,
 .footer-logo {
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -216,142 +71,248 @@ footer {
   text-decoration: none;
 }
 
-.footer-copy {
-  font-size: 0.72rem;
-  color: var(--gray);
-}
-
-.footer-socials {
+.nav-right {
   display: flex;
-  gap: 1.5rem;
-  list-style: none;
+  align-items: center;
+  gap: 0.85rem;
 }
 
-.footer-socials a {
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+.nav-icon {
+  width: 42px;
+  height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 999px;
   color: var(--black);
   text-decoration: none;
-  opacity: 0.55;
-  transition: opacity 0.2s ease;
+  background: rgba(255, 255, 255, 0.82);
+  transition: transform 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
-.footer-socials a:hover { opacity: 1; }
+.nav-icon:hover {
+  transform: translateY(-2px);
+  color: var(--accent);
+  border-color: rgba(255, 60, 31, 0.28);
+}
 
-@media (max-width: 768px) {
-  .hamburger { display: flex; }
+.nav-icon svg {
+  width: 18px;
+  height: 18px;
+}
 
-  .nav-right {
-    position: fixed;
-    top: 56px;
-    left: 0;
-    right: 0;
-    flex-direction: column;
-    gap: 0;
-    background: var(--white);
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+.blog-shell {
+  min-height: 100vh;
+  padding: 8.5rem 3rem 4rem;
+  background:
+    radial-gradient(circle at top right, rgba(255, 60, 31, 0.12), transparent 28%),
+    linear-gradient(135deg, rgba(255, 60, 31, 0.02), transparent 55%, rgba(13, 13, 13, 0.03));
+}
+
+.blog-hero {
+  max-width: 1100px;
+  margin: 0 auto 3rem;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 2rem;
+  align-items: end;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: 1rem;
+}
+
+.hero-title {
+  font-size: clamp(2.8rem, 7vw, 6rem);
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+  max-width: 700px;
+}
+
+.hero-title .italic {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 500;
+}
+
+.hero-copy {
+  max-width: 440px;
+  color: var(--gray);
+  font-size: 1rem;
+  line-height: 1.8;
+  justify-self: end;
+}
+
+.blog-frame {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem;
+  border: 1px solid var(--gray-light);
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 24px 60px rgba(13, 13, 13, 0.08);
+}
+
+#blog-container {
+  display: grid;
+  gap: 1.5rem;
+}
+
+#blog-container:empty::before {
+  content: 'Posts are loading...';
+  display: block;
+  padding: 3rem 1.5rem;
+  text-align: center;
+  color: var(--gray);
+  font-size: 0.95rem;
+  border: 1px dashed var(--gray-light);
+  border-radius: 20px;
+}
+
+.post {
+  padding: 2rem;
+  border: 1px solid var(--gray-light);
+  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(245,244,240,0.92));
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.post:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px rgba(13, 13, 13, 0.08);
+  border-color: rgba(255, 60, 31, 0.2);
+}
+
+.post h2 {
+  margin-bottom: 0.85rem;
+  font-size: clamp(1.7rem, 3vw, 2.4rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.post h2 a {
+  color: var(--black);
+  text-decoration: none;
+}
+
+.post h2 a:hover {
+  color: var(--accent);
+}
+
+.post p {
+  color: var(--gray);
+  font-size: 0.98rem;
+  line-height: 1.8;
+}
+
+.post img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 18px;
+  margin-bottom: 1.2rem;
+}
+
+footer {
+  padding: 2rem 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  background: var(--off-white);
+}
+
+.footer-copy {
+  font-size: 0.74rem;
+  color: var(--gray);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 900px) {
+  nav,
+  footer {
+    padding-left: 1.4rem;
+    padding-right: 1.4rem;
   }
 
-  .nav-right.active { max-height: 320px; }
-  .nav-links { flex-direction: column; gap: 0; width: 100%; }
-  .nav-links li { border-bottom: 1px solid var(--gray-light); }
-  .nav-links a { display: block; padding: 1rem 1.5rem; font-size: 0.9rem; opacity: 0.8; }
-  .nav-cta { margin: 1rem; text-align: center; width: calc(100% - 2rem); }
+  nav::after {
+    left: 1.4rem;
+    right: 1.4rem;
+  }
+
+  .blog-shell {
+    padding: 7rem 1.4rem 3rem;
+  }
+
+  .blog-hero {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .hero-copy {
+    justify-self: start;
+  }
+}
+
+@media (max-width: 640px) {
+  .blog-frame,
+  .post {
+    padding: 1.3rem;
+  }
 
   footer {
     flex-direction: column;
-    gap: 1rem;
-    text-align: center;
+    align-items: flex-start;
   }
-
-  .footer-socials { justify-content: center; }
-}
-
-@media (max-width: 480px) {
-  nav { padding: 0.9rem 1.2rem; }
-  nav::after { left: 1.2rem; right: 1.2rem; }
-
-  .blog-placeholder { padding: 6rem 1.2rem 2rem; }
-  .placeholder-card { padding: 2.5rem 1.4rem; border-radius: 18px; }
-  .placeholder-title { font-size: clamp(2rem, 12vw, 3.6rem); }
-  .placeholder-copy { font-size: 0.9rem; }
-
-  footer { padding: 1.2rem; }
-  .footer-copy,
-  .footer-socials a { font-size: 0.65rem; }
 }
 </style>
 </head>
 <body>
-<nav>
-  <a href="/" class="nav-logo">KJS Creative</a>
-  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-    <span></span>
-    <span></span>
-    <span></span>
-  </button>
-  <div class="nav-right" id="navRight">
-    <ul class="nav-links">
-      <li><a href="/">Work</a></li>
-      <li><a href="/">About</a></li>
-      <li><a href="/">Services</a></li>
-      <li><a href="/blog/" class="active">Blog</a></li>
-    </ul>
-    <a href="/" class="nav-cta">Let's Talk</a>
-  </div>
-</nav>
-
-<main class="blog-placeholder">
-  <section class="placeholder-card">
-    <p class="eyebrow">KJS Blog</p>
-    <h1 class="placeholder-title">Blogs <span class="italic">Uploading</span> Soon</h1>
-    <p class="placeholder-copy">
-      Fresh insights, brand stories, and creative updates will be uploaded here soon. Please check back shortly.
-    </p>
-    <div class="status-badge">
-      <span class="status-dot"></span>
-      Upload Soon
+  <nav>
+    <a class="nav-logo" href="#top">KJS Creative</a>
+    <div class="nav-right">
+      <a class="nav-icon" href="javascript:history.back()" aria-label="Go back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M19 12H5"></path>
+          <path d="M12 19l-7-7 7-7"></path>
+        </svg>
+      </a>
+      <a class="nav-icon" href="/" aria-label="Home">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 10.5 12 3l9 7.5"></path>
+          <path d="M5 9.5V21h14V9.5"></path>
+        </svg>
+      </a>
     </div>
-  </section>
-</main>
+  </nav>
 
-<footer>
-  <a href="/" class="footer-logo">KJS Creative</a>
-  <p class="footer-copy">© 2026 KJS Creative. All rights reserved.</p>
-  <ul class="footer-socials">
-    <li><a href="https://www.instagram.com/kjscreative.in/" target="_blank">Instagram</a></li>
-    <li><a href="https://www.facebook.com/profile.php?id=100092027042143" target="_blank">Facebook</a></li>
-    <li><a href="/">Contact</a></li>
-  </ul>
-</footer>
+  <main class="blog-shell" id="top">
+    <section class="blog-hero">
+      <div>
+        <span class="eyebrow">Journal / Essays / Creative Direction</span>
+        <h1 class="hero-title">The <span class="italic">KJS</span> Blog, now fully connected.</h1>
+      </div>
+      <p class="hero-copy">Old theme preserved, dynamic content enabled. Your posts can now render inside the same editorial visual style instead of the plain dark fallback.</p>
+    </section>
 
-<script>
-const hamburger = document.getElementById('hamburger');
-const navRight = document.getElementById('navRight');
+    <section class="blog-frame" id="blog">
+      <div id="blog-container"></div>
+    </section>
+  </main>
 
-hamburger.addEventListener('click', () => {
-  hamburger.classList.toggle('active');
-  navRight.classList.toggle('active');
-});
+  <footer id="footer">
+    <a class="footer-logo" href="#top">KJS Creative</a>
+    <p class="footer-copy">Editorial aesthetic with live blog content</p>
+  </footer>
 
-document.querySelectorAll('.nav-links a, .nav-cta').forEach((link) => {
-  link.addEventListener('click', () => {
-    hamburger.classList.remove('active');
-    navRight.classList.remove('active');
-  });
-});
-
-document.addEventListener('click', (event) => {
-  if (!event.target.closest('nav')) {
-    hamburger.classList.remove('active');
-    navRight.classList.remove('active');
-  }
-});
-</script>
+  <script src="../js/sanity.js"></script>
 </body>
 </html>
