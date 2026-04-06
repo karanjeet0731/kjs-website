@@ -11,3 +11,18 @@ async function getPosts() {
   const data = await res.json()
   return data.result
 }
+
+// 👇 YE FUNCTION KE BAHAR AAYEGA
+getPosts().then(posts => {
+  const container = document.getElementById("blog-container")
+
+  posts.forEach(post => {
+    const div = document.createElement("div")
+    div.innerHTML = `
+      <h2>${post.title}</h2>
+      <p>${post.content}</p>
+      <hr/>
+    `
+    container.appendChild(div)
+  })
+})
