@@ -2033,10 +2033,6 @@ button,
         <div class="about-stat-label">Projects Delivered</div>
       </div>
       <div class="about-stat">
-        <div class="about-stat-num">7<span>+</span></div>
-        <div class="about-stat-label">Core Services</div>
-      </div>
-      <div class="about-stat">
         <div class="about-stat-num">3<span>+</span></div>
         <div class="about-stat-label">Years Active</div>
       </div>
@@ -2678,11 +2674,10 @@ if (galleryCarousel) {
 
   const startAutoRotate = () => {
     clearInterval(autoRotate);
-    if (window.innerWidth <= 768) return;
     autoRotate = setInterval(() => {
       activeIndex = (activeIndex + 1) % galleryCards.length;
       renderGallery();
-    }, 2200);
+    }, window.innerWidth <= 768 ? 1800 : 2200);
   };
 
   window.addEventListener('resize', startAutoRotate);
