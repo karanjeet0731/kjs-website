@@ -2005,16 +2005,10 @@ button,
         <div class="card" tabindex="0" style="background-image: url('No-Drama-llama.jpg'); background-color: #0a1628;">
         </div>
 
-        <div class="card" tabindex="0" style="background-image: url('c9d269235648009.68dbb43484aa7'); background-color: #1a1200;">
+        <div class="card" tabindex="0" style="background-image: url('c9d269235648009.68dbb43484aa7.webp'); background-color: #1a1200;">
         </div>
 
-        <div class="card" tabindex="0" style="background-image: url('e3418d59-cc69-408e-96d3-3ff502c425e7'); background-color: #0a1a0a;">
-        </div>
-
-        <div class="card" tabindex="0" style="background-image: url('1.jpg'); background-color: #2b1b22;">
-        </div>
-
-        <div class="card" tabindex="0" style="background-image: url('No-Drama-llama.jpg'); background-color: #2c250d;">
+        <div class="card" tabindex="0" style="background-image: url('e3418d59-cc69-408e-96d3-3ff502c425e7.webp'); background-color: #0a1a0a;">
         </div>
       </div>
     </div>
@@ -2650,8 +2644,13 @@ const galleryCarousel = document.getElementById('galleryCarousel');
 
 if (galleryCarousel) {
   const galleryCards = Array.from(galleryCarousel.querySelectorAll('.card'));
-  const positions = ['pos-left-2', 'pos-left-1', 'pos-center', 'pos-right-1', 'pos-right-2'];
-  let activeIndex = 2;
+  const fourCardMode = galleryCards.length === 4;
+  const positions = fourCardMode
+    ? ['pos-left-1', 'pos-center', 'pos-right-1', 'pos-right-2']
+    : ['pos-left-2', 'pos-left-1', 'pos-center', 'pos-right-1', 'pos-right-2'];
+  const minOffset = fourCardMode ? -1 : -2;
+  const maxOffset = 2;
+  let activeIndex = fourCardMode ? 1 : 2;
   let autoRotate;
 
   const renderGallery = () => {
@@ -2664,8 +2663,8 @@ if (galleryCarousel) {
       if (offset > total / 2) offset -= total;
       if (offset < -total / 2) offset += total;
 
-      if (offset >= -2 && offset <= 2) {
-        card.classList.add('is-visible', positions[offset + 2]);
+      if (offset >= minOffset && offset <= maxOffset) {
+        card.classList.add('is-visible', positions[offset - minOffset]);
       } else {
         card.classList.add('pos-far');
       }
