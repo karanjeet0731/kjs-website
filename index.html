@@ -61,7 +61,7 @@ button,
   display: block;
   will-change: transform;
 }
- 
+
 .cursor.hovered {
   width: 40px;
   height: 40px;
@@ -1602,6 +1602,285 @@ footer {
 }
  
  
+/* ================= GALLERY EXPANDING CARDS ================= */
+.gallery-section {
+  background: #0d0d0d;
+  border-bottom: 1px solid #1a1a1a;
+  overflow: hidden;
+  position: relative;
+}
+
+.gallery-section-header {
+  padding: 4.5rem 3rem 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.gallery-section-header .section-eyebrow { color: rgba(255,255,255,0.4); }
+.gallery-section-header .section-title   { color: var(--white); }
+
+.gallery-section::before,
+.gallery-section::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 88px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.gallery-section::before {
+  top: 0;
+  background: linear-gradient(180deg, #0d0d0d 0%, rgba(13, 13, 13, 0) 100%);
+}
+
+.gallery-section::after {
+  bottom: 0;
+  background: linear-gradient(0deg, #0d0d0d 0%, rgba(13, 13, 13, 0) 100%);
+}
+
+.gallery-stage {
+  position: relative;
+  min-height: 620px;
+  padding: 1.5rem 0 4.75rem;
+  perspective: 2200px;
+  perspective-origin: center center;
+}
+
+.gallery-carousel {
+  position: relative;
+  width: min(1280px, calc(100vw - 3rem));
+  height: 460px;
+  margin: 0 auto;
+}
+
+.gallery-container .card {
+  position: relative;
+  width: 255px;
+  height: 440px;
+  border-radius: 0;
+  background-size: cover;
+  background-position: center;
+  cursor: default;
+  transition:
+    transform 0.95s cubic-bezier(0.22, 1, 0.36, 1),
+    left 0.95s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.6s ease,
+    filter 0.45s ease,
+    box-shadow 0.45s ease;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  box-shadow: 0 26px 60px rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transform-origin: center center;
+  clip-path: polygon(0 3%, 100% 0, 100% 97%, 0 100%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.gallery-container .card.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.gallery-container .card.pos-center {
+  left: 50%;
+  transform: translateX(-50%) translateY(0) rotateY(0deg) rotateZ(0deg) scale(1);
+  z-index: 6;
+  filter: brightness(1);
+  box-shadow: 0 34px 84px rgba(0, 0, 0, 0.48);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.gallery-container .card.pos-left-1 {
+  left: calc(50% - 220px);
+  transform: translateX(-50%) translateY(8px) rotateY(18deg) rotateZ(-1.8deg) scale(0.98);
+  z-index: 5;
+  filter: brightness(0.95);
+}
+
+.gallery-container .card.pos-right-1 {
+  left: calc(50% + 220px);
+  transform: translateX(-50%) translateY(8px) rotateY(-18deg) rotateZ(1.8deg) scale(0.98);
+  z-index: 5;
+  filter: brightness(0.95);
+}
+
+.gallery-container .card.pos-left-2 {
+  left: calc(50% - 430px);
+  transform: translateX(-50%) translateY(20px) rotateY(34deg) rotateZ(-3.2deg) scale(0.94);
+  z-index: 4;
+  filter: brightness(0.88);
+}
+
+.gallery-container .card.pos-right-2 {
+  left: calc(50% + 430px);
+  transform: translateX(-50%) translateY(20px) rotateY(-34deg) rotateZ(3.2deg) scale(0.94);
+  z-index: 4;
+  filter: brightness(0.88);
+}
+
+.gallery-container .card.pos-far {
+  left: 50%;
+  transform: translateX(-50%) translateY(30px) scale(0.9);
+  z-index: 1;
+  opacity: 0;
+}
+
+.gallery-container .card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(10, 10, 10, 0.04) 0%, rgba(10, 10, 10, 0.22) 100%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.22) 0%, rgba(0, 0, 0, 0) 34%, rgba(0, 0, 0, 0.24) 100%);
+  z-index: 1;
+}
+
+.gallery-container .card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: border-color 0.45s ease, box-shadow 0.45s ease, opacity 0.45s ease;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.gallery-container .card.pos-center::after {
+  border-color: rgba(255, 60, 31, 0.45);
+  box-shadow: inset 0 0 0 1px rgba(255, 60, 31, 0.2);
+}
+
+.gallery-container .content {
+  position: relative;
+  z-index: 2;
+  width: calc(100% - 0.5rem);
+  margin: 0 0.25rem;
+  padding: 1rem 0.85rem;
+  color: white;
+  opacity: 0.96;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s ease, background 0.35s ease;
+  text-align: center;
+  background: rgba(52, 52, 52, 0.78);
+  backdrop-filter: blur(10px);
+  transform: translateY(22px) scale(0.96);
+}
+
+.gallery-container .card.pos-center .content {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  background: rgba(46, 46, 46, 0.82);
+}
+
+.gallery-container .content h3 {
+  margin: 0 0 6px;
+  font-family: var(--sans);
+  font-size: 1.15rem;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  color: #fff;
+}
+
+.gallery-container .content p {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 300;
+  color: rgba(255,255,255,0.9);
+  letter-spacing: 0.01em;
+  line-height: 1.35;
+}
+
+.gallery-container .content .card-tag {
+  display: block;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+@media (max-width: 1100px) {
+  .gallery-stage {
+    min-height: 540px;
+    padding: 0.75rem 0 3.5rem;
+  }
+  .gallery-carousel {
+    width: min(980px, calc(100vw - 2rem));
+    height: 390px;
+  }
+  .gallery-container .card {
+    width: 240px;
+    height: 390px;
+    clip-path: none;
+  }
+  .gallery-container .card.pos-left-1 {
+    left: calc(50% - 175px);
+  }
+  .gallery-container .card.pos-right-1 {
+    left: calc(50% + 175px);
+  }
+  .gallery-container .card.pos-left-2 {
+    left: calc(50% - 330px);
+  }
+  .gallery-container .card.pos-right-2 {
+    left: calc(50% + 330px);
+  }
+  .gallery-container .content {
+    width: calc(100% - 1rem);
+    margin: 0 0.5rem;
+    padding: 1rem 0.85rem;
+  }
+  .gallery-container .content h3 {
+    font-size: 1.05rem;
+  }
+  .gallery-container .content p {
+    font-size: 0.82rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .gallery-stage {
+    min-height: auto;
+    padding: 0 0 2.5rem;
+  }
+  .gallery-carousel {
+    width: calc(100vw - 1.5rem);
+    height: 320px;
+  }
+  .gallery-container .card {
+    width: 180px;
+    height: 260px;
+    clip-path: none;
+  }
+  .gallery-container .card.pos-left-1 {
+    left: calc(50% - 110px);
+    transform: translateX(-50%) translateY(8px) rotateY(16deg) rotateZ(-1.2deg) scale(0.95);
+  }
+  .gallery-container .card.pos-right-1 {
+    left: calc(50% + 110px);
+    transform: translateX(-50%) translateY(8px) rotateY(-16deg) rotateZ(1.2deg) scale(0.95);
+  }
+  .gallery-container .card.pos-left-2,
+  .gallery-container .card.pos-right-2 {
+    opacity: 0;
+  }
+  .gallery-container .content {
+    opacity: 1;
+    width: calc(100% - 1.25rem);
+    margin: 0 0.625rem;
+    transform: translateY(0) scale(1);
+  }
+  .gallery-section-header { padding: 3rem 1.5rem 1.5rem; }
+}
+
 /* ================= FINAL CURSOR FIX ================= */
  
 /* Buttons & links should work properly */
@@ -1652,7 +1931,7 @@ button,
   </button>
   <div class="nav-right" id="navRight">
     <ul class="nav-links">
-      <li><a href="/" data-scroll-target="work">Work</a></li>
+      <li><a href="/" data-scroll-target="clients">Work</a></li>
       <li><a href="/" data-scroll-target="about">About</a></li>
       <li><a href="/" data-scroll-target="services">Services</a></li>
       <li><a href="blog/">Blog</a></li>
@@ -1683,7 +1962,7 @@ button,
       <p class="hero-desc">
         A full-service creative agency crafting brand identities, digital experiences, and content that drives real growth.
       </p>
-      <a href="/" class="hero-cta" data-scroll-target="work">
+      <a href="/" class="hero-cta" data-scroll-target="clients">
         See our work <span class="hero-cta-arrow">↗</span>
       </a>
     </div>
@@ -1710,68 +1989,38 @@ button,
   </div>
 </div>
  
-<!-- WORK -->
-<section class="work" id="work">
-  <div class="section-header">
-    <div>
-      <p class="section-eyebrow reveal">Selected Work</p>
-      <h2 class="section-title reveal d1">Our <span class="italic">Portfolio</span></h2>
-    </div>
-    <a href="/" class="view-all reveal d2" data-scroll-target="work">View All →</a>
+<!-- GALLERY EXPANDING CARDS -->
+<section class="gallery-section" id="clients">
+  <div class="gallery-section-header reveal">
+    <p class="section-eyebrow">Work Showcase</p>
+    <h2 class="section-title">Our <span class="italic">Projects</span></h2>
   </div>
- 
-  <div class="work-grid reveal d1">
-    <div class="work-card" style="animation: cardReveal 0.8s ease 0.1s both;">
-      <div class="work-card-inner">
-        <div class="work-card-bg bg-1" style="height:100%">
-          <div class="work-placeholder">YSS</div>
+
+  <div class="gallery-stage">
+    <div class="gallery-carousel">
+      <div class="gallery-container" id="galleryCarousel">
+        <div class="card" tabindex="0" style="background-image: url('image1.jpg'); background-color: #1a0a2e;">
         </div>
-        <div class="work-card-overlay"></div>
-        <div class="work-card-info">
-          <div class="work-card-tag">Brand Identity · Social Media</div>
-          <div class="work-card-name">Your Scent Stories</div>
+
+        <div class="card" tabindex="0" style="background-image: url('image2.jpg'); background-color: #0a1628;">
         </div>
-      </div>
-    </div>
-    <div class="work-card" style="animation: cardReveal 0.8s ease 0.2s both;">
-      <div class="work-card-inner">
-        <div class="work-card-bg bg-2" style="height:100%">
-          <div class="work-placeholder">TBC</div>
+
+        <div class="card" tabindex="0" style="background-image: url('image3.jpg'); background-color: #1a1200;">
         </div>
-        <div class="work-card-overlay"></div>
-        <div class="work-card-info">
-          <div class="work-card-tag">Motion Graphics · Reels</div>
-          <div class="work-card-name">The Bamboo Co.</div>
+
+        <div class="card" tabindex="0" style="background-image: url('image4.jpg'); background-color: #0a1a0a;">
         </div>
-      </div>
-    </div>
-    <div class="work-card" style="animation: cardReveal 0.8s ease 0.3s both;">
-      <div class="work-card-inner">
-        <div class="work-card-bg bg-3" style="height:100%">
-          <div class="work-placeholder">TAC</div>
+
+        <div class="card" tabindex="0" style="background-image: url('image5.jpg'); background-color: #2b1b22;">
         </div>
-        <div class="work-card-overlay"></div>
-        <div class="work-card-info">
-          <div class="work-card-tag">Branding · Design System</div>
-          <div class="work-card-name">The Ardour & Co.</div>
-        </div>
-      </div>
-    </div>
-    <div class="work-card" style="animation: cardReveal 0.8s ease 0.4s both;">
-      <div class="work-card-inner">
-        <div class="work-card-bg bg-4" style="height:100%">
-          <div class="work-placeholder">E-COM</div>
-        </div>
-        <div class="work-card-overlay"></div>
-        <div class="work-card-info">
-          <div class="work-card-tag">E-commerce · Shopify</div>
-          <div class="work-card-name">Marketplace Scaling</div>
+
+        <div class="card" tabindex="0" style="background-image: url('image6.jpg'); background-color: #2c250d;">
         </div>
       </div>
     </div>
   </div>
 </section>
- 
+
 <!-- ABOUT -->
 <section class="about" id="about">
   <div class="about-left">
@@ -2368,6 +2617,7 @@ const counters = document.querySelectorAll('.about-stat-num');
 function animateCounters() {
   counters.forEach(counter => {
     const target = parseInt(counter.textContent);
+    const suffix = counter.querySelector('span')?.textContent || '';
     let current = 0;
     const speed = target / 60;
     counter.classList.add('counting');
@@ -2375,14 +2625,10 @@ function animateCounters() {
     const updateCounter = () => {
       if (current < target) {
         current += speed;
-        counter.textContent = Math.floor(current);
+        counter.innerHTML = Math.floor(current) + (suffix ? '<span>' + suffix + '</span>' : '');
         requestAnimationFrame(updateCounter);
       } else {
-        counter.textContent = target;
-        const span = counter.querySelector('span');
-        if (span) {
-          counter.innerHTML = target + '<span>' + span.textContent + '</span>';
-        }
+        counter.innerHTML = target + (suffix ? '<span>' + suffix + '</span>' : '');
       }
     };
  
@@ -2402,6 +2648,48 @@ window.addEventListener('scroll', () => {
     }
   }
 });
+
+// PROJECT GALLERY AUTO CAROUSEL
+const galleryCarousel = document.getElementById('galleryCarousel');
+
+if (galleryCarousel) {
+  const galleryCards = Array.from(galleryCarousel.querySelectorAll('.card'));
+  const positions = ['pos-left-2', 'pos-left-1', 'pos-center', 'pos-right-1', 'pos-right-2'];
+  let activeIndex = 2;
+  let autoRotate;
+
+  const renderGallery = () => {
+    galleryCards.forEach((card, index) => {
+      card.classList.remove('is-visible', 'pos-left-2', 'pos-left-1', 'pos-center', 'pos-right-1', 'pos-right-2', 'pos-far');
+
+      let offset = index - activeIndex;
+      const total = galleryCards.length;
+
+      if (offset > total / 2) offset -= total;
+      if (offset < -total / 2) offset += total;
+
+      if (offset >= -2 && offset <= 2) {
+        card.classList.add('is-visible', positions[offset + 2]);
+      } else {
+        card.classList.add('pos-far');
+      }
+    });
+  };
+
+  const startAutoRotate = () => {
+    clearInterval(autoRotate);
+    if (window.innerWidth <= 768) return;
+    autoRotate = setInterval(() => {
+      activeIndex = (activeIndex + 1) % galleryCards.length;
+      renderGallery();
+    }, 2200);
+  };
+
+  window.addEventListener('resize', startAutoRotate);
+  renderGallery();
+  startAutoRotate();
+}
+
 </script>
 <script>
 (function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="fagsrkLlmJpQHpQxtHP3O";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
