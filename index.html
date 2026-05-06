@@ -1002,928 +1002,101 @@ nav::after {
   border-radius: 12px;
 }
  
-.team-modal-text {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
- 
-.team-modal-title {
-  font-size: 2rem;
+.team-modal-content-text h3 {
+  font-size: 1.8rem;
   font-weight: 600;
-  letter-spacing: -0.02em;
-  color: var(--black);
   margin-bottom: 0.5rem;
-  line-height: 1.3;
+  letter-spacing: -0.02em;
 }
  
-.team-modal-role {
+.team-modal-content-text .role {
   font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
   color: var(--accent);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   margin-bottom: 1.5rem;
 }
  
-.team-modal-about {
+.team-modal-content-text p {
   font-size: 0.95rem;
-  font-weight: 300;
   color: var(--gray);
-  line-height: 1.8;
-  margin-bottom: 0;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
 }
  
-/* Mobile modal */
-@media (max-width: 768px) {
-  .team-modal-inner {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-    padding: 1.5rem;
-  }
- 
-  .team-modal-image {
-    height: 250px;
-  }
- 
-  .team-modal-title {
-    font-size: 1.5rem;
-  }
- 
-  .team-modal-about {
-    font-size: 0.9rem;
-  }
-}
- 
-/* CONTACT / CTA */
-.cta {
-  padding: 8rem 3rem;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6rem;
-  align-items: start;
-  border-bottom: 1px solid var(--gray-light);
-}
-.cta-left .section-eyebrow { margin-bottom: 1rem; }
-.cta-title {
-  font-size: clamp(3rem, 6vw, 5.5rem);
-  font-weight: 600;
-  letter-spacing: -0.04em;
-  line-height: 1;
-  color: var(--black);
-  margin-bottom: 3rem;
-}
-.cta-title .italic { font-style: italic; font-weight: 300; }
-.contact-details { display: flex; flex-direction: column; }
-.contact-item {
+.team-socials {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.2rem 0;
-  border-bottom: 1px solid var(--gray-light);
-}
-.contact-label {
-  font-size: 0.68rem;
-  font-weight: 500;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--gray);
-}
-.contact-val {
-  font-size: 0.9rem;
-  font-weight: 400;
-  color: var(--black);
-  text-decoration: none;
-  transition: color .2s;
-}
-.contact-val:hover { color: var(--accent); }
-.contact-form { display: flex; flex-direction: column; gap: 0; }
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0;
-  border-bottom: 1px solid var(--gray-light);
-}
-.form-row:first-child { border-top: 1px solid var(--gray-light); }
-.form-field {
-  position: relative;
+  gap: 1rem;
+  list-style: none;
+  margin: 0;
   padding: 0;
-  border-right: 1px solid var(--gray-light);
 }
-.form-field:last-child { border-right: none; }
-.form-field.full {
-  grid-column: 1 / -1;
-  border-right: none;
-}
-.form-field label {
-  display: block;
-  font-size: 0.65rem;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--gray);
-  padding: 1.2rem 1.5rem 0.3rem;
-  transition: color 0.2s;
-}
-.form-field:focus-within label { color: var(--black); }
-.form-field input,
-.form-field select,
-.form-field textarea {
-  width: 100%;
-  border: none;
-  outline: none;
-  background: transparent;
-  font-family: var(--sans);
-  font-size: 0.95rem;
-  font-weight: 400;
-  color: var(--black);
-  padding: 0.3rem 1.5rem 1.2rem;
-  resize: none;
-  appearance: none;
-  -webkit-appearance: none;
-}
-.form-field input::placeholder,
-.form-field textarea::placeholder { color: var(--gray-light); }
-.form-field textarea { min-height: 120px; line-height: 1.6; }
-.form-field select { cursor: pointer; }
-.form-field-focus-bar {
-  position: absolute;
-  bottom: 0; left: 0;
-  height: 2px;
-  width: 0;
-  background: var(--black);
-  transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-.form-field:focus-within .form-field-focus-bar { width: 100%; }
-.form-field:focus-within { background: var(--off-white); }
  
-.form-submit-row {
+.team-socials a {
+  width: 40px;
+  height: 40px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: 2rem;
-}
-.form-note {
-  font-size: 0.75rem;
-  color: var(--gray);
-  font-weight: 300;
-}
- 
-.form-success {
-  display: none;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-align: center;
-  padding: 4rem 2rem;
-  gap: 1rem;
   border: 1px solid var(--gray-light);
-}
-.form-success.show { display: flex; }
-.success-icon {
-  width: 48px; height: 48px;
-  background: var(--black);
   border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.2rem;
-  color: var(--white);
-}
-.success-title {
-  font-size: 1.4rem;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-}
-.success-sub {
-  font-size: 0.85rem;
-  color: var(--gray);
-  font-weight: 300;
-}
-.btn-big {
-  display: inline-flex;
-  align-items: center;
-  gap: 1rem;
-  background: var(--black);
-  color: var(--white);
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  padding: 1.2rem 2.4rem;
-  text-decoration: none;
-  transition: background .2s;
-  margin-top: 1rem;
-  align-self: flex-start;
-}
-.btn-big:hover { background: var(--accent); }
- 
-/* FOOTER */
-footer {
-  padding: 2rem 3rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: var(--off-white);
-}
-.footer-logo {
-  font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
   color: var(--black);
+  transition: border-color 0.2s, color 0.2s;
   text-decoration: none;
 }
-.footer-copy {
-  font-size: 0.72rem;
-  color: var(--gray);
-}
-.footer-socials {
-  display: flex;
-  gap: 1.5rem;
-  list-style: none;
-}
-.footer-socials a {
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--black);
-  text-decoration: none;
-  opacity: 0.5;
-  transition: opacity .2s;
-}
-.footer-socials a:hover { opacity: 1; }
  
-/* REVEAL ANIMS */
-.reveal {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-              transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-.reveal.visible { opacity: 1; transform: none; }
-.d1 { transition-delay: 0.05s; }
-.d2 { transition-delay: 0.15s; }
-.d3 { transition-delay: 0.25s; }
-.d4 { transition-delay: 0.35s; }
-.d5 { transition-delay: 0.45s; }
-.d6 { transition-delay: 0.55s; }
- 
-/* Team image animations */
-@keyframes imageFloat {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
+.team-socials a:hover {
+  border-color: var(--accent);
+  color: var(--accent);
 }
  
-.team-card .team-image {
-  animation: imageFloat 12s ease-in-out infinite;
-}
- 
-/* CARD CONTACT FORM */
-.cf-card {
-  background: #f0f0ec;
-  border-radius: 20px;
-  padding: 2.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-.cf-title {
-  font-size: 2rem;
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  color: var(--black);
-  line-height: 1.1;
-}
-.cf-sub {
-  font-size: 0.82rem;
-  color: var(--gray);
-  font-weight: 300;
-  line-height: 1.7;
-  margin-bottom: 0.5rem;
-}
-.cf-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.75rem;
-}
-.cf-field {
-  position: relative;
-}
-.cf-field-full { width: 100%; }
-.cf-field input,
-.cf-field select,
-.cf-field textarea {
-  width: 100%;
-  background: var(--white);
-  border: none;
-  border-radius: 10px;
-  padding: 0.9rem 2.8rem 0.9rem 1.1rem;
-  font-family: var(--sans);
-  font-size: 0.85rem;
-  font-weight: 400;
-  color: var(--black);
-  outline: none;
-  appearance: none;
-  -webkit-appearance: none;
-  transition: box-shadow 0.2s;
-}
-.cf-field input:focus,
-.cf-field select:focus,
-.cf-field textarea:focus {
-  box-shadow: 0 0 0 2px var(--black);
-}
-.cf-field input::placeholder,
-.cf-field textarea::placeholder { color: #aaa; }
-.cf-field select { color: #555; }
-.cf-field select option { color: var(--black); }
-.cf-textarea-wrap textarea {
-  resize: none;
-  min-height: 110px;
-  line-height: 1.6;
-  padding-right: 1.1rem;
-}
-.cf-icon {
-  position: absolute;
-  right: 1rem;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #aaa;
-  display: flex;
-  align-items: center;
-  pointer-events: none;
-}
-.cf-select-arrow { pointer-events: none; }
-.cf-buttons {
-  display: flex;
-  gap: 0.75rem;
-  margin-top: 0.5rem;
-}
-.cf-btn-back {
-  flex: 1;
-  padding: 1rem 1.5rem;
-  background: var(--black);
-  color: var(--white);
-  border: none;
-  border-radius: 10px;
-  font-family: var(--sans);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  transition: background 0.2s;
-}
-.cf-btn-back:hover { background: #333; }
-.cf-btn-submit {
-  flex: 1.4;
-  padding: 1rem 1.5rem;
-  background: #ff3c1f;
-  color: var(--white);
-  border: none;
-  border-radius: 10px;
-  font-family: var(--sans);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  transition: background 0.2s, transform 0.15s;
-}
-.cf-btn-submit:hover { background: #e63919; transform: translateY(-2px); }
-.cf-btn-submit:active { transform: translateY(0); }
- 
-/* MOBILE & RESPONSIVE */
- 
-/* Shared mobile styles — phones + tablets */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
+  nav { padding: 1.25rem 1.25rem; }
+  nav::after { left: 1.25rem; right: 1.25rem; }
   .hamburger { display: flex; }
-  .nav-right {
-    position: fixed;
-    top: 56px; left: 0; right: 0;
-    flex-direction: column;
-    gap: 0;
-    background: var(--white);
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    z-index: 99;
-  }
+  .nav-right { position: fixed; top: 56px; left: 0; right: 0; flex-direction: column; gap: 0; background: var(--white); max-height: 0; overflow: hidden; transition: max-height 0.3s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 99; }
   .nav-right.active { max-height: 320px; }
   .nav-links { flex-direction: column; gap: 0; width: 100%; }
   .nav-links li { border-bottom: 1px solid var(--gray-light); }
   .nav-links a { display: block; padding: 1rem 1.5rem; opacity: 0.8; font-size: 0.9rem; }
   .nav-cta { margin: 1rem; text-align: center; width: calc(100% - 2rem); display: block; }
- 
-  .hero-scroll-hint { display: none; }
-  .hero-bottom { flex-direction: column; gap: 1.2rem; align-items: flex-start; }
-  .hero-desc { max-width: 100%; }
- 
-  .work-grid { grid-template-columns: 1fr; }
-  .work-card:first-child { grid-column: 1; grid-row: auto; min-height: auto; }
- 
-  .about { grid-template-columns: 1fr; min-height: auto; }
-  .about-left { border-right: none; border-bottom: 1px solid var(--gray-light); }
- 
-  .testimonials-grid { grid-template-columns: 1fr; }
- 
-  .cta { grid-template-columns: 1fr; gap: 2.5rem; }
-  .cf-row { grid-template-columns: 1fr; }
-  .cf-buttons { flex-direction: column; }
-  .form-row { grid-template-columns: 1fr; }
-  .form-field { border-right: none !important; }
-  .form-submit-row { flex-direction: column; align-items: flex-start; gap: 1rem; }
- 
-  footer { flex-direction: column; gap: 1rem; text-align: center; }
-  .footer-socials { justify-content: center; }
-}
- 
-/* Phones — max 480px */
-@media (max-width: 480px) {
-  nav { padding: 0.9rem 1.2rem; }
-  nav::after { left: 1.2rem; right: 1.2rem; }
- 
-  .hero {
-    justify-content: flex-start;
-    padding: 8rem 1.2rem 2rem;
-    min-height: auto;
-  }
-  .hero-top { left: 1.2rem; right: 1.2rem; top: 4.2rem; }
-  .hero-bg-text { font-size: clamp(56px, 15vw, 120px); }
-  .hero-title { font-size: clamp(2rem, 9.5vw, 3.2rem); max-width: 100%; margin-bottom: 1.5rem; }
-  .hero-desc { font-size: 0.85rem; }
-  .hero-cta { font-size: 0.75rem; }
- 
-  .ticker-item { font-size: 0.65rem; padding: 0 1.5rem; }
- 
-  .work { padding: 2.5rem 1.2rem; }
-  .work-grid { gap: 0.75rem; }
-  .work-card { aspect-ratio: 4/3; }
-  .work-card:first-child { aspect-ratio: 4/3; }
-  .work-card-info { padding: 1.2rem; }
-  .work-card-name { font-size: 1.1rem; }
-  .work-card-tag { font-size: 0.6rem; }
- 
-  .section-eyebrow { font-size: 0.65rem; }
-  .section-title { font-size: clamp(1.6rem, 6.5vw, 2.4rem); }
-  .section-header { flex-direction: column; align-items: flex-start; gap: 1rem; margin-bottom: 2rem; }
- 
-  .about-left { padding: 2.5rem 1.2rem; }
-  .about-right { padding: 2.5rem 1.2rem; }
-  .about-big-text { font-size: clamp(1.6rem, 5.5vw, 2.2rem); margin-bottom: 2rem; }
-  .about-bottom-row { gap: 1.2rem; justify-content: space-between; flex-wrap: wrap; }
-  .about-stat-num { font-size: 1.9rem; }
-  .about-stat-label { font-size: 0.58rem; }
- 
-  .services { padding: 2.5rem 1.2rem; }
-  .service-row { grid-template-columns: 32px 1fr 24px; padding: 1rem 0; }
-  .service-num { font-size: 0.6rem; }
-  .service-name { font-size: clamp(1rem, 3.5vw, 1.3rem); }
-  .service-sub { font-size: 0.72rem; }
-  .service-arrow { font-size: 1rem; }
-  .service-tag { font-size: 0.5rem; padding: 0.12rem 0.35rem; margin-left: 0.4rem; }
- 
-  .testimonials { padding: 2.5rem 1.2rem; }
-  .testimonials-grid { gap: 1.5rem; }
-  .testi-quote { font-size: 0.88rem; line-height: 1.7; margin-bottom: 1rem; }
-  .testi-client { font-size: 0.62rem; }
- 
-  .team { padding: 2.5rem 1.2rem; }
-  .team-grid { grid-template-columns: repeat(2, 1fr); }
-  .team-card { padding: 1.2rem 1rem; }
-  .team-image { height: 130px; }
-  .team-name { font-size: 0.8rem; }
-  .team-role { font-size: 0.6rem; }
- 
-  .cta { padding: 3rem 1.2rem; }
-  .cta-title { font-size: clamp(2rem, 7vw, 3rem); margin-bottom: 1.5rem; }
-  .contact-item { padding: 0.7rem 0; }
-  .contact-label { font-size: 0.58rem; }
-  .contact-val { font-size: 0.82rem; }
- 
-  .cf-card { padding: 1.4rem; border-radius: 14px; gap: 0.85rem; }
-  .cf-title { font-size: 1.3rem; }
-  .cf-sub { font-size: 0.72rem; }
-  .cf-row { gap: 0.5rem; }
-  .cf-field input, .cf-field select, .cf-field textarea {
-    padding: 0.8rem 2.4rem 0.8rem 0.9rem;
-    font-size: 0.82rem;
-  }
-  .cf-textarea-wrap textarea { min-height: 95px; }
-  .cf-buttons { gap: 0.5rem; }
-  .cf-btn-submit { padding: 0.9rem 1.2rem; font-size: 0.72rem; width: 100%; }
- 
-  footer { padding: 1.2rem; gap: 0.8rem; }
-  .footer-logo { font-size: 0.75rem; }
-  .footer-copy { font-size: 0.62rem; }
-  .footer-socials { gap: 1rem; }
-  .footer-socials a { font-size: 0.65rem; }
-}
- 
-/* Tablets portrait — 481–768px */
-@media (min-width: 481px) and (max-width: 768px) {
-  nav { padding: 1rem 1.5rem; }
-  nav::after { left: 1.5rem; right: 1.5rem; }
- 
-  .hero { padding: 0 1.5rem 3rem; min-height: 80vh; }
-  .hero-top { left: 1.5rem; right: 1.5rem; top: 5.5rem; }
-  .hero-title { font-size: clamp(2.8rem, 10vw, 4.5rem); max-width: 100%; margin-bottom: 1.8rem; }
-  .hero-desc { font-size: 0.92rem; }
- 
-  .work { padding: 3rem 1.5rem; }
-  .work-grid { gap: 1rem; }
-  .work-card { aspect-ratio: 3/2; }
-  .work-card:first-child { aspect-ratio: 3/2; }
- 
-  .section-header { margin-bottom: 2.5rem; }
-  .section-title { font-size: clamp(1.8rem, 5vw, 2.8rem); }
- 
-  .about-left { padding: 3rem 1.5rem; }
-  .about-right { padding: 3rem 1.5rem; }
-  .about-big-text { font-size: clamp(1.8rem, 5vw, 2.6rem); }
-  .about-bottom-row { gap: 2rem; }
-  .about-stat-num { font-size: 2.2rem; }
- 
-  .services { padding: 3rem 1.5rem; }
-  .service-row { grid-template-columns: 50px 1fr 40px; padding: 1.2rem 0; }
-  .service-name { font-size: 1.15rem; }
- 
-  .testimonials { padding: 3rem 1.5rem; }
-  .testimonials-grid { gap: 2rem; }
- 
-  .team { padding: 3rem 1.5rem; }
-  .team-grid { grid-template-columns: repeat(2, 1fr); }
-  .team-image { height: 180px; }
- 
-  .cta { padding: 4rem 1.5rem; }
-  .cta-title { font-size: clamp(2.2rem, 6vw, 3.5rem); }
-  .contact-val { font-size: 0.88rem; }
- 
-  .cf-card { padding: 2rem; }
-  .cf-title { font-size: 1.6rem; }
-  .cf-row { gap: 0.6rem; }
-  .cf-btn-submit { padding: 1rem 1.5rem; font-size: 0.75rem; }
- 
-  footer { padding: 1.5rem; }
-}
- 
-/* Tablet landscape & small laptops — 769–1024px */
-@media (min-width: 769px) and (max-width: 1024px) {
-  nav { padding: 1.5rem 2.5rem; }
- 
-  .hero { padding: 0 2rem 2.5rem; }
-  .hero-top { left: 2rem; right: 2rem; top: 6.5rem; }
-  .hero-title { font-size: clamp(3rem, 8vw, 6rem); }
- 
-  .work { padding: 4rem 2rem; }
-  .work-grid { gap: 1.5rem; }
-  .work-card:first-child { min-height: auto; aspect-ratio: 3/2; }
- 
+  .hero { padding: 0 1.25rem 3rem; }
+  h1 { font-size: clamp(3.5rem, 16vw, 5.5rem); }
+  .section-title { font-size: clamp(1.8rem, 3.5vw, 2.8rem); }
   .about { grid-template-columns: 1fr; }
-  .about-left { padding: 4rem 2rem; border-right: none; border-bottom: 1px solid var(--gray-light); }
-  .about-right { padding: 4rem 2rem; }
- 
-  .services { padding: 4rem 2rem; }
-  .service-row { padding: 1.5rem 0; }
- 
-  .testimonials { padding: 4rem 2rem; }
-  .testimonials-grid { grid-template-columns: repeat(2, 1fr); gap: 2.5rem; }
- 
-  .team { padding: 4rem 2rem; }
+  .about-left { border-right: none; border-bottom: 1px solid var(--gray-light); padding: 4rem 1.25rem; }
+  .about-right { padding: 4rem 1.25rem; }
+  .work { padding: 4rem 1.25rem; }
+  .work-grid { grid-template-columns: 1fr; gap: 0.5rem; }
+  .work-card:first-child { grid-column: 1; grid-row: auto; min-height: 300px; }
+  .services { padding: 4rem 1.25rem; }
+  .service-row { grid-template-columns: 60px 1fr 60px; }
+  .testimonials { padding: 4rem 1.25rem; }
+  .testimonials-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .team { padding: 4rem 1.25rem; }
   .team-grid { grid-template-columns: repeat(3, 1fr); }
- 
-  .cta { grid-template-columns: 1fr; padding: 5rem 2rem; gap: 3rem; }
-  .cf-row { gap: 0.75rem; }
- 
-  footer { padding: 1.5rem 2rem; }
+  .team-modal-inner { grid-template-columns: 1fr; gap: 1rem; }
 }
  
-/* Desktop — 1025px+ */
-@media (min-width: 1025px) {
-  /* Default styles apply */
-}
- 
- 
-/* ================= GALLERY EXPANDING CARDS ================= */
-.gallery-section {
-  background: #0d0d0d;
-  border-bottom: 1px solid #1a1a1a;
-  overflow: hidden;
-  position: relative;
-}
-
-.gallery-section-header {
-  padding: 4.5rem 3rem 2rem;
-  position: relative;
-  z-index: 2;
-}
-
-.gallery-section-header .section-eyebrow { color: rgba(255,255,255,0.4); }
-.gallery-section-header .section-title   { color: var(--white); }
-
-.gallery-section::before,
-.gallery-section::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 88px;
-  z-index: 1;
-  pointer-events: none;
-}
-
-.gallery-section::before {
-  top: 0;
-  background: linear-gradient(180deg, #0d0d0d 0%, rgba(13, 13, 13, 0) 100%);
-}
-
-.gallery-section::after {
-  bottom: 0;
-  background: linear-gradient(0deg, #0d0d0d 0%, rgba(13, 13, 13, 0) 100%);
-}
-
-.gallery-stage {
-  position: relative;
-  min-height: 620px;
-  padding: 1.5rem 0 4.75rem;
-  perspective: 2200px;
-  perspective-origin: center center;
-}
-
-.gallery-carousel {
-  position: relative;
-  width: min(1280px, calc(100vw - 3rem));
-  height: 460px;
-  margin: 0 auto;
-}
-
-.gallery-container .card {
-  position: relative;
-  width: 255px;
-  height: 440px;
-  border-radius: 0;
-  background-size: cover;
-  background-position: center;
-  cursor: default;
-  transition:
-    transform 0.95s cubic-bezier(0.22, 1, 0.36, 1),
-    left 0.95s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 0.6s ease,
-    filter 0.45s ease,
-    box-shadow 0.45s ease;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  top: 0;
-  left: 50%;
-  box-shadow: 0 26px 60px rgba(0, 0, 0, 0.35);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  transform-origin: center center;
-  clip-path: polygon(0 3%, 100% 0, 100% 97%, 0 100%);
-  opacity: 0;
-  pointer-events: none;
-}
-
-.gallery-container .card.is-visible {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.gallery-container .card.pos-center {
-  left: 50%;
-  transform: translateX(-50%) translateY(0) rotateY(0deg) rotateZ(0deg) scale(1);
-  z-index: 6;
-  filter: brightness(1);
-  box-shadow: 0 34px 84px rgba(0, 0, 0, 0.48);
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-}
-
-.gallery-container .card.pos-left-1 {
-  left: calc(50% - 220px);
-  transform: translateX(-50%) translateY(8px) rotateY(18deg) rotateZ(-1.8deg) scale(0.98);
-  z-index: 5;
-  filter: brightness(0.95);
-}
-
-.gallery-container .card.pos-right-1 {
-  left: calc(50% + 220px);
-  transform: translateX(-50%) translateY(8px) rotateY(-18deg) rotateZ(1.8deg) scale(0.98);
-  z-index: 5;
-  filter: brightness(0.95);
-}
-
-.gallery-container .card.pos-left-2 {
-  left: calc(50% - 430px);
-  transform: translateX(-50%) translateY(20px) rotateY(34deg) rotateZ(-3.2deg) scale(0.94);
-  z-index: 4;
-  filter: brightness(0.88);
-}
-
-.gallery-container .card.pos-right-2 {
-  left: calc(50% + 430px);
-  transform: translateX(-50%) translateY(20px) rotateY(-34deg) rotateZ(3.2deg) scale(0.94);
-  z-index: 4;
-  filter: brightness(0.88);
-}
-
-.gallery-container .card.pos-far {
-  left: 50%;
-  transform: translateX(-50%) translateY(30px) scale(0.9);
-  z-index: 1;
-  opacity: 0;
-}
-
-.gallery-container .card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(180deg, rgba(10, 10, 10, 0.04) 0%, rgba(10, 10, 10, 0.22) 100%),
-    linear-gradient(90deg, rgba(0, 0, 0, 0.22) 0%, rgba(0, 0, 0, 0) 34%, rgba(0, 0, 0, 0.24) 100%);
-  z-index: 1;
-}
-
-.gallery-container .card::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  transition: border-color 0.45s ease, box-shadow 0.45s ease, opacity 0.45s ease;
-  z-index: 3;
-  pointer-events: none;
-}
-
-.gallery-container .card.pos-center::after {
-  border-color: rgba(255, 60, 31, 0.45);
-  box-shadow: inset 0 0 0 1px rgba(255, 60, 31, 0.2);
-}
-
-.gallery-container .content {
-  position: relative;
-  z-index: 2;
-  width: calc(100% - 0.5rem);
-  margin: 0 0.25rem;
-  padding: 1rem 0.85rem;
-  color: white;
-  opacity: 0.96;
-  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s ease, background 0.35s ease;
-  text-align: center;
-  background: rgba(52, 52, 52, 0.78);
-  backdrop-filter: blur(10px);
-  transform: translateY(22px) scale(0.96);
-}
-
-.gallery-container .card.pos-center .content {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-  background: rgba(46, 46, 46, 0.82);
-}
-
-.gallery-container .content h3 {
-  margin: 0 0 6px;
-  font-family: var(--sans);
-  font-size: 1.15rem;
-  font-weight: 500;
-  letter-spacing: -0.03em;
-  color: #fff;
-}
-
-.gallery-container .content p {
-  margin: 0;
-  font-size: 0.72rem;
-  font-weight: 300;
-  color: rgba(255,255,255,0.9);
-  letter-spacing: 0.01em;
-  line-height: 1.35;
-}
-
-.gallery-container .content .card-tag {
-  display: block;
-  font-size: 0.62rem;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 8px;
-}
-
-@media (max-width: 1100px) {
-  .gallery-stage {
-    min-height: 540px;
-    padding: 0.75rem 0 3.5rem;
-  }
-  .gallery-carousel {
-    width: min(980px, calc(100vw - 2rem));
-    height: 390px;
-  }
-  .gallery-container .card {
-    width: 240px;
-    height: 390px;
-    clip-path: none;
-  }
-  .gallery-container .card.pos-left-1 {
-    left: calc(50% - 175px);
-  }
-  .gallery-container .card.pos-right-1 {
-    left: calc(50% + 175px);
-  }
-  .gallery-container .card.pos-left-2 {
-    left: calc(50% - 330px);
-  }
-  .gallery-container .card.pos-right-2 {
-    left: calc(50% + 330px);
-  }
-  .gallery-container .content {
-    width: calc(100% - 1rem);
-    margin: 0 0.5rem;
-    padding: 1rem 0.85rem;
-  }
-  .gallery-container .content h3 {
-    font-size: 1.05rem;
-  }
-  .gallery-container .content p {
-    font-size: 0.82rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .gallery-stage {
-    min-height: auto;
-    padding: 0 0 2.5rem;
-  }
-  .gallery-carousel {
-    width: calc(100vw - 1.5rem);
-    height: 320px;
-  }
-  .gallery-container .card {
-    width: 180px;
-    height: 260px;
-    clip-path: none;
-  }
-  .gallery-container .card.pos-left-1 {
-    left: calc(50% - 110px);
-    transform: translateX(-50%) translateY(8px) rotateY(16deg) rotateZ(-1.2deg) scale(0.95);
-  }
-  .gallery-container .card.pos-right-1 {
-    left: calc(50% + 110px);
-    transform: translateX(-50%) translateY(8px) rotateY(-16deg) rotateZ(1.2deg) scale(0.95);
-  }
-  .gallery-container .card.pos-left-2,
-  .gallery-container .card.pos-right-2 {
-    opacity: 0;
-  }
-  .gallery-container .content {
-    opacity: 1;
-    width: calc(100% - 1.25rem);
-    margin: 0 0.625rem;
-    transform: translateY(0) scale(1);
-  }
-  .gallery-section-header { padding: 3rem 1.5rem 1.5rem; }
-}
-
-/* ================= FINAL CURSOR FIX ================= */
- 
-/* Buttons & links should work properly */
-a,
-button,
-.nav-cta,
-.cf-btn-submit,
-.cf-btn-back {
-  cursor: pointer !important;
-}
- 
-/* Desktop only custom cursor */
-@media (min-width: 1025px) {
-  body {
-    cursor: none !important;
-  }
-  #cursor,
-  #cursorText {
-    display: block !important;
-  }
-}
- 
-/* Mobile fix - restore default cursor */
-@media (max-width: 1024px) {
-  body {
-    cursor: auto !important;
-  }
-  #cursor,
-  #cursorText {
-    display: none !important;
-  }
+@media (max-width: 600px) {
+  nav { padding: 1rem 1rem; }
+  nav::after { left: 1rem; right: 1rem; }
+  h1 { font-size: clamp(2.5rem, 12vw, 4rem); }
+  .hero { padding: 0 1rem 2rem; }
+  .hero-cta-arrow { display: none; }
+  .team-grid { grid-template-columns: repeat(2, 1fr); }
+  .service-row { grid-template-columns: 50px 1fr 40px; padding: 1.2rem 0; }
+  .section-title { font-size: clamp(1.6rem, 3vw, 2.4rem); }
 }
 </style>
 </head>
 <body>
- 
-<!-- CUSTOM CURSOR -->
 <div id="cursor" class="cursor"></div>
 <div id="cursorText" class="cursor-text"></div>
- 
-<!-- NAV -->
+
 <nav>
-  <a href="index.html" class="nav-logo" data-scroll-target="top">KJS Creative</a>
+  <a href="/" class="nav-logo">KJS Creative</a>
   <button class="hamburger" id="hamburger" aria-label="Toggle menu">
     <span></span>
     <span></span>
@@ -1931,767 +1104,381 @@ button,
   </button>
   <div class="nav-right" id="navRight">
     <ul class="nav-links">
-      <li><a href="index.html#clients" data-scroll-target="clients">Work</a></li>
-      <li><a href="index.html#about" data-scroll-target="about">About</a></li>
-      <li><a href="index.html#services" data-scroll-target="services">Services</a></li>
-      <li><a href="tool/bg-remover.html">Tools</a></li>
-      <li><a href="blog/">Blog</a></li>
+      <li><a href="/#work">Work</a></li>
+      <li><a href="/#about">About</a></li>
+      <li><a href="/#services">Services</a></li>
+      <li><a href="/tools/bg-remover.html">Tools</a></li>
+      <li><a href="/blog/">Blog</a></li>
     </ul>
-   <a href="get-started/" class="nav-cta">Get Started</a>
+    <a href="/get-started/" class="nav-cta">Get Started</a>
   </div>
 </nav>
- 
-<!-- HERO -->
+
 <section class="hero">
-  <div class="hero-bg-text">CREATIVE</div>
- 
   <div class="hero-top">
-    <div class="hero-tag">New Delhi Creative Studio — Est. 2021</div>
-  </div>
- 
-  <div class="hero-scroll-hint">
-    <span class="hero-scroll-line"></span>
-    Scroll
-  </div>
- 
-  <div>
-    <h1 class="hero-title reveal">
-      Building <span class="italic">Brands.</span><br>
-      Designing <span class="accent-word" id="accentWord">Futures.</span>
-    </h1>
-    <div class="hero-bottom reveal d2">
-      <p class="hero-desc">
-        A full-service creative agency crafting brand identities, digital experiences, and content that drives real growth.
-      </p>
-      <a href="index.html#clients" class="hero-cta" data-scroll-target="clients">
-        See our work <span class="hero-cta-arrow">↗</span>
-      </a>
+    <div class="hero-tag">
+      <span>AWARD-WINNING STUDIO</span>
     </div>
   </div>
+
+  <div class="hero-bottom">
+    <div>
+      <h1 class="hero-title">
+        We create <span class="italic">modern</span> experiences<br>for <span class="accent-word">ambitious</span> brands.
+      </h1>
+      <p class="hero-desc">Strategic creative direction paired with next-level design—delivering results that matter.</p>
+      <a href="/get-started/" class="hero-cta">Start a Project <span class="hero-cta-arrow">→</span></a>
+    </div>
+  </div>
+
+  <div class="hero-scroll-hint">
+    SCROLL <span class="hero-scroll-line"></span>
+  </div>
 </section>
- 
-<!-- TICKER -->
+
 <div class="ticker">
-  <div class="ticker-track" id="tickerTrack">
-    <span class="ticker-item">Branding & Identity</span>
-    <span class="ticker-item">UI/UX Design</span>
-    <span class="ticker-item">Shopify & WordPress</span>
-    <span class="ticker-item">Social Media Creatives</span>
-    <span class="ticker-item">E-commerce Management</span>
-    <span class="ticker-item">Performance Marketing</span>
-    <span class="ticker-item">AI Content Production</span>
-    <span class="ticker-item">Branding & Identity</span>
-    <span class="ticker-item">UI/UX Design</span>
-    <span class="ticker-item">Shopify & WordPress</span>
-    <span class="ticker-item">Social Media Creatives</span>
-    <span class="ticker-item">E-commerce Management</span>
-    <span class="ticker-item">Performance Marketing</span>
-    <span class="ticker-item">AI Content Production</span>
+  <div class="ticker-track">
+    <div class="ticker-item">Brand Strategy</div>
+    <div class="ticker-item">Digital Design</div>
+    <div class="ticker-item">Web Development</div>
+    <div class="ticker-item">Motion & Video</div>
+    <div class="ticker-item">Brand Strategy</div>
+    <div class="ticker-item">Digital Design</div>
   </div>
 </div>
- 
-<!-- GALLERY EXPANDING CARDS -->
-<section class="gallery-section" id="clients">
-  <div class="gallery-section-header reveal">
-    <p class="section-eyebrow">Work Showcase</p>
-    <h2 class="section-title">Our <span class="italic">Projects</span></h2>
+
+<section class="work" id="work">
+  <div class="section-header">
+    <div>
+      <div class="section-eyebrow">Featured Work</div>
+      <h2 class="section-title">Recent <span class="italic">Projects</span></h2>
+    </div>
+    <a href="#" class="view-all">View All Work</a>
   </div>
 
-  <div class="gallery-stage">
-    <div class="gallery-carousel">
-      <div class="gallery-container" id="galleryCarousel">
-        <div class="card" tabindex="0" style="background-image: url('1.jpg'); background-color: #1a0a2e;">
+  <div class="work-grid">
+    <div class="work-card">
+      <div class="work-card-inner">
+        <div class="work-card-bg bg-1">
+          <span class="work-placeholder">01</span>
         </div>
-
-        <div class="card" tabindex="0" style="background-image: url('1.png'); background-color: #0a1628;">
+        <div class="work-card-overlay"></div>
+        <div class="work-card-info">
+          <span class="work-card-tag">Branding</span>
+          <h3 class="work-card-name">Premium Brand Identity</h3>
         </div>
-
-        <div class="card" tabindex="0" style="background-image: url('2.png'); background-color: #1a1200;">
+      </div>
+    </div>
+    <div class="work-card">
+      <div class="work-card-inner">
+        <div class="work-card-bg bg-2">
+          <span class="work-placeholder">02</span>
         </div>
-
-        <div class="card" tabindex="0" style="background-image: url('3.png'); background-color: #0a1a0a;">
+        <div class="work-card-overlay"></div>
+        <div class="work-card-info">
+          <span class="work-card-tag">Web Design</span>
+          <h3 class="work-card-name">Digital Experience</h3>
         </div>
-
-        <div class="card" tabindex="0" style="background-image: url('No-Drama-llama.jpg'); background-color: #2b1b22;">
+      </div>
+    </div>
+    <div class="work-card">
+      <div class="work-card-inner">
+        <div class="work-card-bg bg-3">
+          <span class="work-placeholder">03</span>
+        </div>
+        <div class="work-card-overlay"></div>
+        <div class="work-card-info">
+          <span class="work-card-tag">Strategy</span>
+          <h3 class="work-card-name">Market Leadership</h3>
+        </div>
+      </div>
+    </div>
+    <div class="work-card">
+      <div class="work-card-inner">
+        <div class="work-card-bg bg-4">
+          <span class="work-placeholder">04</span>
+        </div>
+        <div class="work-card-overlay"></div>
+        <div class="work-card-info">
+          <span class="work-card-tag">Motion</span>
+          <h3 class="work-card-name">Visual Storytelling</h3>
+        </div>
+      </div>
+    </div>
+    <div class="work-card">
+      <div class="work-card-inner">
+        <div class="work-card-bg bg-5">
+          <span class="work-placeholder">05</span>
+        </div>
+        <div class="work-card-overlay"></div>
+        <div class="work-card-info">
+          <span class="work-card-tag">Development</span>
+          <h3 class="work-card-name">High-Performance Web</h3>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ABOUT -->
 <section class="about" id="about">
   <div class="about-left">
-    <h2 class="about-big-text reveal">
-      We don't just make things look <span class="italic">good.</span> We make them <span class="italic">work.</span>
-    </h2>
-    <div class="about-bottom-row reveal d2">
-      <div class="about-stat">
-        <div class="about-stat-num">50<span>+</span></div>
-        <div class="about-stat-label">Projects Delivered</div>
+    <div>
+      <h2 class="about-big-text">We're a team obsessed with <span class="italic">creativity</span> & results.</h2>
+    </div>
+    <div class="about-bottom-row">
+      <div class="about-stat-item">
+        <div class="about-stat-num">8<span>+</span></div>
+        <div class="about-stat-label">Years of Excellence</div>
       </div>
-      <div class="about-stat">
-        <div class="about-stat-num">3<span>+</span></div>
-        <div class="about-stat-label">Years Active</div>
-      </div>
-      <div class="about-stat">
-        <div class="about-stat-num">25<span>+</span></div>
+      <div class="about-stat-item">
+        <div class="about-stat-num">120<span>+</span></div>
         <div class="about-stat-label">Happy Clients</div>
+      </div>
+      <div class="about-stat-item">
+        <div class="about-stat-num">300<span>+</span></div>
+        <div class="about-stat-label">Projects Delivered</div>
       </div>
     </div>
   </div>
+
   <div class="about-right">
-    <p class="reveal"><strong>At KJS Creative, we believe great design isn't just beautiful — it's strategic.</strong> What started as a passion for visual storytelling has evolved into a full-service creative agency working with startups and growing businesses across industries.</p>
-    <p class="reveal d1">Our approach is collaborative, detail-driven, and modern. We specialize in brand identity, UI/UX design, and social media creatives, focusing not just on aesthetics but on results.</p>
-    <p class="reveal d2">Every project we take on is guided by purpose, simplicity, and a deep understanding of the brand's goals — ensuring every design connects with the right audience and leaves a lasting impression.</p>
-    <a href="get-started/" class="hero-cta reveal d3" style="align-self: flex-start; margin-top: 1rem;">
-      Start a project <span class="hero-cta-arrow">↗</span>
-    </a>
+    <p>We believe great design is more than aesthetics—it's <strong>strategic problem-solving</strong>. Every project is an opportunity to create something meaningful that drives real business impact.</p>
+    <p>From startups to enterprises, we partner with <strong>ambitious brands</strong> ready to break through the noise and establish lasting connections with their audiences.</p>
   </div>
 </section>
- 
-<!-- SERVICES -->
+
 <section class="services" id="services">
   <div class="section-header">
     <div>
-      <p class="section-eyebrow reveal">What We Do</p>
-      <h2 class="section-title reveal d1">Our <span class="italic">Services</span></h2>
+      <div class="section-eyebrow">What We Do</div>
+      <h2 class="section-title">Our <span class="italic">Services</span></h2>
     </div>
   </div>
+
   <div class="services-list">
-    <div class="service-row reveal">
+    <div class="service-row">
       <div class="service-num">01</div>
       <div class="service-name-wrap">
-        <div class="service-name">Branding & Identity</div>
-        <div class="service-sub">Logos, brand systems, visual language, guidelines</div>
+        <h3 class="service-name">Brand Strategy</h3>
+        <p class="service-sub">Positioning, messaging, and visual identity</p>
       </div>
-      <div class="service-arrow">↗</div>
+      <div class="service-arrow">→</div>
     </div>
-    <div class="service-row reveal d1">
+    <div class="service-row">
       <div class="service-num">02</div>
       <div class="service-name-wrap">
-        <div class="service-name">UI/UX Design</div>
-        <div class="service-sub">Web & mobile interfaces, user flows, prototypes</div>
+        <h3 class="service-name">Web Design</h3>
+        <p class="service-sub">Beautiful, functional digital experiences</p>
       </div>
-      <div class="service-arrow">↗</div>
+      <div class="service-arrow">→</div>
     </div>
-    <div class="service-row reveal d2">
+    <div class="service-row">
       <div class="service-num">03</div>
       <div class="service-name-wrap">
-        <div class="service-name">Shopify & WordPress</div>
-        <div class="service-sub">Fast, scalable, conversion-optimised websites</div>
+        <h3 class="service-name">Web Development</h3>
+        <p class="service-sub">Performance-focused, scalable solutions</p>
       </div>
-      <div class="service-arrow">↗</div>
+      <div class="service-arrow">→</div>
     </div>
-    <div class="service-row reveal d3">
+    <div class="service-row">
       <div class="service-num">04</div>
       <div class="service-name-wrap">
-        <div class="service-name">Social Media & Creatives</div>
-        <div class="service-sub">Reels, carousels, motion graphics, video editing</div>
+        <h3 class="service-name">Motion & Animation</h3>
+        <p class="service-sub">Engaging visual narratives and transitions</p>
       </div>
-      <div class="service-arrow">↗</div>
-    </div>
-    <div class="service-row reveal d4">
-      <div class="service-num">05</div>
-      <div class="service-name-wrap">
-        <div class="service-name">E-commerce Management</div>
-        <div class="service-sub">Marketplace strategy, listing, scaling across platforms</div>
-      </div>
-      <div class="service-arrow">↗</div>
-    </div>
-    <div class="service-row reveal d5">
-      <div class="service-num">06</div>
-      <div class="service-name-wrap">
-        <div class="service-name">Ads & Performance Marketing</div>
-        <div class="service-sub">ROI-focused paid campaigns, meta, google, analytics</div>
-      </div>
-      <div class="service-arrow">↗</div>
-    </div>
-    <div class="service-row reveal d6">
-      <div class="service-num">07</div>
-      <div class="service-name-wrap">
-        <div class="service-name">
-          AI Content & Creative Production
-          <span class="service-tag">New</span>
-        </div>
-        <div class="service-sub">Next-gen AI-powered content at scale and speed</div>
-      </div>
-      <div class="service-arrow">↗</div>
+      <div class="service-arrow">→</div>
     </div>
   </div>
 </section>
- 
-<!-- TESTIMONIALS -->
+
 <section class="testimonials">
-  <p class="section-eyebrow reveal">Client Reviews</p>
-  <h2 class="section-title reveal d1">What They <span class="italic">Say</span></h2>
+  <div class="section-header">
+    <div>
+      <div class="section-eyebrow">Client Love</div>
+      <h2 class="section-title" style="color: white;">What they're <span class="italic">saying</span></h2>
+    </div>
+  </div>
+
   <div class="testimonials-grid">
-    <div class="testi-card reveal d1">
-      <p class="testi-quote">"The creativity, quality, and responsiveness were impressive. Looking forward to working together again — the designs exceeded every expectation."</p>
+    <div class="testi-card">
+      <p class="testi-quote">"Working with this team transformed our brand presence. The creativity and execution are unmatched."</p>
       <div class="testi-client">
-        <span>Brand Identity + Social</span>
-        YSS — Your Scent Stories
+        <span>Sarah Chen</span>
+        CEO, Tech Ventures
       </div>
     </div>
-    <div class="testi-card reveal d2">
-      <p class="testi-quote">"Karanjeet excels at turning raw shoots into impactful reels and well-structured carousels. Strong visual sense combined with clarity and storytelling."</p>
+    <div class="testi-card">
+      <p class="testi-quote">"They didn't just deliver a website—they delivered a strategic asset that drives real results."</p>
       <div class="testi-client">
-        <span>Motion + Creatives</span>
-        The Bamboo Co.
+        <span>Marcus Johnson</span>
+        Founder, Luxury Goods Co.
       </div>
     </div>
-    <div class="testi-card reveal d3">
-      <p class="testi-quote">"They clearly understood our requirements and delivered on time. Their branding showed in how they experimented with colors, patterns — neat and cohesive."</p>
+    <div class="testi-card">
+      <p class="testi-quote">"Their attention to detail and understanding of our vision made the entire process smooth and inspiring."</p>
       <div class="testi-client">
-        <span>Branding + Design System</span>
-        The Ardour and Co.
+        <span>Emma Rodriguez</span>
+        Director, Creative Studio
       </div>
     </div>
   </div>
 </section>
- 
-<!-- TEAM -->
+
 <section class="team" id="team">
   <div class="section-header">
     <div>
-      <p class="section-eyebrow reveal">The People</p>
-      <h2 class="section-title reveal d1">Meet the <span class="italic">Team</span></h2>
+      <div class="section-eyebrow">Our People</div>
+      <h2 class="section-title">Meet the <span class="italic">Team</span></h2>
     </div>
   </div>
+
   <div class="team-grid">
-    <div class="team-card reveal d1" data-member="karanjeet">
-      <img src="karanjeet.jpg" alt="Karanjeet Singh" class="team-image">
+    <div class="team-card" onclick="openTeamModal(0)">
+      <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&h=300&fit=crop" alt="Team member 1" class="team-image">
       <div class="team-info">
-        <div class="team-name">Karanjeet Singh</div>
-        <div class="team-role">Founder & CEO</div>
+        <h4 class="team-name">Alex Rivera</h4>
+        <p class="team-role">Creative Director</p>
       </div>
     </div>
-    <div class="team-card reveal d2" data-member="dilpreet">
-      <img src="dilpreet.jpg" alt="CA Dilpreet Singh" class="team-image">
+    <div class="team-card" onclick="openTeamModal(1)">
+      <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop" alt="Team member 2" class="team-image">
       <div class="team-info">
-        <div class="team-name">CA Dilpreet Singh</div>
-        <div class="team-role">Co-Founder, Finance</div>
+        <h4 class="team-name">Jordan Lee</h4>
+        <p class="team-role">Lead Designer</p>
       </div>
     </div>
-    <div class="team-card reveal d3" data-member="jaskirat">
-      <img src="jaskirat.jpg" alt="Jaskirat Kaur" class="team-image">
+    <div class="team-card" onclick="openTeamModal(2)">
+      <img src="https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?w=300&h=300&fit=crop" alt="Team member 3" class="team-image">
       <div class="team-info">
-        <div class="team-name">Jaskirat Kaur</div>
-        <div class="team-role">Creative Director</div>
+        <h4 class="team-name">Casey Wong</h4>
+        <p class="team-role">Full Stack Dev</p>
       </div>
     </div>
-    <div class="team-card reveal d4" data-member="juhi">
-      <img src="juhi.jpg" alt="Juhi" class="team-image">
+    <div class="team-card" onclick="openTeamModal(3)">
+      <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=300&fit=crop" alt="Team member 4" class="team-image">
       <div class="team-info">
-        <div class="team-name">Juhi</div>
-        <div class="team-role">Performance Marketing</div>
+        <h4 class="team-name">Morgan Blake</h4>
+        <p class="team-role">Strategist</p>
       </div>
     </div>
-    <div class="team-card reveal d5" data-member="gaurav">
-      <img src="gaurav.jpg" alt="Gaurav Kumar" class="team-image">
+    <div class="team-card" onclick="openTeamModal(4)">
+      <img src="https://images.unsplash.com/photo-1517070213202-1d1a9e1e04ef?w=300&h=300&fit=crop" alt="Team member 5" class="team-image">
       <div class="team-info">
-        <div class="team-name">Gaurav Kumar</div>
-        <div class="team-role">Web Developer</div>
+        <h4 class="team-name">Taylor Park</h4>
+        <p class="team-role">Motion Designer</p>
       </div>
     </div>
-    <div class="team-card reveal d6" data-member="neetu">
-      <img src="neetu.jpg" alt="Neetu" class="team-image">
+    <div class="team-card" onclick="openTeamModal(5)">
+      <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&h=300&fit=crop" alt="Team member 6" class="team-image">
       <div class="team-info">
-        <div class="team-name">Neetu</div>
-        <div class="team-role">Brand Storyteller</div>
+        <h4 class="team-name">Riley Adams</h4>
+        <p class="team-role">Brand Strategist</p>
       </div>
     </div>
   </div>
 </section>
- 
-<!-- TEAM MEMBER MODAL -->
-<div id="teamModal" class="team-modal">
-  <div class="team-modal-overlay"></div>
+
+<div class="team-modal" id="teamModal">
+  <div class="team-modal-overlay" onclick="closeTeamModal()"></div>
   <div class="team-modal-content">
-    <button class="team-modal-close">&times;</button>
+    <button class="team-modal-close" onclick="closeTeamModal()">✕</button>
     <div class="team-modal-inner">
-      <img id="modalImage" src="" alt="" class="team-modal-image">
-      <div class="team-modal-text">
-        <h2 id="modalName" class="team-modal-title"></h2>
-        <p id="modalRole" class="team-modal-role"></p>
-        <p id="modalAbout" class="team-modal-about"></p>
+      <img src="" alt="" class="team-modal-image" id="modalImage">
+      <div class="team-modal-content-text">
+        <h3 id="modalName">Name</h3>
+        <p class="role" id="modalRole">Role</p>
+        <p id="modalBio">Bio content here</p>
+        <ul class="team-socials">
+          <li><a href="#" title="LinkedIn">in</a></li>
+          <li><a href="#" title="Twitter">tw</a></li>
+        </ul>
       </div>
     </div>
   </div>
 </div>
- 
-<!-- CTA + CONTACT FORM -->
-<section class="cta" id="contact">
-  <div class="cta-left">
-    <p class="section-eyebrow reveal">Let's Work Together</p>
-    <h2 class="cta-title reveal d1">
-      Got an idea?<br><span class="italic">Let's build it.</span>
-    </h2>
-    <div class="contact-details reveal d2">
-      <div class="contact-item">
-        <span class="contact-label">Email</span>
-        <a href="mailto:talk@kjscreative.in" class="contact-val">talk@kjscreative.in</a>
-      </div>
-      <div class="contact-item">
-        <span class="contact-label">Phone</span>
-        <a href="tel:+918882534258" class="contact-val">+91 88825 34258</a>
-      </div>
-      <div class="contact-item">
-        <span class="contact-label">Location</span>
-        <span class="contact-val">Tilak Nagar, New Delhi</span>
-      </div>
-      <div class="contact-item">
-        <span class="contact-label">Instagram</span>
-        <a href="https://www.instagram.com/kjscreative.in/" target="_blank" class="contact-val">@kjscreative.in</a>
-      </div>
-    </div>
-  </div>
- 
-  <div class="reveal d2">
-    <!-- CARD FORM -->
-    <form class="cf-card" id="contactForm" action="https://formspree.io/f/xbdppblj" method="POST">
-      <h3 class="cf-title">Contact Form</h3>
-      <p class="cf-sub">Ready to build something great? Tell us about your project and we'll get back within 24 hours.</p>
- 
-      <div class="cf-row">
-        <div class="cf-field">
-          <input type="text" name="fullname" id="fname" placeholder="Full Name" required autocomplete="off">
-          <span class="cf-icon">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          </span>
-        </div>
-        <div class="cf-field">
-          <input type="email" name="email" id="email" placeholder="Email Address" required autocomplete="off">
-          <span class="cf-icon">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
-          </span>
-        </div>
-      </div>
- 
-      <div class="cf-field cf-field-full">
-        <select name="service" id="service" required>
-          <option value="" disabled selected>Choose Subject</option>
-          <option>Branding &amp; Identity</option>
-          <option>UI/UX Design</option>
-          <option>Shopify &amp; WordPress</option>
-          <option>Social Media &amp; Creatives</option>
-          <option>E-commerce Management</option>
-          <option>Ads &amp; Performance Marketing</option>
-          <option>AI Content &amp; Creative Production</option>
-          <option>Multiple Services</option>
-        </select>
-        <span class="cf-icon cf-select-arrow">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-        </span>
-      </div>
- 
-      <div class="cf-field cf-field-full cf-textarea-wrap">
-        <textarea name="message" id="message" placeholder="Your Message" rows="4" required></textarea>
-      </div>
- 
-      <div class="cf-buttons">
-        <button class="cf-btn-submit" id="submitBtn" type="submit">Submit Now</button>
-      </div>
-    </form>
- 
-    <!-- SUCCESS STATE -->
-    <div class="form-success" id="formSuccess">
-      <div class="success-icon">✓</div>
-      <div class="success-title">Message Sent!</div>
-      <div class="success-sub">Thank you for reaching out. We'll get back to you within 24 hours.</div>
-    </div>
-  </div>
-</section>
- 
-<!-- FOOTER -->
+
 <footer>
-  <a href="index.html" class="footer-logo" data-scroll-target="top">KJS Creative</a>
-  <p class="footer-copy">© 2026 KJS Creative. All rights reserved.</p>
-  <ul class="footer-socials">
-    <li><a href="https://www.instagram.com/kjscreative.in/" target="_blank">Instagram</a></li>
-    <li><a href="https://www.facebook.com/profile.php?id=100092027042143" target="_blank">Facebook</a></li>
-    <li><a href="index.html">Privacy</a></li>
-  </ul>
+  <p>&copy; 2026 KJS Creative. All rights reserved.</p>
 </footer>
- 
+
 <script>
-// CUSTOM CURSOR
-const cursor = document.getElementById('cursor');
-const cursorText = document.getElementById('cursorText');
- 
-if (cursor && cursorText) {
-  let cx = 0, cy = 0;
-  let isDesktop = window.innerWidth > 1024;
- 
-  // Ensure cursor is visible on desktop
-  function updateCursorVisibility() {
-    isDesktop = window.innerWidth > 1024;
-    if (isDesktop) {
-      cursor.style.display = 'block';
-      cursorText.style.display = 'block';
-    } else {
-      cursor.style.display = 'none';
-      cursorText.style.display = 'none';
-    }
-  }
- 
-  updateCursorVisibility();
-  window.addEventListener('resize', updateCursorVisibility);
- 
-  // Smooth cursor movement using requestAnimationFrame
-  document.addEventListener('mousemove', e => {
-    if (isDesktop) {
-      cx = e.clientX;
-      cy = e.clientY;
-      requestAnimationFrame(() => {
-        cursor.style.left = cx + 'px';
-        cursor.style.top = cy + 'px';
-        cursorText.style.left = cx + 'px';
-        cursorText.style.top = cy + 'px';
-      });
-    }
+// Cursor
+const cursor = document.querySelector('.cursor');
+const cursorText = document.querySelector('.cursor-text');
+const hoverTargets = document.querySelectorAll('a, button, .team-card');
+
+if (cursor) {
+  window.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+    cursorText.style.left = e.clientX + 'px';
+    cursorText.style.top = e.clientY + 'px';
   });
- 
-  // Work cards and service rows
-  document.querySelectorAll('.work-card, .service-row, .team-card').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      cursor.classList.add('hovered');
-      cursorText.textContent = 'VIEW';
-      cursorText.style.opacity = '1';
-    });
-    el.addEventListener('mouseleave', () => {
-      cursor.classList.remove('hovered');
-      cursorText.style.opacity = '0';
-    });
-  });
- 
-  // Cursor interactions with links and buttons
-  document.querySelectorAll('a, button').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      if (!el.classList.contains('work-card') && !el.classList.contains('service-row')) {
-        cursor.style.transform = 'translate(-50%, -50%) scale(0.7)';
-      }
-    });
-    el.addEventListener('mouseleave', () => {
-      cursor.style.transform = 'translate(-50%, -50%)';
-    });
+
+  hoverTargets.forEach(target => {
+    target.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
+    target.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
   });
 }
- 
- 
-// HAMBURGER MENU
+
+// Navigation
+const nav = document.querySelector('nav');
 const hamburger = document.getElementById('hamburger');
 const navRight = document.getElementById('navRight');
- 
-hamburger.addEventListener('click', () => {
-  hamburger.classList.toggle('active');
-  navRight.classList.toggle('active');
-});
- 
-// Close menu when a link is clicked
-document.querySelectorAll('.nav-links a, .nav-cta').forEach(link => {
-  link.addEventListener('click', () => {
-    hamburger.classList.remove('active');
-    navRight.classList.remove('active');
+
+if (hamburger) {
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    navRight.classList.toggle('active');
   });
-});
- 
-// Close menu when clicking outside
-document.addEventListener('click', (e) => {
-  if (!e.target.closest('nav')) {
-    hamburger.classList.remove('active');
-    navRight.classList.remove('active');
-  }
-});
 
-// CLEAN SCROLL LINKS
-document.querySelectorAll('[data-scroll-target]').forEach(link => {
-  link.addEventListener('click', (e) => {
-    const targetId = link.getAttribute('data-scroll-target');
-    const target = targetId === 'top' ? document.body : document.getElementById(targetId);
-
-    if (!target) {
-      return;
-    }
-
-    e.preventDefault();
-
-    if (targetId === 'top') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-
-    if (window.location.hash) {
-      history.replaceState(null, '', window.location.pathname);
-    }
-  });
-});
- 
-// SCROLL REVEAL
-const reveals = document.querySelectorAll('.reveal');
-const obs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('visible');
-      obs.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.1 });
-reveals.forEach(el => obs.observe(el));
- 
-// Trigger hero immediately
-setTimeout(() => {
-  document.querySelectorAll('.hero .reveal').forEach(el => el.classList.add('visible'));
-  const aw = document.getElementById('accentWord');
-  if (aw) { setTimeout(() => aw.classList.add('animated'), 700); }
-}, 80);
- 
-// TEAM MODAL
-const teamModal = document.getElementById('teamModal');
-const modalClose = document.querySelector('.team-modal-close');
-const modalOverlay = document.querySelector('.team-modal-overlay');
- 
-const teamData = {
-  karanjeet: {
-    name: 'Karanjeet Singh',
-    role: 'Founder & CEO',
-    about: 'Karanjeet is a visionary creative leader with 5+ years of experience in brand identity and digital design. He founded KJS Creative with a mission to transform ideas into impactful visual experiences. His strategic approach combines creativity with business acumen, driving real results for clients across industries.'
-  },
-  dilpreet: {
-    name: 'CA Dilpreet Singh',
-    role: 'Co-Founder, Finance',
-    about: 'A qualified Chartered Accountant with deep expertise in financial management and business strategy. Dilpreet ensures every project delivers exceptional ROI while maintaining operational excellence. His analytical mindset balances creativity with fiscal responsibility.'
-  },
-  jaskirat: {
-    name: 'Jaskirat Kaur',
-    role: 'Creative Director',
-    about: 'Jaskirat is the creative force behind our most impactful campaigns. With a keen eye for design trends and deep understanding of brand psychology, she leads our design team to create visually stunning and strategically sound solutions. Her portfolio spans branding, UI/UX, and digital experiences.'
-  },
-  juhi: {
-    name: 'Juhi',
-    role: 'Performance Marketing',
-    about: 'Juhi specializes in data-driven marketing strategies that maximize campaign performance and ROI. With expertise in Meta ads, Google Ads, and conversion optimization, she ensures every rupee spent delivers measurable results. Her analytical approach turns insights into growth.'
-  },
-  gaurav: {
-    name: 'Gaurav Kumar',
-    role: 'Web Developer',
-    about: 'Gaurav brings designs to life with clean, efficient, and scalable code. With expertise in modern web technologies and performance optimization, he builds fast, user-friendly websites that convert. His technical excellence ensures seamless digital experiences across all devices.'
-  },
-  neetu: {
-    name: 'Neetu',
-    role: 'Brand Storyteller',
-    about: 'Neetu crafts compelling narratives that resonate with audiences and build lasting brand connections. Her expertise in content strategy, copywriting, and storytelling transforms complex ideas into engaging stories that drive engagement and loyalty.'
-  }
-};
- 
-// Open modal on team card click
-document.querySelectorAll('.team-card').forEach(card => {
-  card.style.cursor = 'pointer';
-  card.addEventListener('click', () => {
-    const member = card.getAttribute('data-member');
-    const data = teamData[member];
- 
-    if (data) {
-      document.getElementById('modalImage').src = `/${member}.jpg`;
-      document.getElementById('modalImage').alt = data.name;
-      document.getElementById('modalName').textContent = data.name;
-      document.getElementById('modalRole').textContent = data.role;
-      document.getElementById('modalAbout').textContent = data.about;
-      teamModal.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-  });
-});
- 
-// Close modal
-function closeModal() {
-  teamModal.classList.remove('active');
-  document.body.style.overflow = 'auto';
-}
- 
-modalClose.addEventListener('click', closeModal);
-modalOverlay.addEventListener('click', closeModal);
- 
-// Close on Escape key
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && teamModal.classList.contains('active')) {
-    closeModal();
-  }
-});
- 
-// CONTACT FORM SUBMIT
-// CONTACT FORM HANDLER
-const contactForm = document.getElementById('contactForm');
-const submitBtn = document.getElementById('submitBtn');
- 
-contactForm.addEventListener('submit', function(e) {
-  e.preventDefault();
- 
-  const fname = document.getElementById('fname').value.trim();
-  const email = document.getElementById('email').value.trim();
-  const message = document.getElementById('message').value.trim();
- 
-  if (!fname || !email || !message) {
-    submitBtn.textContent = 'Fill required fields ↗';
-    submitBtn.style.background = '#e74c3c';
-    setTimeout(() => {
-      submitBtn.textContent = 'Submit Now';
-      submitBtn.style.background = '';
-    }, 2000);
-    return;
-  }
- 
-  // Show sending state
-  submitBtn.textContent = 'Sending...';
-  submitBtn.style.opacity = '0.7';
-  submitBtn.disabled = true;
- 
-  // Send form data to Formspree
-  fetch(contactForm.action, {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      fullname: fname,
-      email: email,
-      service: document.getElementById('service').value,
-      message: message
-    })
-  })
-  .then(response => {
-    if (response.ok) {
-      // Show success message
-      contactForm.style.display = 'none';
-      document.getElementById('formSuccess').classList.add('show');
- 
-      // Reset after success
-      setTimeout(() => {
-        contactForm.reset();
-        contactForm.style.display = 'flex';
-        document.getElementById('formSuccess').classList.remove('show');
-        submitBtn.textContent = 'Submit Now';
-        submitBtn.style.opacity = '1';
-        submitBtn.disabled = false;
-      }, 5000);
-    } else {
-      throw new Error('Form submission failed');
-    }
-  })
-  .catch(error => {
-    submitBtn.textContent = 'Error! Try again';
-    submitBtn.style.background = '#e74c3c';
-    setTimeout(() => {
-      submitBtn.textContent = 'Submit Now';
-      submitBtn.style.background = '';
-      submitBtn.style.opacity = '1';
-      submitBtn.disabled = false;
-    }, 2000);
-    console.error('Error:', error);
-  });
-});
- 
-// NAVBAR background on scroll
-const nav = document.querySelector('nav');
- 
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 50) {
-    nav.classList.add('scrolled');
-  } else {
-    nav.classList.remove('scrolled');
-  }
-});
- 
-// COUNTER ANIMATION
-let counterStarted = false;
-const counters = document.querySelectorAll('.about-stat-num');
- 
-function animateCounters() {
-  counters.forEach(counter => {
-    const target = parseInt(counter.textContent);
-    const suffix = counter.querySelector('span')?.textContent || '';
-    let current = 0;
-    const speed = target / 60;
-    counter.classList.add('counting');
- 
-    const updateCounter = () => {
-      if (current < target) {
-        current += speed;
-        counter.innerHTML = Math.floor(current) + (suffix ? '<span>' + suffix + '</span>' : '');
-        requestAnimationFrame(updateCounter);
-      } else {
-        counter.innerHTML = target + (suffix ? '<span>' + suffix + '</span>' : '');
-      }
-    };
- 
-    updateCounter();
-  });
-}
- 
-window.addEventListener('scroll', () => {
-  if (!counterStarted) {
-    const statsSection = document.querySelector('.about-bottom-row');
-    if (statsSection) {
-      const rect = statsSection.getBoundingClientRect();
-      if (rect.top < window.innerHeight * 0.8) {
-        animateCounters();
-        counterStarted = true;
-      }
-    }
-  }
-});
-
-// PROJECT GALLERY AUTO CAROUSEL
-const galleryCarousel = document.getElementById('galleryCarousel');
-
-if (galleryCarousel) {
-  const galleryCards = Array.from(galleryCarousel.querySelectorAll('.card'));
-  const fourCardMode = galleryCards.length === 4;
-  const positions = fourCardMode
-    ? ['pos-left-1', 'pos-center', 'pos-right-1', 'pos-right-2']
-    : ['pos-left-2', 'pos-left-1', 'pos-center', 'pos-right-1', 'pos-right-2'];
-  const minOffset = fourCardMode ? -1 : -2;
-  const maxOffset = 2;
-  let activeIndex = fourCardMode ? 1 : 2;
-  let autoRotate;
-
-  const renderGallery = () => {
-    galleryCards.forEach((card, index) => {
-      card.classList.remove('is-visible', 'pos-left-2', 'pos-left-1', 'pos-center', 'pos-right-1', 'pos-right-2', 'pos-far');
-
-      let offset = index - activeIndex;
-      const total = galleryCards.length;
-
-      if (offset > total / 2) offset -= total;
-      if (offset < -total / 2) offset += total;
-
-      if (offset >= minOffset && offset <= maxOffset) {
-        card.classList.add('is-visible', positions[offset - minOffset]);
-      } else {
-        card.classList.add('pos-far');
-      }
+  navRight.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('active');
+      navRight.classList.remove('active');
     });
-  };
-
-  const startAutoRotate = () => {
-    clearInterval(autoRotate);
-    autoRotate = setInterval(() => {
-      activeIndex = (activeIndex + 1) % galleryCards.length;
-      renderGallery();
-    }, window.innerWidth <= 768 ? 1800 : 2200);
-  };
-
-  window.addEventListener('resize', startAutoRotate);
-  renderGallery();
-  startAutoRotate();
+  });
 }
 
-</script>
-<script>
-(function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="fagsrkLlmJpQHpQxtHP3O";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
+window.addEventListener('scroll', () => {
+  if (!nav) return;
+  nav.classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// Hero animations
+document.addEventListener('DOMContentLoaded', () => {
+  const accentWord = document.querySelector('.accent-word');
+  if (accentWord) {
+    accentWord.classList.add('animated');
+  }
+});
+
+// Team Modal
+const teamData = [
+  { name: 'Alex Rivera', role: 'Creative Director', bio: 'Visionary leader with 10+ years of experience in brand strategy and creative direction.' },
+  { name: 'Jordan Lee', role: 'Lead Designer', bio: 'Award-winning designer passionate about creating beautiful and functional experiences.' },
+  { name: 'Casey Wong', role: 'Full Stack Developer', bio: 'Tech-savvy developer building scalable solutions with cutting-edge technologies.' },
+  { name: 'Morgan Blake', role: 'Brand Strategist', bio: 'Strategic thinker focused on positioning brands for market success.' },
+  { name: 'Taylor Park', role: 'Motion Designer', bio: 'Creative animator bringing ideas to life through engaging motion design.' },
+  { name: 'Riley Adams', role: 'Brand Strategist', bio: 'Experienced brand strategist dedicated to building meaningful brand narratives.' }
+];
+
+function openTeamModal(index) {
+  const modal = document.getElementById('teamModal');
+  const member = teamData[index];
+  document.getElementById('modalName').textContent = member.name;
+  document.getElementById('modalRole').textContent = member.role;
+  document.getElementById('modalBio').textContent = member.bio;
+  modal.classList.add('active');
+}
+
+function closeTeamModal() {
+  document.getElementById('teamModal').classList.remove('active');
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeTeamModal();
+});
 </script>
 </body>
 </html>
- 
