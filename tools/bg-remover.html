@@ -283,274 +283,361 @@ h1 em {
 
 .hero-stats {
   display: flex;
-  gap: 2.5rem;
-  flex-wrap: wrap;
+  gap: 3.5rem;
+  margin-top: 3rem;
 }
-.stat-num {
-  font-size: 1.45rem;
-  font-weight: 600;
-  color: var(--black);
-  letter-spacing: -0.03em;
-}
-.stat-label { font-size: 0.72rem; color: var(--gray); font-weight: 400; letter-spacing: 0.05em; text-transform: uppercase; }
 
-.upload-zone {
-  background: rgba(255,255,255,0.82);
-  border: 1px solid var(--gray-light);
-  border-radius: 8px;
-  padding: 3.25rem 2rem;
-  text-align: center;
-  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s, background 0.25s;
-  position: relative;
-  overflow: hidden;
-  min-height: 360px;
+.stat-item {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  gap: 0.3rem;
 }
-.upload-zone:hover, .upload-zone.drag-over {
+
+.stat-num {
+  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  font-weight: 600;
+  color: var(--black);
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+
+.upload-zone {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 3.5rem 2rem;
+  text-align: center;
+  transition: all 0.3s ease, border-color 0.3s, background 0.3s;
+  position: relative;
+}
+
+.upload-zone.drag-over {
   border-color: var(--accent);
-  box-shadow: 0 16px 48px rgba(var(--accent-rgb), 0.15);
-  transform: translateY(-6px);
-  background: var(--white);
+  background: rgba(var(--accent-rgb), 0.03);
 }
+
 .upload-icon {
-  width: 58px;
-  height: 58px;
-  background: var(--black);
-  border-radius: 4px;
-  margin: 0 auto 1.25rem;
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: var(--white);
+  border-radius: 8px;
+  border: 1px solid var(--border);
 }
-.upload-icon svg { width: 28px; height: 28px; stroke: var(--white); }
-.upload-title {
-  font-size: 1rem;
-  font-weight: 600;
+
+.upload-icon svg {
+  width: 24px;
+  height: 24px;
+  stroke: var(--black);
   color: var(--black);
-  margin-bottom: 0.4rem;
-  letter-spacing: -0.01em;
 }
-.upload-hint { font-size: 0.78rem; color: var(--gray); letter-spacing: 0.04em; text-transform: uppercase; }
-.upload-btn, .btn-primary-sm {
-  margin-top: 1.25rem;
+
+.upload-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--black);
+}
+
+.upload-hint {
+  font-size: 0.85rem;
+  color: var(--gray);
+  margin-bottom: 1.5rem;
+}
+
+.upload-btn {
   background: var(--black);
   color: var(--white);
   border: 0;
   padding: 0.7rem 1.5rem;
-  border-radius: 4px;
-  font-family: var(--sans);
+  border-radius: 6px;
+  font-size: 0.85rem;
   font-weight: 600;
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   transition: background 0.2s, transform 0.2s;
   cursor: pointer;
 }
-.upload-btn:hover, .btn-primary-sm:hover { background: var(--accent); transform: translateY(-1px); }
+
+.upload-btn:hover {
+  background: var(--accent);
+  transform: translateY(-1px);
+}
+
 #fileInput { display: none; }
 
-.tool-section {
-  max-width: 1180px;
-  margin: 0 auto;
-  padding: 5rem 3rem 5rem;
-}
-.result-area {
-  display: none;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.25rem;
-  margin-top: 2rem;
-}
-.result-area.visible { display: grid; }
-.result-card, .processing-bar, .feat-card {
-  background: var(--white);
-  border: 1px solid var(--gray-light);
-  border-radius: 8px;
-  overflow: hidden;
-  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
-}
-.result-card:hover, .feat-card:hover {
-  border-color: var(--accent);
-  box-shadow: 0 16px 48px rgba(var(--accent-rgb), 0.12);
-  transform: translateY(-4px);
-}
-.result-card-header {
-  padding: 0.95rem 1.25rem;
-  border-bottom: 1px solid var(--gray-light);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.result-card-label {
-  font-size: 0.7rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: var(--gray);
-}
-.result-img-wrap {
-  min-height: 300px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.error-msg {
+  background: #fee;
+  border: 1px solid #fcc;
+  color: #c33;
   padding: 1rem;
-  background: repeating-conic-gradient(#f0efeb 0% 25%, #ffffff 0% 50%) 0 0 / 20px 20px;
+  border-radius: 8px;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  display: none;
 }
-.result-img-wrap img { max-width: 100%; max-height: 280px; object-fit: contain; border-radius: 8px; }
-.result-actions { padding: 1rem 1.25rem; display: flex; gap: 0.75rem; }
-.btn-outline {
-  flex: 1;
-  background: transparent;
-  border: 1px solid rgba(13,13,13,0.2);
-  color: var(--black);
-  padding: 0.65rem 1rem;
-  border-radius: 4px;
-  font-family: var(--sans);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  transition: border-color 0.2s, color 0.2s, background 0.2s;
-  cursor: pointer;
-}
-.btn-outline:hover { border-color: var(--accent); color: var(--accent); background: rgba(var(--accent-rgb),0.04); }
-.btn-primary-sm { flex: 1; margin-top: 0; }
+
+.error-msg.visible { display: block; }
 
 .processing-bar {
   display: none;
-  margin: 0 0 2rem;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
   padding: 2rem;
-  text-align: center;
+  margin-bottom: 2rem;
+  position: relative;
 }
+
 .processing-bar.visible { display: block; }
+
 .bar-track {
-  background: var(--off-white);
-  border-radius: 100px;
-  height: 4px;
-  margin: 1rem 0 0.75rem;
+  width: 100%;
+  height: 6px;
+  background: var(--gray-light);
+  border-radius: 3px;
   overflow: hidden;
+  margin: 1rem 0;
 }
+
 .bar-fill {
   height: 100%;
-  background: var(--accent);
-  border-radius: 100px;
+  background: linear-gradient(90deg, var(--accent), #ff6b47);
   width: 0%;
   transition: width 0.3s ease;
+  border-radius: 3px;
 }
-.bar-label { font-size: 0.78rem; color: var(--gray); letter-spacing: 0.04em; text-transform: uppercase; }
 
-.features-row {
-  max-width: 1180px;
-  margin: 0 auto;
-  padding: 0 3rem 5rem;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
+.bar-label {
+  font-size: 0.85rem;
+  color: var(--gray);
+  margin-top: 0.5rem;
 }
-.feat-card { padding: 1.5rem; }
-.feat-icon {
-  width: 42px;
-  height: 42px;
-  background: var(--black);
-  border-radius: 4px;
+
+.tool-section {
+  min-height: 60vh;
+  padding: 4rem 3rem;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 1rem;
+  flex-direction: column;
+  gap: 2rem;
 }
-.feat-icon svg { width: 20px; height: 20px; stroke: var(--white); }
-.feat-title { font-size: 0.9rem; font-weight: 600; color: var(--black); margin-bottom: 0.4rem; letter-spacing: -0.01em; }
-.feat-desc { font-size: 0.8rem; color: var(--gray); line-height: 1.6; }
 
-.error-msg {
-  background: rgba(231,76,60,0.08);
-  border: 1px solid rgba(231,76,60,0.25);
-  color: #c0392b;
-  border-radius: 8px;
-  padding: 0.875rem 1.25rem;
-  font-size: 0.875rem;
-  margin-top: 1rem;
+.result-area {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
   display: none;
 }
-.error-msg.visible { display: block; }
 
-footer {
-  padding: 2rem 3rem;
+.result-area.visible { display: grid; }
+
+.result-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.result-card:hover {
+  border-color: var(--border2);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+}
+
+.result-card-header {
+  padding: 1rem 1.5rem;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: var(--off-white);
 }
-.footer-logo {
+
+.result-card-label {
   font-size: 0.85rem;
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: var(--black);
-  text-decoration: none;
-}
-.footer-copy {
-  font-size: 0.72rem;
   color: var(--gray);
 }
-.footer-socials {
+
+.result-img-wrap {
+  width: 100%;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, var(--accent) 0%, #ff6b47 100%);
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1;
   display: flex;
-  gap: 1.5rem;
-  list-style: none;
+  align-items: center;
+  justify-content: center;
 }
-.footer-socials a {
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+
+.result-card:nth-child(2) .result-img-wrap {
+  background: linear-gradient(135deg, rgba(var(--accent-rgb),0.08) 0%, rgba(var(--accent-rgb),0.04) 100%);
+}
+
+.result-img-wrap img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.result-actions {
+  padding: 1rem 1.5rem;
+  background: var(--white);
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 1rem;
+}
+
+.btn-outline, .btn-primary-sm {
+  flex: 1;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--white);
   color: var(--black);
-  text-decoration: none;
-  opacity: 0.5;
-  transition: opacity .2s;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.2s;
 }
+
+.btn-primary-sm {
+  background: var(--black);
+  color: var(--white);
+  border-color: var(--black);
+}
+
+.btn-primary-sm:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.btn-outline:hover {
+  border-color: var(--black);
+  background: rgba(0,0,0,0.02);
+}
+
+.features-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  padding: 4rem 3rem;
+  background: var(--surface2);
+  border-top: 1px solid var(--border);
+}
+
+.feat-card {
+  padding: 2rem;
+  background: var(--white);
+  border-radius: 8px;
+}
+
+.feat-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(var(--accent-rgb), 0.1);
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.feat-icon svg {
+  width: 24px;
+  height: 24px;
+  stroke: var(--accent);
+}
+
+.feat-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--black);
+}
+
+.feat-desc {
+  font-size: 0.9rem;
+  color: var(--gray);
+  line-height: 1.6;
+}
+
+footer {
+  padding: 2rem 3rem;
+  background: var(--black);
+  color: var(--white);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.footer-logo {
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  color: var(--white);
+  letter-spacing: 0.05em;
+}
+
+.footer-copy {
+  font-size: 0.85rem;
+  opacity: 0.6;
+}
+
+.footer-socials {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+
+.footer-socials a {
+  font-size: 0.85rem;
+  color: var(--white);
+  text-decoration: none;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+
 .footer-socials a:hover { opacity: 1; }
 
-@media (max-width: 900px) {
-  nav { padding: 1.25rem 1.25rem; }
-  nav::after { left: 1.25rem; right: 1.25rem; }
+@media (max-width: 768px) {
+  nav { padding: 1.5rem; }
+  nav::after { left: 1.5rem; right: 1.5rem; }
+  .hero { grid-template-columns: 1fr; padding: 6rem 1.5rem 2rem; }
+  .hero-stats { flex-direction: column; gap: 2rem; }
+  .nav-links { display: none; }
   .hamburger { display: flex; }
-  .nav-right {
-    position: fixed;
-    top: 56px; left: 0; right: 0;
-    flex-direction: column;
-    gap: 0;
-    background: var(--white);
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    z-index: 99;
-  }
-  .nav-right.active { max-height: 320px; }
-  .nav-links { flex-direction: column; gap: 0; width: 100%; }
-  .nav-links li { border-bottom: 1px solid var(--gray-light); }
-  .nav-links a { display: block; padding: 1rem 1.5rem; opacity: 0.8; font-size: 0.9rem; }
-  .nav-cta { margin: 1rem; text-align: center; width: calc(100% - 2rem); display: block; }
-  .hero { grid-template-columns: 1fr; gap: 2rem; padding: 7rem 1.25rem 3rem; align-items: start; }
-  h1 { font-size: clamp(3.5rem, 16vw, 5.5rem); }
-  .tool-section, .features-row, footer { padding-left: 1.25rem; padding-right: 1.25rem; }
-  .result-area, .features-row { grid-template-columns: 1fr; }
-  footer { flex-direction: column; gap: 1rem; text-align: center; }
-  .footer-socials { justify-content: center; }
+  .tool-section { padding: 2rem 1.5rem; }
+  .features-row { padding: 2rem 1.5rem; }
+  footer { padding: 1.5rem; flex-direction: column; text-align: center; }
 }
 </style>
 </head>
 <body>
-<div id="cursor" class="cursor"></div>
-<div id="cursorText" class="cursor-text"></div>
+
+<div class="cursor"></div>
+<div class="cursor-text"></div>
 
 <nav>
   <a href="/index.html" class="nav-logo">KJS Creative</a>
-  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-    <span></span>
-    <span></span>
-    <span></span>
+  <button class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
   </button>
   <div class="nav-right" id="navRight">
     <ul class="nav-links">
@@ -568,19 +655,19 @@ footer {
   <div>
     <div class="hero-label">AI-Powered Tool</div>
     <h1>Remove<br>Background<br><em>Instantly.</em></h1>
-    <p class="hero-sub">Professional-grade background removal powered by advanced AI. Fast, accurate, and trusted by designers worldwide.</p>
+    <p class="hero-sub">Professional-grade background removal powered by advanced AI. Fast, accurate, and powered by cutting-edge machine learning.</p>
     <div class="hero-stats">
       <div class="stat-item">
         <div class="stat-num">2-5s</div>
-        <div class="stat-label">Processing</div>
+        <div class="stat-label">Processing Time</div>
       </div>
       <div class="stat-item">
         <div class="stat-num">4K</div>
-        <div class="stat-label">Max resolution</div>
+        <div class="stat-label">Max Resolution</div>
       </div>
       <div class="stat-item">
         <div class="stat-num">100%</div>
-        <div class="stat-label">Accurate</div>
+        <div class="stat-label">Client-Side</div>
       </div>
     </div>
   </div>
@@ -594,7 +681,7 @@ footer {
         </svg>
       </div>
       <p class="upload-title">Drop your image here</p>
-      <p class="upload-hint">PNG, JPG, WEBP — up to 12MB</p>
+      <p class="upload-hint">PNG, JPG, WEBP — up to 10MB</p>
       <button class="upload-btn" onclick="document.getElementById('fileInput').click()">Choose Image</button>
       <input type="file" id="fileInput" accept="image/*">
     </div>
@@ -606,7 +693,7 @@ footer {
   <div class="processing-bar" id="processingBar">
     <p style="font-weight:600; color: var(--text); font-size:0.95rem;">Removing background…</p>
     <div class="bar-track"><div class="bar-fill" id="barFill"></div></div>
-    <p class="bar-label" id="barLabel">Sending to AI engine</p>
+    <p class="bar-label" id="barLabel">Loading AI model…</p>
   </div>
 
   <div class="result-area" id="resultArea">
@@ -663,7 +750,7 @@ footer {
       </svg>
     </div>
     <div class="feat-title">100% Secure</div>
-    <div class="feat-desc">Your images are processed securely and never stored on our servers.</div>
+    <div class="feat-desc">Your images are processed securely in your browser — never stored on servers.</div>
   </div>
 </div>
 
@@ -676,6 +763,10 @@ footer {
     <li><a href="/index.html">Privacy</a></li>
   </ul>
 </footer>
+
+<!-- Load TensorFlow.js and BodySegmentation Model -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tensorflow.js/4.11.0/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/body-segmentation@0.5.3/dist/body-segmentation.js"></script>
 
 <script>
 const cursor = document.querySelector('.cursor');
@@ -736,6 +827,8 @@ const errorMsg = document.getElementById('errorMsg');
 
 let currentResultBlob = null;
 let currentResultUrl = null;
+let segmenter = null;
+let modelLoading = false;
 
 dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
 dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
@@ -759,6 +852,81 @@ function hideError() {
   errorMsg.classList.remove('visible');
 }
 
+// Initialize segmentation model
+async function initModel() {
+  if (segmenter || modelLoading) return;
+  modelLoading = true;
+  
+  try {
+    const estimationConfig = {
+      maxShapesToDetect: 20,
+      flipHorizontal: false
+    };
+    
+    segmenter = await window.bodySegmentation.createSegmenter(
+      window.bodySegmentation.SupportedModels.BodyPix,
+      {
+        architecture: 'MobileNetV1',
+        outputStride: 16,
+        multiplier: 0.5,
+        quantBytes: 2
+      }
+    );
+    
+    modelLoading = false;
+    return true;
+  } catch (err) {
+    modelLoading = false;
+    showError('Failed to load AI model: ' + err.message);
+    return false;
+  }
+}
+
+// Remove background using TensorFlow
+async function removeBackground(img) {
+  try {
+    if (!segmenter) {
+      const initialized = await initModel();
+      if (!initialized) throw new Error('Model initialization failed');
+    }
+
+    const segmentation = await segmenter.segmentPeople(img, {
+      flipHorizontal: false,
+      multiSegmentation: false,
+      segmentBodyParts: false
+    });
+
+    const canvas = document.createElement('canvas');
+    canvas.width = img.width;
+    canvas.height = img.height;
+    
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0);
+    
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const data = imageData.data;
+    
+    // If we have segmentation, remove background
+    if (segmentation.length > 0) {
+      const mask = segmentation[0].mask;
+      
+      for (let i = 0; i < mask.data.length; i++) {
+        // Make alpha 0 where mask is false (background)
+        data[i * 4 + 3] = mask.data[i] ? 255 : 0;
+      }
+    }
+    
+    ctx.putImageData(imageData, 0, 0);
+    
+    return new Promise(resolve => {
+      canvas.toBlob(blob => resolve(blob), 'image/png');
+    });
+    
+  } catch (err) {
+    throw new Error('Background removal failed: ' + err.message);
+  }
+}
+
 async function processImage(file) {
   hideError();
   
@@ -772,57 +940,63 @@ async function processImage(file) {
   
   let pct = 0;
   barFill.style.width = '0%';
-  barLabel.textContent = 'Sending to AI engine…';
+  barLabel.textContent = 'Loading AI model…';
 
   const prog = setInterval(() => {
-    pct = Math.min(pct + Math.random() * 12, 85);
+    pct = Math.min(pct + Math.random() * 15, 90);
     barFill.style.width = pct + '%';
-    if (pct > 40) barLabel.textContent = 'Removing background…';
-    if (pct > 70) barLabel.textContent = 'Finalizing output…';
-  }, 350);
+    if (pct > 30) barLabel.textContent = 'Analyzing image…';
+    if (pct > 60) barLabel.textContent = 'Removing background…';
+  }, 300);
 
   try {
-    const formData = new FormData();
-    formData.append('image_file', file);
-    formData.append('size', 'auto');
+    // Read image
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = async () => {
+      try {
+        // Remove background
+        const resultBlob = await removeBackground(img);
+        
+        clearInterval(prog);
+        barFill.style.width = '100%';
+        barLabel.textContent = 'Done!';
 
-    const response = await fetch('/api/remove-bg', {
-      method: 'POST',
-      body: formData
-    });
+        currentResultBlob = resultBlob;
+        currentResultUrl = URL.createObjectURL(resultBlob);
+        resultImg.src = currentResultUrl;
 
-    clearInterval(prog);
+        downloadBtn.onclick = () => {
+          const a = document.createElement('a');
+          a.href = currentResultUrl;
+          a.download = 'kjscreative-nobg.png';
+          a.click();
+        };
 
-    if (!response.ok) {
-      const error = await response.json().catch(() => ({}));
-      const msg = error.errors?.[0]?.title || `Error ${response.status}`;
-      throw new Error(msg);
-    }
+        setTimeout(() => {
+          processingBar.classList.remove('visible');
+          resultArea.classList.add('visible');
+        }, 600);
 
-    barFill.style.width = '100%';
-    barLabel.textContent = 'Done!';
-
-    const blob = await response.blob();
-    currentResultBlob = blob;
-    currentResultUrl = URL.createObjectURL(blob);
-    resultImg.src = currentResultUrl;
-
-    downloadBtn.onclick = () => {
-      const a = document.createElement('a');
-      a.href = currentResultUrl;
-      a.download = 'kjscreative_nobg.png';
-      a.click();
+      } catch (err) {
+        clearInterval(prog);
+        processingBar.classList.remove('visible');
+        showError('Error: ' + err.message);
+      }
     };
-
-    setTimeout(() => {
+    
+    img.onerror = () => {
+      clearInterval(prog);
       processingBar.classList.remove('visible');
-      resultArea.classList.add('visible');
-    }, 600);
-
+      showError('Failed to load image');
+    };
+    
+    img.src = reader.result;
+    
   } catch (err) {
     clearInterval(prog);
     processingBar.classList.remove('visible');
-    showError('Error: ' + err.message + '. Please try again in a moment.');
+    showError('Error: ' + err.message);
   }
 }
 
@@ -833,6 +1007,11 @@ function resetTool() {
   if (currentResultUrl) URL.revokeObjectURL(currentResultUrl);
   hideError();
 }
+
+// Preload model on page load
+window.addEventListener('load', () => {
+  setTimeout(initModel, 1000);
+});
 </script>
 </body>
 </html>
