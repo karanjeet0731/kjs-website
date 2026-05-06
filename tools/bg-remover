@@ -1,1 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BG Remover — KJS Creative</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Editorial+New:ital@0;1&family=Archivo:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --white: #ffffff;
+  --black: #0d0d0d;
+  --off-white: #f5f4f0;
+  --gray: #888880;
+  --gray-light: #e8e7e3;
+  --accent: lab(56.67% 70.89 60.11);
+  --accent-rgb: 255, 60, 31;
+  --sans: 'Archivo', 'Helvetica Neue', sans-serif;
+  --serif: 'Playfair Display', Georgia, serif;
+  --surface: #ffffff;
+  --surface2: #f5f4f0;
+  --border: rgba(13,13,13,0.1);
+  --border2: rgba(13,13,13,0.18);
+  --text: var(--black);
+  --muted: var(--gray);
+  --font-display: var(--serif);
+  --font-body: var(--sans);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--white);
+  color: var(--black);
+  font-family: var(--sans);
+  font-weight: 400;
+  line-height: 1.5;
+  min-height: 100vh;
+  overflow-x: hidden;
+  cursor: none !important;
+}
+
+a, button, .upload-zone { cursor: none !important; }
+
+.cursor {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--black);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s ease, height 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  display: block;
+  will-change: transform;
+}
+
+.cursor.hovered {
+  width: 40px;
+  height: 40px;
+  border-color: var(--accent);
+  background: rgba(var(--accent-rgb), 0.1);
+  box-shadow: 0 0 0 4px rgba(var(--accent-rgb), 0.05);
+}
+
+.cursor-text {
+  position: fixed;
+  pointer-events: none;
+  z-index: 10000;
+  left: 0;
+  top: 0;
+  transform: translate(-50%, -50%);
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.8rem 3rem;
+  background: rgba(255,255,255,0.82);
+  backdrop-filter: blur(16px);
+  transition: background 0.3s ease;
+}
+
+nav::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 3rem;
+  right: 3rem;
+  height: 1px;
+  background: rgba(0,0,0,0.1);
+}
+
+.logo {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--black);
+  text-decoration: none;
+  z-index: 101;
+}
+.logo span { color: var(--black); }
+
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a {
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: var(--black);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  opacity: 0.6;
+  transition: opacity .2s, color .2s;
+}
+.nav-links a:hover { opacity: 1; color: var(--black); }
+
+.nav-cta {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--white);
+  background: var(--black);
+  padding: 0.65rem 1.5rem;
+  border: 0;
+  text-decoration: none;
+  transition: background .2s, transform .2s;
+  border-radius: 4px;
+  font-family: var(--sans);
+}
+.nav-cta:hover { background: var(--accent); transform: translateY(-1px); }
+
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+  gap: 4rem;
+  align-items: end;
+  padding: 8rem 3rem 4rem;
+  position: relative;
+  border-bottom: 1px solid var(--gray-light);
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(var(--accent-rgb),0.02) 0%, rgba(var(--accent-rgb),0) 50%, rgba(13,13,13,0.02) 100%);
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(var(--accent-rgb),0.15) 0%, transparent 70%);
+  top: -100px;
+  right: -100px;
+  border-radius: 50%;
+  animation: float 15s ease-in-out infinite;
+}
+
+.hero::after {
+  content: 'REMOVE';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: clamp(110px, 18vw, 245px);
+  font-weight: 600;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(0,0,0,0.06);
+  white-space: nowrap;
+  user-select: none;
+  pointer-events: none;
+  letter-spacing: -0.04em;
+  animation: textFloat 8s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(30px); }
+}
+
+@keyframes textFloat {
+  0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+  50% { transform: translate(-50%, -50%) translateY(-20px); }
+}
+
+.hero > div { position: relative; z-index: 1; }
+
+.hero-label {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gray);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.5rem;
+}
+.hero-label::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: var(--gray);
+}
+
+h1 {
+  font-size: clamp(4rem, 8.5vw, 8.5rem);
+  font-weight: 600;
+  line-height: 0.93;
+  letter-spacing: -0.04em;
+  color: var(--black);
+  max-width: 760px;
+  margin-bottom: 2rem;
+}
+h1 em {
+  color: var(--black);
+  font-style: italic;
+  font-weight: 300;
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 0.08em;
+}
+
+.hero-sub {
+  color: var(--gray);
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-bottom: 2rem;
+  font-weight: 300;
+  max-width: 430px;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+}
+.stat-num {
+  font-size: 1.45rem;
+  font-weight: 600;
+  color: var(--black);
+  letter-spacing: -0.03em;
+}
+.stat-label { font-size: 0.72rem; color: var(--gray); font-weight: 400; letter-spacing: 0.05em; text-transform: uppercase; }
+
+.upload-zone {
+  background: rgba(255,255,255,0.82);
+  border: 1px solid var(--gray-light);
+  border-radius: 8px;
+  padding: 3.25rem 2rem;
+  text-align: center;
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s, background 0.25s;
+  position: relative;
+  overflow: hidden;
+  min-height: 360px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.upload-zone:hover, .upload-zone.drag-over {
+  border-color: var(--accent);
+  box-shadow: 0 16px 48px rgba(var(--accent-rgb), 0.15);
+  transform: translateY(-6px);
+  background: var(--white);
+}
+.upload-icon {
+  width: 58px;
+  height: 58px;
+  background: var(--black);
+  border-radius: 4px;
+  margin: 0 auto 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.upload-icon svg { width: 28px; height: 28px; stroke: var(--white); }
+.upload-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--black);
+  margin-bottom: 0.4rem;
+  letter-spacing: -0.01em;
+}
+.upload-hint { font-size: 0.78rem; color: var(--gray); letter-spacing: 0.04em; text-transform: uppercase; }
+.upload-btn, .btn-primary-sm {
+  margin-top: 1.25rem;
+  background: var(--black);
+  color: var(--white);
+  border: 0;
+  padding: 0.7rem 1.5rem;
+  border-radius: 4px;
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: background 0.2s, transform 0.2s;
+}
+.upload-btn:hover, .btn-primary-sm:hover { background: var(--accent); transform: translateY(-1px); }
+#fileInput { display: none; }
+
+.tool-section {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 5rem 3rem 5rem;
+}
+.result-area {
+  display: none;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin-top: 2rem;
+}
+.result-area.visible { display: grid; }
+.result-card, .processing-bar, .feat-card {
+  background: var(--white);
+  border: 1px solid var(--gray-light);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+}
+.result-card:hover, .feat-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 16px 48px rgba(var(--accent-rgb), 0.12);
+  transform: translateY(-4px);
+}
+.result-card-header {
+  padding: 0.95rem 1.25rem;
+  border-bottom: 1px solid var(--gray-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.result-card-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--gray);
+}
+.result-img-wrap {
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: repeating-conic-gradient(#f0efeb 0% 25%, #ffffff 0% 50%) 0 0 / 20px 20px;
+}
+.result-img-wrap img { max-width: 100%; max-height: 280px; object-fit: contain; border-radius: 8px; }
+.result-actions { padding: 1rem 1.25rem; display: flex; gap: 0.75rem; }
+.btn-outline {
+  flex: 1;
+  background: transparent;
+  border: 1px solid rgba(13,13,13,0.2);
+  color: var(--black);
+  padding: 0.65rem 1rem;
+  border-radius: 4px;
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+.btn-outline:hover { border-color: var(--accent); color: var(--accent); background: rgba(var(--accent-rgb),0.04); }
+.btn-primary-sm { flex: 1; margin-top: 0; }
+
+.processing-bar {
+  display: none;
+  margin: 0 0 2rem;
+  padding: 2rem;
+  text-align: center;
+}
+.processing-bar.visible { display: block; }
+.bar-track {
+  background: var(--off-white);
+  border-radius: 100px;
+  height: 4px;
+  margin: 1rem 0 0.75rem;
+  overflow: hidden;
+}
+.bar-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 100px;
+  width: 0%;
+  transition: width 0.3s ease;
+}
+.bar-label { font-size: 0.78rem; color: var(--gray); letter-spacing: 0.04em; text-transform: uppercase; }
+
+.features-row {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 3rem 5rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+.feat-card { padding: 1.5rem; }
+.feat-icon {
+  width: 42px;
+  height: 42px;
+  background: var(--black);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+.feat-icon svg { width: 20px; height: 20px; stroke: var(--white); }
+.feat-title { font-size: 0.9rem; font-weight: 600; color: var(--black); margin-bottom: 0.4rem; letter-spacing: -0.01em; }
+.feat-desc { font-size: 0.8rem; color: var(--gray); line-height: 1.6; }
+
+.error-msg {
+  background: rgba(231,76,60,0.08);
+  border: 1px solid rgba(231,76,60,0.25);
+  color: #c0392b;
+  border-radius: 8px;
+  padding: 0.875rem 1.25rem;
+  font-size: 0.875rem;
+  margin-top: 1rem;
+  display: none;
+}
+.error-msg.visible { display: block; }
+
+footer {
+  border-top: 1px solid var(--gray-light);
+  padding: 2rem 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+.footer-copy { font-size: 0.78rem; color: var(--gray); letter-spacing: 0.04em; }
+.footer-brand { font-family: var(--sans); font-weight: 600; font-size: 0.9rem; color: var(--black); letter-spacing: 0.08em; text-transform: uppercase; }
+.footer-brand span { color: var(--black); }
+
+@media (max-width: 900px) {
+  nav { padding: 1.25rem 1.25rem; }
+  nav::after { left: 1.25rem; right: 1.25rem; }
+  .nav-links { display: none; }
+  .hero { grid-template-columns: 1fr; gap: 2rem; padding: 7rem 1.25rem 3rem; align-items: start; }
+  h1 { font-size: clamp(3.5rem, 16vw, 5.5rem); }
+  .tool-section, .features-row, footer { padding-left: 1.25rem; padding-right: 1.25rem; }
+  .result-area, .features-row { grid-template-columns: 1fr; }
+  footer { align-items: flex-start; flex-direction: column; gap: 0.75rem; }
+}
+</style>
+</head>
+<body>
+<div class="cursor"></div>
+<div class="cursor-text">VIEW</div>
+
+<nav>
+  <a href="#" class="logo">KJS <span>Creative</span></a>
+  <ul class="nav-links">
+    <li><a href="#">Work</a></li>
+    <li><a href="#">Services</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#">Blog</a></li>
+  </ul>
+  <button class="nav-cta">Get Started</button>
+</nav>
+
+<section class="hero">
+  <div>
+    <div class="hero-label">AI-Powered Tool</div>
+    <h1>Remove<br>Background<br><em>Instantly.</em></h1>
+    <p class="hero-sub">Professional-grade background removal in seconds. Powered by remove.bg API — trusted by designers, brands & creators worldwide.</p>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">5s</div>
+        <div class="stat-label">Average speed</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">HD</div>
+        <div class="stat-label">Output quality</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Auto magic</div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="upload-zone" id="dropZone">
+      <div class="upload-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="17 8 12 3 7 8"/>
+          <line x1="12" y1="3" x2="12" y2="15"/>
+        </svg>
+      </div>
+      <p class="upload-title">Drop your image here</p>
+      <p class="upload-hint">PNG, JPG, WEBP — up to 12MB</p>
+      <button class="upload-btn" onclick="document.getElementById('fileInput').click()">Choose Image</button>
+      <input type="file" id="fileInput" accept="image/*">
+    </div>
+    <div class="error-msg" id="errorMsg"></div>
+  </div>
+</section>
+
+<section class="tool-section">
+  <div class="processing-bar" id="processingBar">
+    <p style="font-weight:600; color: var(--text); font-size:0.95rem;">Removing background…</p>
+    <div class="bar-track"><div class="bar-fill" id="barFill"></div></div>
+    <p class="bar-label" id="barLabel">Sending to AI engine</p>
+  </div>
+
+  <div class="result-area" id="resultArea">
+    <div class="result-card">
+      <div class="result-card-header">
+        <span class="result-card-label">Original</span>
+      </div>
+      <div class="result-img-wrap">
+        <img id="originalImg" src="" alt="Original image">
+      </div>
+      <div class="result-actions">
+        <button class="btn-outline" onclick="resetTool()">Try Another</button>
+      </div>
+    </div>
+    <div class="result-card">
+      <div class="result-card-header">
+        <span class="result-card-label">Background Removed</span>
+        <span style="font-size:0.7rem; color: var(--accent); font-weight:600; background: rgba(var(--accent-rgb),0.08); padding: 0.2rem 0.6rem; border-radius:4px;">✓ Done</span>
+      </div>
+      <div class="result-img-wrap">
+        <img id="resultImg" src="" alt="Processed image">
+      </div>
+      <div class="result-actions">
+        <button class="btn-outline" onclick="resetTool()">New Image</button>
+        <button class="btn-primary-sm" id="downloadBtn">Download PNG</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="features-row">
+  <div class="feat-card">
+    <div class="feat-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/>
+      </svg>
+    </div>
+    <div class="feat-title">Instant Results</div>
+    <div class="feat-desc">AI processes your image in under 5 seconds with photorealistic edge detection.</div>
+  </div>
+  <div class="feat-card">
+    <div class="feat-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
+      </svg>
+    </div>
+    <div class="feat-title">HD Quality Output</div>
+    <div class="feat-desc">Download transparent PNG at full resolution — ready for print, web, or social media.</div>
+  </div>
+  <div class="feat-card">
+    <div class="feat-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      </svg>
+    </div>
+    <div class="feat-title">100% Secure</div>
+    <div class="feat-desc">Images are processed securely and never stored on our servers. Your files, your privacy.</div>
+  </div>
+</div>
+
+<footer>
+  <span class="footer-brand">KJS <span>Creative</span></span>
+  <span class="footer-copy">© 2026 KJS Creative. All rights reserved.</span>
+  <span class="footer-copy">New Delhi — Est. 2021</span>
+</footer>
+
+<script>
+const cursor = document.querySelector('.cursor');
+const cursorText = document.querySelector('.cursor-text');
+const hoverTargets = document.querySelectorAll('a, button, .upload-zone, .result-card, .feat-card');
+
+if (cursor && cursorText) {
+  window.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+    cursorText.style.left = e.clientX + 'px';
+    cursorText.style.top = e.clientY + 'px';
+  });
+
+  hoverTargets.forEach(target => {
+    target.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
+    target.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
+  });
+}
+
+const API_KEY = 'cdNVmMrsghGWKP2dzsDQiv6e';
+const dropZone = document.getElementById('dropZone');
+const fileInput = document.getElementById('fileInput');
+const processingBar = document.getElementById('processingBar');
+const resultArea = document.getElementById('resultArea');
+const originalImg = document.getElementById('originalImg');
+const resultImg = document.getElementById('resultImg');
+const downloadBtn = document.getElementById('downloadBtn');
+const barFill = document.getElementById('barFill');
+const barLabel = document.getElementById('barLabel');
+const errorMsg = document.getElementById('errorMsg');
+
+let currentResultBlob = null;
+
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+dropZone.addEventListener('drop', e => {
+  e.preventDefault();
+  dropZone.classList.remove('drag-over');
+  const file = e.dataTransfer.files[0];
+  if (file && file.type.startsWith('image/')) processImage(file);
+});
+fileInput.addEventListener('change', e => {
+  if (e.target.files[0]) processImage(e.target.files[0]);
+});
+
+function showError(msg) {
+  errorMsg.textContent = msg;
+  errorMsg.classList.add('visible');
+}
+function hideError() { errorMsg.classList.remove('visible'); }
+
+async function processImage(file) {
+  hideError();
+  const reader = new FileReader();
+  reader.onload = e => { originalImg.src = e.target.result; };
+  reader.readAsDataURL(file);
+
+  processingBar.classList.add('visible');
+  resultArea.classList.remove('visible');
+  let pct = 0;
+  barFill.style.width = '0%';
+  barLabel.textContent = 'Sending to AI engine…';
+
+  const prog = setInterval(() => {
+    pct = Math.min(pct + Math.random() * 12, 85);
+    barFill.style.width = pct + '%';
+    if (pct > 40) barLabel.textContent = 'Detecting edges…';
+    if (pct > 70) barLabel.textContent = 'Finalising output…';
+  }, 350);
+
+  try {
+    const formData = new FormData();
+    formData.append('image_file', file);
+    formData.append('size', 'auto');
+
+    const res = await fetch('https://api.remove.bg/v1.0/removebg', {
+      method: 'POST',
+      headers: { 'X-Api-Key': API_KEY },
+      body: formData
+    });
+
+    clearInterval(prog);
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      const msg = err.errors?.[0]?.title || `Error ${res.status}`;
+      throw new Error(msg);
+    }
+
+    barFill.style.width = '100%';
+    barLabel.textContent = 'Done!';
+
+    const blob = await res.blob();
+    currentResultBlob = blob;
+    const url = URL.createObjectURL(blob);
+    resultImg.src = url;
+
+    downloadBtn.onclick = () => {
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'kjscreative_nobg.png';
+      a.click();
+    };
+
+    setTimeout(() => {
+      processingBar.classList.remove('visible');
+      resultArea.classList.add('visible');
+    }, 600);
+
+  } catch (err) {
+    clearInterval(prog);
+    processingBar.classList.remove('visible');
+    showError('Error: ' + err.message + '. Please check your API key or try again.');
+  }
+}
+
+function resetTool() {
+  resultArea.classList.remove('visible');
+  fileInput.value = '';
+  currentResultBlob = null;
+  hideError();
+}
+</script>
+</body>
+</html>
 
