@@ -544,7 +544,7 @@ footer {
 <div id="cursorText" class="cursor-text"></div>
 
 <nav>
-  <a href="../Main/index.html" class="nav-logo">KJS Creative</a>
+  <a href="../index.html" class="nav-logo">KJS Creative</a>
   <button class="hamburger" id="hamburger" aria-label="Toggle menu">
     <span></span>
     <span></span>
@@ -552,13 +552,13 @@ footer {
   </button>
   <div class="nav-right" id="navRight">
     <ul class="nav-links">
-      <li><a href="../Main/index.html#clients">Work</a></li>
-      <li><a href="../Main/index.html#about">About</a></li>
-      <li><a href="../Main/index.html#services">Services</a></li>
-      <li><a href="kjs_bg_remover.html">Tools</a></li>
-      <li><a href="../Main/blog/">Blog</a></li>
+      <li><a href="../index.html#clients">Work</a></li>
+      <li><a href="../index.html#about">About</a></li>
+      <li><a href="../index.html#services">Services</a></li>
+      <li><a href="bg-remover">Tools</a></li>
+      <li><a href="../blog/">Blog</a></li>
     </ul>
-    <a href="../Main/get-started/" class="nav-cta">Get Started</a>
+    <a href="../get-started/" class="nav-cta">Get Started</a>
   </div>
 </nav>
 
@@ -666,12 +666,12 @@ footer {
 </div>
 
 <footer>
-  <a href="../Main/index.html" class="footer-logo">KJS Creative</a>
+  <a href="../index.html" class="footer-logo">KJS Creative</a>
   <p class="footer-copy">© 2026 KJS Creative. All rights reserved.</p>
   <ul class="footer-socials">
     <li><a href="https://www.instagram.com/kjscreative.in/" target="_blank">Instagram</a></li>
     <li><a href="https://www.facebook.com/profile.php?id=100092027042143" target="_blank">Facebook</a></li>
-    <li><a href="../Main/index.html">Privacy</a></li>
+    <li><a href="../index.html">Privacy</a></li>
   </ul>
 </footer>
 
