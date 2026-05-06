@@ -346,6 +346,7 @@ h1 em {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   transition: background 0.2s, transform 0.2s;
+  cursor: pointer;
 }
 .upload-btn:hover, .btn-primary-sm:hover { background: var(--accent); transform: translateY(-1px); }
 #fileInput { display: none; }
@@ -411,6 +412,7 @@ h1 em {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   transition: border-color 0.2s, color 0.2s, background 0.2s;
+  cursor: pointer;
 }
 .btn-outline:hover { border-color: var(--accent); color: var(--accent); background: rgba(var(--accent-rgb),0.04); }
 .btn-primary-sm { flex: 1; margin-top: 0; }
@@ -472,6 +474,18 @@ h1 em {
   display: none;
 }
 .error-msg.visible { display: block; }
+
+.info-msg {
+  background: rgba(52,152,219,0.08);
+  border: 1px solid rgba(52,152,219,0.25);
+  color: #2980b9;
+  border-radius: 8px;
+  padding: 0.875rem 1.25rem;
+  font-size: 0.875rem;
+  margin-top: 1rem;
+  display: none;
+}
+.info-msg.visible { display: block; }
 
 footer {
   padding: 2rem 3rem;
@@ -555,7 +569,7 @@ footer {
       <li><a href="/index.html#clients">Work</a></li>
       <li><a href="/index.html#about">About</a></li>
       <li><a href="/index.html#services">Services</a></li>
-      <li><a href="/tool/bg-remover.html">Tools</a></li>
+      <li><a href="/tools/bg-remover.html">Tools</a></li>
       <li><a href="/blog/">Blog</a></li>
     </ul>
     <a href="/get-started/" class="nav-cta">Get Started</a>
@@ -566,19 +580,19 @@ footer {
   <div>
     <div class="hero-label">AI-Powered Tool</div>
     <h1>Remove<br>Background<br><em>Instantly.</em></h1>
-    <p class="hero-sub">Professional-grade background removal in seconds. Powered by remove.bg API — trusted by designers, brands & creators worldwide.</p>
+    <p class="hero-sub">Professional-grade background removal using advanced AI. Fast, accurate, and powered by cutting-edge machine learning.</p>
     <div class="hero-stats">
       <div class="stat-item">
-        <div class="stat-num">5s</div>
-        <div class="stat-label">Average speed</div>
+        <div class="stat-num">2-5s</div>
+        <div class="stat-label">Processing time</div>
       </div>
       <div class="stat-item">
-        <div class="stat-num">HD</div>
-        <div class="stat-label">Output quality</div>
+        <div class="stat-num">4K</div>
+        <div class="stat-label">Max resolution</div>
       </div>
       <div class="stat-item">
         <div class="stat-num">100%</div>
-        <div class="stat-label">Auto magic</div>
+        <div class="stat-label">Client-side</div>
       </div>
     </div>
   </div>
@@ -592,11 +606,12 @@ footer {
         </svg>
       </div>
       <p class="upload-title">Drop your image here</p>
-      <p class="upload-hint">PNG, JPG, WEBP — up to 12MB</p>
+      <p class="upload-hint">PNG, JPG, WEBP — up to 10MB</p>
       <button class="upload-btn" onclick="document.getElementById('fileInput').click()">Choose Image</button>
       <input type="file" id="fileInput" accept="image/*">
     </div>
     <div class="error-msg" id="errorMsg"></div>
+    <div class="info-msg" id="infoMsg"></div>
   </div>
 </section>
 
@@ -604,7 +619,7 @@ footer {
   <div class="processing-bar" id="processingBar">
     <p style="font-weight:600; color: var(--text); font-size:0.95rem;">Removing background…</p>
     <div class="bar-track"><div class="bar-fill" id="barFill"></div></div>
-    <p class="bar-label" id="barLabel">Sending to AI engine</p>
+    <p class="bar-label" id="barLabel">Processing image</p>
   </div>
 
   <div class="result-area" id="resultArea">
@@ -642,8 +657,8 @@ footer {
         <circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/>
       </svg>
     </div>
-    <div class="feat-title">Instant Results</div>
-    <div class="feat-desc">AI processes your image in under 5 seconds with photorealistic edge detection.</div>
+    <div class="feat-title">Lightning Fast</div>
+    <div class="feat-desc">AI processes your image in 2-5 seconds with precision edge detection.</div>
   </div>
   <div class="feat-card">
     <div class="feat-icon">
@@ -651,8 +666,8 @@ footer {
         <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
       </svg>
     </div>
-    <div class="feat-title">HD Quality Output</div>
-    <div class="feat-desc">Download transparent PNG at full resolution — ready for print, web, or social media.</div>
+    <div class="feat-title">Crystal Clear</div>
+    <div class="feat-desc">Download transparent PNG at full resolution. Perfect for any use case.</div>
   </div>
   <div class="feat-card">
     <div class="feat-icon">
@@ -660,8 +675,8 @@ footer {
         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
       </svg>
     </div>
-    <div class="feat-title">100% Secure</div>
-    <div class="feat-desc">Images are processed securely and never stored on our servers. Your files, your privacy.</div>
+    <div class="feat-title">Your Privacy</div>
+    <div class="feat-desc">Processed entirely on your device. No uploads, no tracking, no data collection.</div>
   </div>
 </div>
 
@@ -675,6 +690,7 @@ footer {
   </ul>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@imgly/background-removal/dist/index.browser.js"></script>
 <script>
 const cursor = document.querySelector('.cursor');
 const cursorText = document.querySelector('.cursor-text');
@@ -731,6 +747,7 @@ const downloadBtn = document.getElementById('downloadBtn');
 const barFill = document.getElementById('barFill');
 const barLabel = document.getElementById('barLabel');
 const errorMsg = document.getElementById('errorMsg');
+const infoMsg = document.getElementById('infoMsg');
 
 let currentResultBlob = null;
 
@@ -749,11 +766,27 @@ fileInput.addEventListener('change', e => {
 function showError(msg) {
   errorMsg.textContent = msg;
   errorMsg.classList.add('visible');
+  infoMsg.classList.remove('visible');
 }
-function hideError() { errorMsg.classList.remove('visible'); }
+function showInfo(msg) {
+  infoMsg.textContent = msg;
+  infoMsg.classList.add('visible');
+  errorMsg.classList.remove('visible');
+}
+function hideMessages() { 
+  errorMsg.classList.remove('visible');
+  infoMsg.classList.remove('visible');
+}
 
 async function processImage(file) {
-  hideError();
+  hideMessages();
+  
+  // File size check (10MB)
+  if (file.size > 10 * 1024 * 1024) {
+    showError('File size exceeds 10MB limit. Please use a smaller image.');
+    return;
+  }
+
   const reader = new FileReader();
   reader.onload = e => { originalImg.src = e.target.result; };
   reader.readAsDataURL(file);
@@ -762,57 +795,67 @@ async function processImage(file) {
   resultArea.classList.remove('visible');
   let pct = 0;
   barFill.style.width = '0%';
-  barLabel.textContent = 'Sending to AI engine…';
+  barLabel.textContent = 'Loading AI model…';
 
   const prog = setInterval(() => {
-    pct = Math.min(pct + Math.random() * 12, 85);
+    pct = Math.min(pct + Math.random() * 15, 90);
     barFill.style.width = pct + '%';
-    if (pct > 40) barLabel.textContent = 'Detecting edges…';
-    if (pct > 70) barLabel.textContent = 'Finalising output…';
-  }, 350);
+    if (pct > 30) barLabel.textContent = 'Detecting edges…';
+    if (pct > 60) barLabel.textContent = 'Finalizing output…';
+  }, 300);
 
   try {
-    const formData = new FormData();
-    formData.append('image_file', file);
-    formData.append('size', 'auto');
+    // Load image from file
+    const imageBlob = file;
+    const imageUrl = URL.createObjectURL(imageBlob);
+    const img = new Image();
+    
+    img.onload = async () => {
+      try {
+        // Use ImglyRemoveBackground to process
+        const canvas = await window.removeBackground(img);
+        
+        clearInterval(prog);
+        barFill.style.width = '100%';
+        barLabel.textContent = 'Done!';
 
-    const res = await fetch('/api/remove-bg', {
-      method: 'POST',
-      body: formData
-    });
+        // Convert canvas to blob
+        canvas.toBlob((blob) => {
+          currentResultBlob = blob;
+          const url = URL.createObjectURL(blob);
+          resultImg.src = url;
 
-    clearInterval(prog);
+          downloadBtn.onclick = () => {
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'kjscreative_nobg.png';
+            a.click();
+          };
 
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      const msg = err.errors?.[0]?.title || `Error ${res.status}`;
-      throw new Error(msg);
-    }
-
-    barFill.style.width = '100%';
-    barLabel.textContent = 'Done!';
-
-    const blob = await res.blob();
-    currentResultBlob = blob;
-    const url = URL.createObjectURL(blob);
-    resultImg.src = url;
-
-    downloadBtn.onclick = () => {
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'kjscreative_nobg.png';
-      a.click();
+          setTimeout(() => {
+            processingBar.classList.remove('visible');
+            resultArea.classList.add('visible');
+          }, 600);
+        }, 'image/png');
+      } catch (err) {
+        clearInterval(prog);
+        processingBar.classList.remove('visible');
+        showError('Processing failed: ' + err.message);
+      }
     };
-
-    setTimeout(() => {
+    
+    img.onerror = () => {
+      clearInterval(prog);
       processingBar.classList.remove('visible');
-      resultArea.classList.add('visible');
-    }, 600);
+      showError('Failed to load image. Please try another file.');
+    };
+    
+    img.src = imageUrl;
 
   } catch (err) {
     clearInterval(prog);
     processingBar.classList.remove('visible');
-    showError('Error: ' + err.message + '. Please try again in a moment.');
+    showError('Error: ' + err.message);
   }
 }
 
@@ -820,7 +863,7 @@ function resetTool() {
   resultArea.classList.remove('visible');
   fileInput.value = '';
   currentResultBlob = null;
-  hideError();
+  hideMessages();
 }
 </script>
 </body>
