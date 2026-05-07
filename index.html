@@ -1033,6 +1033,125 @@ nav::after {
   line-height: 1.8;
   margin-bottom: 0;
 }
+
+/* TOOLS ACCESS MODAL */
+.tools-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+}
+
+.tools-modal.active {
+  display: flex;
+}
+
+.tools-modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(13, 13, 13, 0.72);
+  backdrop-filter: blur(5px);
+}
+
+.tools-modal-content {
+  position: relative;
+  z-index: 10001;
+  width: min(92vw, 460px);
+  margin: auto;
+  padding: 2.25rem;
+  background: var(--white);
+  border-radius: 16px;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+  animation: slideUp 0.35s ease;
+}
+
+.tools-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--gray-light);
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--black);
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.tools-modal-eyebrow {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+}
+
+.tools-modal-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.7rem;
+}
+
+.tools-modal-copy {
+  color: var(--gray);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+.tools-access-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.tools-access-form input {
+  width: 100%;
+  border: 1px solid var(--gray-light);
+  border-radius: 8px;
+  padding: 0.95rem 1rem;
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tools-access-form input:focus {
+  border-color: var(--black);
+  box-shadow: 0 0 0 3px rgba(13, 13, 13, 0.07);
+}
+
+.tools-access-submit {
+  border: none;
+  border-radius: 8px;
+  padding: 1rem 1.2rem;
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.tools-access-submit:hover {
+  background: var(--accent);
+}
+
+@media (max-width: 520px) {
+  .tools-modal-content {
+    padding: 1.6rem;
+    border-radius: 12px;
+  }
+
+  .tools-modal-title {
+    font-size: 1.45rem;
+  }
+}
  
 /* Mobile modal */
 @media (max-width: 768px) {
@@ -1934,7 +2053,7 @@ button,
       <li><a href="index.html#clients" data-scroll-target="clients">Work</a></li>
       <li><a href="index.html#about" data-scroll-target="about">About</a></li>
       <li><a href="index.html#services" data-scroll-target="services">Services</a></li>
-      <li><a href="https://brandscore.kjscreative.in/">Tools</a></li>
+      <li><a href="https://brandscore.kjscreative.in/" id="toolsAccessLink">Tools</a></li>
       <li><a href="blog/">Blog</a></li>
     </ul>
    <a href="get-started/" class="nav-cta">Get Started</a>
@@ -2313,6 +2432,22 @@ button,
     <li><a href="index.html">Privacy</a></li>
   </ul>
 </footer>
+
+<!-- TOOLS ACCESS FORM -->
+<div id="toolsAccessModal" class="tools-modal" aria-hidden="true">
+  <div class="tools-modal-overlay" data-tools-close></div>
+  <div class="tools-modal-content" role="dialog" aria-modal="true" aria-labelledby="toolsModalTitle">
+    <button class="tools-modal-close" type="button" aria-label="Close tools form" data-tools-close>&times;</button>
+    <p class="tools-modal-eyebrow">Free Tools Access</p>
+    <h2 class="tools-modal-title" id="toolsModalTitle">Enter your details to continue</h2>
+    <p class="tools-modal-copy">Add your email and phone number, then we will open the Brand Score tool.</p>
+    <form class="tools-access-form" id="toolsAccessForm">
+      <input type="email" id="toolsEmail" name="email" placeholder="Email ID" required autocomplete="email">
+      <input type="tel" id="toolsPhone" name="phone" placeholder="Phone Number" required autocomplete="tel" inputmode="tel" minlength="7" maxlength="20">
+      <button class="tools-access-submit" type="submit">Open Tool</button>
+    </form>
+  </div>
+</div>
  
 <script>
 // CUSTOM CURSOR
@@ -2401,6 +2536,88 @@ document.addEventListener('click', (e) => {
   if (!e.target.closest('nav')) {
     hamburger.classList.remove('active');
     navRight.classList.remove('active');
+  }
+});
+
+// TOOLS ACCESS FORM
+const toolsAccessLink = document.getElementById('toolsAccessLink');
+const toolsAccessModal = document.getElementById('toolsAccessModal');
+const toolsAccessForm = document.getElementById('toolsAccessForm');
+const toolsEmail = document.getElementById('toolsEmail');
+const toolsPhone = document.getElementById('toolsPhone');
+const toolsTargetUrl = 'https://brandscore.kjscreative.in/';
+const toolsLeadEndpoint = 'https://script.google.com/macros/s/AKfycbxmPscokpl8XMtZ5RRdSpRgUkKOHR6QejTlGAJ5p00m3yHi791y1Ze2p5iLfXHhdIopYA/exec';
+
+function openToolsModal() {
+  if (!toolsAccessModal) return;
+  toolsAccessModal.classList.add('active');
+  toolsAccessModal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => toolsEmail?.focus(), 100);
+}
+
+function closeToolsModal() {
+  if (!toolsAccessModal) return;
+  toolsAccessModal.classList.remove('active');
+  toolsAccessModal.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+
+if (toolsAccessLink) {
+  toolsAccessLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    openToolsModal();
+  });
+}
+
+document.querySelectorAll('[data-tools-close]').forEach(closeTrigger => {
+  closeTrigger.addEventListener('click', closeToolsModal);
+});
+
+if (toolsAccessForm) {
+  toolsAccessForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    if (!toolsAccessForm.checkValidity()) {
+      toolsAccessForm.reportValidity();
+      return;
+    }
+
+    const submitButton = toolsAccessForm.querySelector('button[type="submit"]');
+    const originalButtonText = submitButton.textContent;
+    submitButton.textContent = 'Opening...';
+    submitButton.disabled = true;
+
+    if (toolsLeadEndpoint && !toolsLeadEndpoint.includes('PASTE_GOOGLE_APPS_SCRIPT')) {
+      try {
+        await fetch(toolsLeadEndpoint, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            email: toolsEmail.value.trim(),
+            phone: toolsPhone.value.trim(),
+            source: 'KJS Creative Tools',
+            page: window.location.href,
+            createdAt: new Date().toISOString()
+          })
+        });
+      } catch (error) {
+        console.error('Google Sheet submit failed:', error);
+      }
+    }
+
+    window.location.href = toolsTargetUrl;
+    submitButton.textContent = originalButtonText;
+    submitButton.disabled = false;
+  });
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && toolsAccessModal?.classList.contains('active')) {
+    closeToolsModal();
   }
 });
 
