@@ -2000,6 +2000,589 @@ footer {
   .gallery-section-header { padding: 3rem 1.5rem 1.5rem; }
 }
 
+/* ================= CRAZY CREATIVE ADDITIONS ================= */
+
+/* NOISE OVERLAY */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 180px 180px;
+}
+
+/* PARALLAX HERO LAYER */
+.hero-parallax-blob {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  will-change: transform;
+  mix-blend-mode: multiply;
+}
+.hero-parallax-blob-1 {
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(255,60,31,0.09) 0%, transparent 70%);
+  top: -200px; left: -100px;
+}
+.hero-parallax-blob-2 {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(13,13,13,0.06) 0%, transparent 70%);
+  bottom: -100px; right: 10%;
+}
+
+/* SPLIT TEXT CHARACTER ANIMATION */
+.split-chars .char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(60px) rotate(8deg);
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.split-chars.visible .char {
+  opacity: 1;
+  transform: translateY(0) rotate(0deg);
+}
+
+/* MAGNETIC BUTTON */
+.magnetic-wrap {
+  display: inline-block;
+  position: relative;
+}
+
+/* HORIZONTAL SCROLL SERVICES (desktop) */
+@media (min-width: 1025px) {
+  .services-list {
+    overflow: hidden;
+  }
+  .service-row {
+    transform: translateX(0);
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), background 0.25s;
+  }
+  .service-row:hover {
+    transform: translateX(8px);
+  }
+}
+
+/* TICKER GLOW */
+.ticker {
+  position: relative;
+}
+.ticker::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #0d0d0d 0%, transparent 8%, transparent 92%, #0d0d0d 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* SCROLL PROGRESS BAR */
+#scroll-progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  width: 0%;
+  background: var(--accent);
+  z-index: 9999;
+  transition: width 0.1s linear;
+  box-shadow: 0 0 8px rgba(255,60,31,0.6);
+}
+
+/* GLITCH EFFECT on section eyebrow */
+.glitch-text {
+  position: relative;
+  display: inline-block;
+}
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  overflow: hidden;
+  clip: rect(0, 900px, 0, 0);
+  opacity: 0;
+}
+.glitch-text.glitching::before {
+  animation: glitch-top 0.3s steps(1) forwards;
+  color: var(--accent);
+  text-shadow: -2px 0 var(--accent);
+}
+.glitch-text.glitching::after {
+  animation: glitch-bottom 0.3s steps(1) 0.05s forwards;
+  color: #00f0ff;
+  text-shadow: 2px 0 #00f0ff;
+}
+@keyframes glitch-top {
+  0%   { clip: rect(0,   900px,  0,  0); transform: translate(-2px, -1px); opacity: 1; }
+  20%  { clip: rect(10px,900px, 20px, 0); transform: translate(2px,  1px); }
+  40%  { clip: rect(5px, 900px, 15px, 0); transform: translate(-1px, 2px); }
+  60%  { clip: rect(20px,900px, 30px, 0); transform: translate(1px, -1px); }
+  80%  { clip: rect(0,   900px, 10px, 0); transform: translate(2px,  0px); }
+  100% { clip: rect(0,   900px,  0,  0); opacity: 0; }
+}
+@keyframes glitch-bottom {
+  0%   { clip: rect(30px,900px, 50px, 0); transform: translate(2px, 1px); opacity: 1; }
+  25%  { clip: rect(40px,900px, 55px, 0); transform: translate(-2px,-1px); }
+  50%  { clip: rect(25px,900px, 40px, 0); transform: translate(1px, 2px); }
+  75%  { clip: rect(35px,900px, 50px, 0); transform: translate(-1px,-2px); }
+  100% { clip: rect(0,   900px,  0,  0); opacity: 0; }
+}
+
+/* ABOUT SECTION — staggered line reveal */
+.line-reveal {
+  overflow: hidden;
+  display: block;
+}
+.line-reveal-inner {
+  display: block;
+  transform: translateY(100%);
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.line-reveal.visible .line-reveal-inner {
+  transform: translateY(0);
+}
+
+/* STAT COUNTER glow on count */
+.about-stat-num.counting {
+  text-shadow: 0 0 20px rgba(255,60,31,0.3);
+  color: var(--accent);
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+.about-stat-num.done {
+  color: var(--black);
+  text-shadow: none;
+  transition: color 0.5s ease;
+}
+
+/* TEAM CARD tilt */
+.team-card {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* TESTIMONIAL CARD hover lift */
+.testi-card {
+  transition: transform 0.4s cubic-bezier(0.22,1,0.36,1), border-color 0.3s ease;
+  cursor: default;
+}
+.testi-card:hover {
+  transform: translateY(-6px);
+  border-top-color: var(--accent);
+}
+
+/* MARQUEE HOVER pause */
+.ticker:hover .ticker-track {
+  animation-play-state: paused;
+}
+
+/* SECTION WIPE reveal line */
+.section-wipe {
+  position: relative;
+  overflow: hidden;
+}
+.section-wipe::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--white);
+  transform: translateX(0%);
+  transition: transform 1s cubic-bezier(0.77, 0, 0.18, 1);
+  z-index: 10;
+  pointer-events: none;
+}
+.section-wipe.wiped::after {
+  transform: translateX(101%);
+}
+.testimonials.section-wipe::after {
+  background: var(--black);
+}
+
+/* HERO TITLE word-by-word float in */
+.hero-title .word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+.hero-title .word-inner {
+  display: inline-block;
+  transform: translateY(105%);
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.hero-title.words-visible .word-inner {
+  transform: translateY(0);
+}
+.hero-title .word:nth-child(2) .word-inner { transition-delay: 0.08s; }
+.hero-title .word:nth-child(3) .word-inner { transition-delay: 0.16s; }
+.hero-title .word:nth-child(4) .word-inner { transition-delay: 0.24s; }
+.hero-title .word:nth-child(5) .word-inner { transition-delay: 0.32s; }
+
+/* FLOATING DOTS decoration */
+.deco-dots {
+  position: absolute;
+  width: 120px; height: 120px;
+  pointer-events: none;
+  opacity: 0.08;
+}
+.deco-dots circle {
+  fill: var(--black);
+}
+
+/* SCROLL-TRIGGERED SCALE sections */
+.scale-on-scroll {
+  transition: transform 0.6s cubic-bezier(0.22,1,0.36,1), opacity 0.6s ease;
+  transform-origin: center bottom;
+}
+
+/* ABOUT big number — animated underline */
+.about-stat:hover .about-stat-num {
+  color: var(--accent);
+}
+
+/* SERVICE row number spin on hover */
+.service-row:hover .service-num {
+  transform: rotate(20deg) scale(1.2);
+  color: var(--accent);
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+.service-num {
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+/* CTA section animated gradient bg */
+.cta {
+  position: relative;
+  overflow: hidden;
+}
+.cta::before {
+  content: '';
+  position: absolute;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(255,60,31,0.04) 0%, transparent 70%);
+  top: -200px; right: -150px;
+  border-radius: 50%;
+  animation: float 18s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* FOOTER reveal line */
+footer {
+  position: relative;
+  overflow: hidden;
+}
+footer::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  animation: shimmer 3s linear infinite;
+  background-size: 200% 100%;
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* SCROLL-REVEAL with clip-path */
+.reveal-clip {
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 1s cubic-bezier(0.77, 0, 0.18, 1);
+}
+.reveal-clip.visible {
+  clip-path: inset(0 0% 0 0);
+}
+
+/* FLOATING CURSOR TRAIL dots */
+.trail-dot {
+  position: fixed;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  pointer-events: none;
+  z-index: 9997;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s ease;
+}
+
+/* ================= NEXT LEVEL — TAGDA CSS ================= */
+
+/* CANVAS PARTICLE HERO */
+#hero-canvas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.55;
+}
+
+/* PAGE TRANSITION OVERLAY */
+#page-transition {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+}
+.pt-strip {
+  flex: 1;
+  background: var(--black);
+  transform: scaleY(0);
+  transform-origin: bottom;
+}
+.pt-strip.go { animation: stripIn 0.12s ease forwards; }
+.pt-strip.back { animation: stripOut 0.12s ease forwards; transform: scaleY(1); }
+.pt-strip:nth-child(1){animation-delay:0s}
+.pt-strip:nth-child(2){animation-delay:.05s}
+.pt-strip:nth-child(3){animation-delay:.10s}
+.pt-strip:nth-child(4){animation-delay:.15s}
+.pt-strip:nth-child(5){animation-delay:.20s}
+@keyframes stripIn{to{transform:scaleY(1)}}
+@keyframes stripOut{to{transform:scaleY(0)}}
+
+/* LIQUID CURSOR */
+#liquid-cursor {
+  position: fixed;
+  width: 44px; height: 44px;
+  pointer-events: none;
+  z-index: 9998;
+  top: 0; left: 0;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: difference;
+  will-change: transform;
+}
+#liquid-cursor svg { overflow: visible; }
+body.lc-grow #liquid-cursor { width: 72px; height: 72px; }
+
+/* HORIZONTAL SCROLL PROCESS SHOWCASE */
+.hscroll-section {
+  background: var(--off-white);
+  padding: 5rem 0 0;
+  border-bottom: 1px solid var(--gray-light);
+  overflow: hidden;
+  position: relative;
+}
+.hscroll-header {
+  padding: 0 3rem 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.hscroll-track-wrap {
+  overflow: hidden;
+  width: 100%;
+  cursor: grab;
+  user-select: none;
+  padding-bottom: 3rem;
+  position: relative;
+}
+.hscroll-track-wrap:active { cursor: grabbing; }
+.hscroll-track {
+  display: flex;
+  gap: 1.5rem;
+  padding: 0 3rem 1.5rem;
+  width: max-content;
+  will-change: transform;
+}
+.hscroll-card {
+  width: 340px;
+  flex-shrink: 0;
+  background: var(--white);
+  border: 1px solid var(--gray-light);
+  border-radius: 16px;
+  padding: 2.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.45s cubic-bezier(0.22,1,0.36,1), box-shadow 0.45s ease, border-color 0.3s;
+}
+.hscroll-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,60,31,0.04) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.hscroll-card:hover { transform: translateY(-14px); box-shadow: 0 32px 70px rgba(0,0,0,0.14); border-color: rgba(255,60,31,0.35); }
+.hscroll-card:hover::before { opacity: 1; }
+.hscroll-card-num {
+  font-size: 5rem; font-weight: 800; letter-spacing: -0.06em;
+  color: rgba(0,0,0,0.04); line-height: 1; margin-bottom: 1rem;
+}
+.hscroll-card-title { font-size: 1.35rem; font-weight: 600; letter-spacing: -0.03em; color: var(--black); margin-bottom: 0.8rem; }
+.hscroll-card-body { font-size: 0.85rem; color: var(--gray); line-height: 1.8; font-weight: 300; }
+.hscroll-card-tag {
+  display: inline-block; margin-top: 1.5rem;
+  font-size: 0.63rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--accent); border: 1px solid var(--accent); padding: 0.25rem 0.7rem; border-radius: 100px;
+}
+.hscroll-drag-hint {
+  padding: 0 3rem 1.5rem;
+  font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray);
+  display: flex; align-items: center; gap: 0.5rem;
+  animation: nudgeRight 2s ease-in-out infinite;
+}
+@keyframes nudgeRight { 0%,100%{transform:translateX(0)} 50%{transform:translateX(8px)} }
+
+/* KINETIC STATS BAR */
+.kinetic-bar {
+  background: var(--black);
+  padding: 3.5rem 3rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  position: relative;
+  overflow: hidden;
+}
+.kinetic-bar::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(90deg, transparent 0px, transparent calc(25% - 1px), rgba(255,255,255,0.025) calc(25% - 1px), rgba(255,255,255,0.025) 25%);
+  pointer-events: none;
+}
+.kinetic-item {
+  text-align: center;
+  padding: 1rem;
+  border-right: 1px solid rgba(255,255,255,0.05);
+  position: relative;
+  cursor: default;
+  transition: background 0.3s ease;
+}
+.kinetic-item:last-child { border-right: none; }
+.kinetic-item:hover { background: rgba(255,60,31,0.04); }
+.kinetic-big-num {
+  font-size: clamp(2.8rem, 5vw, 5rem); font-weight: 700; letter-spacing: -0.05em;
+  color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.12);
+  line-height: 1; display: block;
+  transition: -webkit-text-stroke 0.4s, color 0.4s;
+}
+.kinetic-item:hover .kinetic-big-num { -webkit-text-stroke: 1px var(--accent); color: var(--accent); }
+.kinetic-label {
+  font-size: 0.63rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(255,255,255,0.25); display: block; margin-top: 0.5rem; transition: color 0.3s;
+}
+.kinetic-item:hover .kinetic-label { color: rgba(255,255,255,0.6); }
+
+/* REVERSED TICKER */
+.ticker-rev-wrap {
+  background: var(--off-white);
+  overflow: hidden;
+  border-top: 1px solid var(--gray-light);
+  border-bottom: 1px solid var(--gray-light);
+  padding: 0.8rem 0;
+}
+.ticker-track-rev {
+  display: flex; width: max-content;
+  animation: tickerRev 28s linear infinite;
+}
+.ticker-item-rev {
+  font-size: 0.7rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase;
+  color: rgba(13,13,13,0.45); padding: 0 2.5rem; white-space: nowrap;
+  display: flex; align-items: center; gap: 2.5rem;
+}
+.ticker-item-rev::after { content: '◆'; font-size: 0.4rem; }
+@keyframes tickerRev { from{transform:translateX(-50%)} to{transform:translateX(0)} }
+
+/* SPOTLIGHT on about */
+.about { position: relative; }
+.about-spotlight {
+  position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  opacity: 0; transition: opacity 0.4s;
+  background: radial-gradient(600px at var(--mx,50%) var(--my,50%), rgba(255,60,31,0.05) 0%, transparent 50%);
+}
+.about:hover .about-spotlight { opacity: 1; }
+.about-left, .about-right { position: relative; z-index: 1; }
+
+/* DIAGONAL STRIPES on SERVICES */
+.services { position: relative; }
+.services::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background-image: repeating-linear-gradient(-45deg, transparent, transparent 40px, rgba(0,0,0,0.013) 40px, rgba(0,0,0,0.013) 41px);
+}
+.services > * { position: relative; z-index: 1; }
+
+/* SERVICE ROW bottom accent line */
+.service-row::after {
+  content: ''; position: absolute; bottom: -1px; left: 0;
+  height: 1px; width: 0; background: var(--accent); z-index: 2;
+  transition: width 0.5s cubic-bezier(0.22,1,0.36,1);
+}
+.service-row:hover::after { width: 100%; }
+
+/* TESTI QUOTE MARK */
+.testi-card { position: relative; }
+.testi-card::before {
+  content: '\201C'; font-size: 6rem; line-height: 1;
+  color: rgba(255,255,255,0.04); position: absolute; top: -1rem; left: 0;
+  font-family: Georgia, serif; pointer-events: none;
+}
+
+/* FOOTER GIANT BG TEXT */
+footer { position: relative; overflow: hidden; }
+.footer-kjs-bg {
+  position: absolute; bottom: -0.5rem; right: 1.5rem;
+  font-size: clamp(70px, 11vw, 140px); font-weight: 800;
+  color: transparent; -webkit-text-stroke: 1px rgba(0,0,0,0.05);
+  letter-spacing: -0.05em; line-height: 0.8;
+  pointer-events: none; user-select: none;
+}
+
+/* CUSTOM SCROLL INDICATOR */
+.scroll-indicator {
+  position: fixed; right: 2rem; bottom: 50%;
+  transform: translateY(50%);
+  display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
+  z-index: 500;
+  opacity: 0; transition: opacity 0.4s;
+}
+.scroll-indicator.visible { opacity: 1; }
+.scroll-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--gray-light);
+  transition: background 0.3s, transform 0.3s;
+}
+.scroll-dot.active { background: var(--accent); transform: scale(1.6); }
+@media (max-width: 1024px) { .scroll-indicator { display: none; } }
+
+/* ANIMATED SECTION NUMBERS */
+.section-number {
+  position: absolute; top: 4rem; right: 3rem;
+  font-size: clamp(6rem, 12vw, 14rem); font-weight: 800;
+  color: transparent; -webkit-text-stroke: 1px rgba(0,0,0,0.04);
+  letter-spacing: -0.06em; line-height: 1;
+  pointer-events: none; user-select: none; z-index: 0;
+  transition: -webkit-text-stroke 0.4s ease;
+}
+
+/* LOADING STATE */
+.cf-btn-submit.loading { position: relative; color: transparent; }
+.cf-btn-submit.loading::after {
+  content: ''; position: absolute; width: 18px; height: 18px;
+  top: 50%; left: 50%; transform: translate(-50%,-50%);
+  border: 2px solid rgba(255,255,255,0.3); border-top-color: white;
+  border-radius: 50%; animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: translate(-50%,-50%) rotate(360deg); } }
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  #liquid-cursor { display: none !important; }
+  .hscroll-card { width: 280px; padding: 1.8rem; }
+  .hscroll-header { padding: 0 1.2rem 2rem; }
+  .hscroll-track { padding: 0 1.2rem 1rem; gap: 1rem; }
+  .kinetic-bar { grid-template-columns: repeat(2,1fr); padding: 2rem 1.2rem; }
+  .kinetic-item:nth-child(2) { border-right: none; }
+  .kinetic-big-num { font-size: clamp(2rem,8vw,3rem); }
+  .section-number { display: none; }
+  .footer-kjs-bg { font-size: 60px; }
+}
+/* ================= END TAGDA CSS ================= */
+
 /* ================= FINAL CURSOR FIX ================= */
  
 /* Buttons & links should work properly */
@@ -2036,6 +2619,42 @@ button,
 </head>
 <body>
  
+<!-- SCROLL PROGRESS -->
+<div id="scroll-progress"></div>
+
+<!-- PAGE TRANSITION STRIPS -->
+<div id="page-transition">
+  <div class="pt-strip"></div>
+  <div class="pt-strip"></div>
+  <div class="pt-strip"></div>
+  <div class="pt-strip"></div>
+  <div class="pt-strip"></div>
+</div>
+
+<!-- LIQUID CURSOR (desktop) -->
+<div id="liquid-cursor">
+  <svg viewBox="-10 -10 68 68" xmlns="http://www.w3.org/2000/svg">
+    <circle class="cursor-blob" cx="24" cy="24" r="22" fill="white"/>
+  </svg>
+</div>
+
+<!-- CURSOR TRAIL DOTS -->
+<div class="trail-dot" id="trail0"></div>
+<div class="trail-dot" id="trail1"></div>
+<div class="trail-dot" id="trail2"></div>
+<div class="trail-dot" id="trail3"></div>
+<div class="trail-dot" id="trail4"></div>
+
+<!-- SCROLL SECTION DOTS -->
+<div class="scroll-indicator" id="scrollIndicator">
+  <div class="scroll-dot active" data-section="0"></div>
+  <div class="scroll-dot" data-section="1"></div>
+  <div class="scroll-dot" data-section="2"></div>
+  <div class="scroll-dot" data-section="3"></div>
+  <div class="scroll-dot" data-section="4"></div>
+  <div class="scroll-dot" data-section="5"></div>
+</div>
+
 <!-- CUSTOM CURSOR -->
 <div id="cursor" class="cursor"></div>
 <div id="cursorText" class="cursor-text"></div>
@@ -2062,6 +2681,9 @@ button,
  
 <!-- HERO -->
 <section class="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-parallax-blob hero-parallax-blob-1" data-parallax="0.3"></div>
+  <div class="hero-parallax-blob hero-parallax-blob-2" data-parallax="0.15"></div>
   <div class="hero-bg-text">CREATIVE</div>
  
   <div class="hero-top">
@@ -2109,6 +2731,97 @@ button,
   </div>
 </div>
  
+<!-- KINETIC STATS BAR -->
+<div class="kinetic-bar">
+  <div class="kinetic-item">
+    <span class="kinetic-big-num">50+</span>
+    <span class="kinetic-label">Projects Delivered</span>
+  </div>
+  <div class="kinetic-item">
+    <span class="kinetic-big-num">3+</span>
+    <span class="kinetic-label">Years Active</span>
+  </div>
+  <div class="kinetic-item">
+    <span class="kinetic-big-num">7</span>
+    <span class="kinetic-label">Services Offered</span>
+  </div>
+  <div class="kinetic-item">
+    <span class="kinetic-big-num">25+</span>
+    <span class="kinetic-label">Happy Clients</span>
+  </div>
+</div>
+
+<!-- REVERSED TICKER -->
+<div class="ticker-rev-wrap">
+  <div class="ticker-track-rev">
+    <span class="ticker-item-rev">Strategy</span>
+    <span class="ticker-item-rev">Visual Identity</span>
+    <span class="ticker-item-rev">Conversion Design</span>
+    <span class="ticker-item-rev">Digital Growth</span>
+    <span class="ticker-item-rev">Brand Systems</span>
+    <span class="ticker-item-rev">Motion Creative</span>
+    <span class="ticker-item-rev">AI-Powered Content</span>
+    <span class="ticker-item-rev">Strategy</span>
+    <span class="ticker-item-rev">Visual Identity</span>
+    <span class="ticker-item-rev">Conversion Design</span>
+    <span class="ticker-item-rev">Digital Growth</span>
+    <span class="ticker-item-rev">Brand Systems</span>
+    <span class="ticker-item-rev">Motion Creative</span>
+    <span class="ticker-item-rev">AI-Powered Content</span>
+  </div>
+</div>
+
+<!-- HORIZONTAL SCROLL — OUR PROCESS -->
+<section class="hscroll-section">
+  <div class="hscroll-header reveal">
+    <div>
+      <p class="section-eyebrow">How We Work</p>
+      <h2 class="section-title">Our <span class="italic">Process</span></h2>
+    </div>
+    <div class="hscroll-drag-hint">← Drag to explore →</div>
+  </div>
+  <div class="hscroll-track-wrap" id="hscrollWrap">
+    <div class="hscroll-track" id="hscrollTrack">
+      <div class="hscroll-card">
+        <div class="hscroll-card-num">01</div>
+        <div class="hscroll-card-title">Discovery & Strategy</div>
+        <div class="hscroll-card-body">We start by deeply understanding your brand, audience, goals, and competition. This clarity becomes the foundation everything is built on.</div>
+        <span class="hscroll-card-tag">Week 1</span>
+      </div>
+      <div class="hscroll-card">
+        <div class="hscroll-card-num">02</div>
+        <div class="hscroll-card-title">Concept & Moodboard</div>
+        <div class="hscroll-card-body">Visual directions are explored. Moodboards, references, and initial concepts are presented — you choose the path that resonates most.</div>
+        <span class="hscroll-card-tag">Week 1–2</span>
+      </div>
+      <div class="hscroll-card">
+        <div class="hscroll-card-num">03</div>
+        <div class="hscroll-card-title">Design & Creation</div>
+        <div class="hscroll-card-body">Our designers craft pixel-perfect visuals aligned to your brand strategy. Every detail is intentional — from typography to color psychology.</div>
+        <span class="hscroll-card-tag">Week 2–3</span>
+      </div>
+      <div class="hscroll-card">
+        <div class="hscroll-card-num">04</div>
+        <div class="hscroll-card-title">Review & Refinement</div>
+        <div class="hscroll-card-body">You review. We refine. Collaborative feedback rounds ensure the final output is exactly what you envisioned — and better.</div>
+        <span class="hscroll-card-tag">Week 3–4</span>
+      </div>
+      <div class="hscroll-card">
+        <div class="hscroll-card-num">05</div>
+        <div class="hscroll-card-title">Launch & Handoff</div>
+        <div class="hscroll-card-body">Final files, brand guidelines, and assets are delivered in a clean package. We ensure you're fully equipped to use everything confidently.</div>
+        <span class="hscroll-card-tag">Week 4</span>
+      </div>
+      <div class="hscroll-card">
+        <div class="hscroll-card-num">06</div>
+        <div class="hscroll-card-title">Ongoing Support</div>
+        <div class="hscroll-card-body">Great brands evolve. We stay available for updates, new campaigns, and scaling your creative — growing with you long-term.</div>
+        <span class="hscroll-card-tag">Ongoing</span>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- GALLERY EXPANDING CARDS -->
 <section class="gallery-section" id="clients">
   <div class="gallery-section-header reveal">
@@ -2140,6 +2853,7 @@ button,
 
 <!-- ABOUT -->
 <section class="about" id="about">
+  <div class="about-spotlight" id="aboutSpotlight"></div>
   <div class="about-left">
     <h2 class="about-big-text reveal">
       We don't just make things look <span class="italic">good.</span> We make them <span class="italic">work.</span>
@@ -2241,7 +2955,7 @@ button,
 </section>
  
 <!-- TESTIMONIALS -->
-<section class="testimonials">
+<section class="testimonials section-wipe">
   <p class="section-eyebrow reveal">Client Reviews</p>
   <h2 class="section-title reveal d1">What They <span class="italic">Say</span></h2>
   <div class="testimonials-grid">
@@ -2424,6 +3138,7 @@ button,
  
 <!-- FOOTER -->
 <footer>
+  <div class="footer-kjs-bg">KJS</div>
   <a href="index.html" class="footer-logo" data-scroll-target="top">KJS Creative</a>
   <p class="footer-copy">© 2026 KJS Creative. All rights reserved.</p>
   <ul class="footer-socials">
@@ -2904,6 +3619,532 @@ if (galleryCarousel) {
   renderGallery();
   startAutoRotate();
 }
+
+</script>
+<script>
+// ============================================================
+//  TAGDA ANIMATIONS v2 — KJS Creative
+// ============================================================
+
+// ── 1. SCROLL PROGRESS BAR ──────────────────────────────────
+const scrollBar = document.getElementById('scroll-progress');
+window.addEventListener('scroll', () => {
+  const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+  if (scrollBar) scrollBar.style.width = pct + '%';
+}, { passive: true });
+
+// ── 2. CANVAS PARTICLE HERO ─────────────────────────────────
+(function() {
+  const canvas = document.getElementById('hero-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [], mouse = {x: -1000, y: -1000};
+
+  function resize() {
+    W = canvas.width = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize, { passive: true });
+
+  class Particle {
+    constructor() { this.reset(); }
+    reset() {
+      this.x = Math.random() * W;
+      this.y = Math.random() * H;
+      this.vx = (Math.random() - 0.5) * 0.4;
+      this.vy = (Math.random() - 0.5) * 0.4;
+      this.r = Math.random() * 1.8 + 0.4;
+      this.alpha = Math.random() * 0.5 + 0.1;
+      this.color = Math.random() < 0.3 ? '255,60,31' : '13,13,13';
+    }
+    update() {
+      const dx = mouse.x - this.x, dy = mouse.y - this.y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if (dist < 120) {
+        const force = (120 - dist) / 120 * 0.8;
+        this.vx -= (dx/dist) * force;
+        this.vy -= (dy/dist) * force;
+      }
+      this.vx *= 0.98; this.vy *= 0.98;
+      this.x += this.vx; this.y += this.vy;
+      if (this.x < 0 || this.x > W || this.y < 0 || this.y > H) this.reset();
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${this.color},${this.alpha})`;
+      ctx.fill();
+    }
+  }
+
+  for (let i = 0; i < 100; i++) particles.push(new Particle());
+
+  const heroEl = document.querySelector('.hero');
+  if (heroEl) {
+    heroEl.addEventListener('mousemove', e => {
+      const rect = canvas.getBoundingClientRect();
+      mouse.x = e.clientX - rect.left;
+      mouse.y = e.clientY - rect.top;
+    });
+    heroEl.addEventListener('mouseleave', () => { mouse.x = -1000; mouse.y = -1000; });
+  }
+
+  // Draw connection lines between close particles
+  function drawLines() {
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < 80) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(13,13,13,${0.06 * (1 - dist/80)})`;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      }
+    }
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, W, H);
+    drawLines();
+    particles.forEach(p => { p.update(); p.draw(); });
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+
+// ── 3. LIQUID CURSOR ─────────────────────────────────────────
+(function() {
+  const lc = document.getElementById('liquid-cursor');
+  if (!lc || window.innerWidth <= 1024) { if(lc) lc.style.display='none'; return; }
+  const circle = lc.querySelector('circle');
+  let lcX = -100, lcY = -100, curX = -100, curY = -100;
+  let isGrow = false;
+
+  document.addEventListener('mousemove', e => { lcX = e.clientX; lcY = e.clientY; });
+
+  document.querySelectorAll('a, button, .work-card, .team-card, .hscroll-card').forEach(el => {
+    el.addEventListener('mouseenter', () => { document.body.classList.add('lc-grow'); isGrow = true; });
+    el.addEventListener('mouseleave', () => { document.body.classList.remove('lc-grow'); isGrow = false; });
+  });
+
+  let lcFrame;
+  function animLC() {
+    curX += (lcX - curX) * 0.14;
+    curY += (lcY - curY) * 0.14;
+    lc.style.left = curX + 'px';
+    lc.style.top  = curY + 'px';
+    // Squish: based on velocity
+    const dx = lcX - curX, dy = lcY - curY;
+    const speed = Math.sqrt(dx*dx + dy*dy);
+    const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+    const squish = Math.min(speed * 0.08, 0.4);
+    const rx = 1 + squish, ry = 1 - squish * 0.5;
+    lc.style.transform = `translate(-50%,-50%) rotate(${angle}deg) scale(${rx},${ry})`;
+    lcFrame = requestAnimationFrame(animLC);
+  }
+  animLC();
+})();
+
+// ── 4. PARALLAX BLOBS ────────────────────────────────────────
+const blobs = document.querySelectorAll('[data-parallax]');
+window.addEventListener('scroll', () => {
+  const sy = window.scrollY;
+  blobs.forEach(b => {
+    const speed = parseFloat(b.dataset.parallax) || 0.2;
+    b.style.transform = `translateY(${sy * speed}px)`;
+  });
+}, { passive: true });
+
+// ── 5. SECTION WIPE REVEAL ───────────────────────────────────
+const wipes = document.querySelectorAll('.section-wipe');
+const wipeObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('wiped'), 80);
+      wipeObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08 });
+wipes.forEach(w => wipeObs.observe(w));
+
+// ── 6. HERO TITLE word-by-word ───────────────────────────────
+(function() {
+  const heroTitle = document.querySelector('.hero-title');
+  if (!heroTitle) return;
+  function processNode(node) {
+    if (node.nodeType === 3) {
+      const words = node.textContent.split(/(\s+)/);
+      const frag = document.createDocumentFragment();
+      words.forEach(w => {
+        if (/^\s+$/.test(w)) { frag.appendChild(document.createTextNode(w)); }
+        else if (w) {
+          const span = document.createElement('span');
+          span.className = 'word';
+          const inner = document.createElement('span');
+          inner.className = 'word-inner';
+          inner.textContent = w;
+          span.appendChild(inner);
+          frag.appendChild(span);
+        }
+      });
+      node.parentNode.replaceChild(frag, node);
+    } else if (node.nodeType === 1 && node.tagName !== 'BR') {
+      Array.from(node.childNodes).forEach(processNode);
+    }
+  }
+  Array.from(heroTitle.childNodes).forEach(processNode);
+  setTimeout(() => heroTitle.classList.add('words-visible'), 150);
+})();
+
+// ── 7. TEXT SCRAMBLE ─────────────────────────────────────────
+class TextScramble {
+  constructor(el) {
+    this.el = el;
+    this.chars = '!<>-_\\/[]{}—=+*^?#________';
+    this.update = this.update.bind(this);
+  }
+  setText(newText) {
+    const oldText = this.el.innerText;
+    const length = Math.max(oldText.length, newText.length);
+    const promise = new Promise(r => this.resolve = r);
+    this.queue = [];
+    for (let i = 0; i < length; i++) {
+      const from = oldText[i] || '', to = newText[i] || '';
+      const start = Math.floor(Math.random() * 14), end = start + Math.floor(Math.random() * 14);
+      this.queue.push({ from, to, start, end });
+    }
+    cancelAnimationFrame(this.frameRequest);
+    this.frame = 0; this.update(); return promise;
+  }
+  update() {
+    let output = '', complete = 0;
+    for (let i = 0; i < this.queue.length; i++) {
+      let { from, to, start, end, char } = this.queue[i];
+      if (this.frame >= end) { complete++; output += to; }
+      else if (this.frame >= start) {
+        if (!char || Math.random() < 0.28) { char = this.chars[Math.floor(Math.random()*this.chars.length)]; this.queue[i].char = char; }
+        output += `<span style="color:var(--accent);opacity:0.5">${char}</span>`;
+      } else { output += from; }
+    }
+    this.el.innerHTML = output;
+    if (complete === this.queue.length) { this.resolve(); }
+    else { this.frameRequest = requestAnimationFrame(this.update); this.frame++; }
+  }
+}
+const scrambleObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const fx = new TextScramble(e.target);
+      const orig = e.target.textContent;
+      setTimeout(() => fx.setText(orig), 200);
+      scrambleObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('.section-eyebrow').forEach(el => scrambleObs.observe(el));
+
+// ── 8. MAGNETIC BUTTONS ──────────────────────────────────────
+function addMagnetic(sel, s = 0.35) {
+  document.querySelectorAll(sel).forEach(btn => {
+    btn.addEventListener('mousemove', e => {
+      const r = btn.getBoundingClientRect();
+      const dx = (e.clientX - (r.left+r.width/2)) * s;
+      const dy = (e.clientY - (r.top+r.height/2)) * s;
+      btn.style.transform = `translate(${dx}px,${dy}px)`;
+    });
+    btn.addEventListener('mouseleave', () => {
+      btn.style.transform = 'translate(0,0)';
+      btn.style.transition = 'transform 0.5s cubic-bezier(0.22,1,0.36,1)';
+      setTimeout(() => btn.style.transition = '', 500);
+    });
+  });
+}
+addMagnetic('.nav-cta', 0.35);
+addMagnetic('.hero-cta', 0.25);
+addMagnetic('.cf-btn-submit', 0.3);
+
+// ── 9. CURSOR TRAIL ──────────────────────────────────────────
+if (window.innerWidth > 1024) {
+  const trailDots = Array.from({length:5},(_,i)=>document.getElementById('trail'+i));
+  const tp = Array(5).fill(null).map(()=>({x:-100,y:-100}));
+  let mx=-100, my=-100;
+  document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; });
+  function animTrail() {
+    tp[0] = {x:mx,y:my};
+    for (let i=1;i<5;i++) {
+      tp[i] = { x:tp[i].x+(tp[i-1].x-tp[i].x)*0.35, y:tp[i].y+(tp[i-1].y-tp[i].y)*0.35 };
+    }
+    trailDots.forEach((d,i) => {
+      if(!d)return;
+      d.style.left=tp[i].x+'px'; d.style.top=tp[i].y+'px';
+      d.style.opacity=(0.55-i*0.1).toString();
+      d.style.transform=`translate(-50%,-50%) scale(${1-i*0.14})`;
+    });
+    requestAnimationFrame(animTrail);
+  }
+  animTrail();
+}
+
+// ── 10. 3D TILT on TEAM CARDS ────────────────────────────────
+document.querySelectorAll('.team-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const rx = ((e.clientY - r.top - r.height/2) / r.height) * 12;
+    const ry = -((e.clientX - r.left - r.width/2) / r.width) * 12;
+    card.style.transform = `perspective(600px) rotateX(${rx}deg) rotateY(${ry}deg) scale(1.04)`;
+    card.style.transition = 'transform 0.1s ease';
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = 'perspective(600px) rotateX(0) rotateY(0) scale(1)';
+    card.style.transition = 'transform 0.5s cubic-bezier(0.22,1,0.36,1)';
+  });
+});
+
+// ── 11. HERO BG TEXT MOUSE PARALLAX ─────────────────────────
+const bgText = document.querySelector('.hero-bg-text');
+if (bgText) {
+  document.addEventListener('mousemove', e => {
+    const xR = (e.clientX / window.innerWidth - 0.5) * 28;
+    const yR = (e.clientY / window.innerHeight - 0.5) * 14;
+    bgText.style.transform = `translate(calc(-50% + ${xR}px), calc(-50% + ${yR}px))`;
+  });
+}
+
+// ── 12. WORK CARD CLIP REVEAL ────────────────────────────────
+const workCards = document.querySelectorAll('.work-card');
+const workObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const idx = Array.from(workCards).indexOf(e.target);
+      setTimeout(() => {
+        e.target.style.transition = 'clip-path 0.85s cubic-bezier(0.77,0,0.18,1), opacity 0.6s ease, transform 0.6s ease, box-shadow 0.4s ease, border-color 0.4s ease';
+        e.target.style.clipPath = 'inset(0 0% 0 0)';
+        e.target.style.opacity = '1';
+      }, idx * 80);
+      workObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+workCards.forEach(c => { c.style.clipPath = 'inset(0 100% 0 0)'; c.style.opacity = '0'; workObs.observe(c); });
+
+// ── 13. GLITCH on SECTION TITLES ────────────────────────────
+document.querySelectorAll('.section-title').forEach(el => {
+  el.setAttribute('data-text', el.textContent);
+  let gi;
+  el.classList.add('glitch-text');
+  el.addEventListener('mouseenter', () => {
+    let count = 0;
+    gi = setInterval(() => {
+      el.classList.remove('glitching'); void el.offsetWidth; el.classList.add('glitching');
+      if (++count > 3) clearInterval(gi);
+    }, 180);
+  });
+  el.addEventListener('mouseleave', () => { clearInterval(gi); el.classList.remove('glitching'); });
+});
+
+// ── 14. SPOTLIGHT on ABOUT ──────────────────────────────────
+const aboutSection = document.querySelector('.about');
+const spotlight = document.getElementById('aboutSpotlight');
+if (aboutSection && spotlight) {
+  aboutSection.addEventListener('mousemove', e => {
+    const r = aboutSection.getBoundingClientRect();
+    const x = ((e.clientX - r.left) / r.width * 100).toFixed(2);
+    const y = ((e.clientY - r.top) / r.height * 100).toFixed(2);
+    aboutSection.style.setProperty('--mx', x + '%');
+    aboutSection.style.setProperty('--my', y + '%');
+  });
+}
+
+// ── 15. HORIZONTAL DRAG SCROLL ──────────────────────────────
+(function() {
+  const wrap = document.getElementById('hscrollWrap');
+  const track = document.getElementById('hscrollTrack');
+  if (!wrap || !track) return;
+  let isDragging = false, startX = 0, scrollLeft = 0, vel = 0, lastX = 0, momentum;
+
+  wrap.addEventListener('mousedown', e => {
+    isDragging = true; startX = e.pageX; scrollLeft = track._tx || 0; lastX = e.pageX;
+    clearInterval(momentum); wrap.style.cursor = 'grabbing';
+  });
+  document.addEventListener('mouseup', () => {
+    if (!isDragging) return; isDragging = false; wrap.style.cursor = 'grab';
+    let v = vel;
+    momentum = setInterval(() => {
+      v *= 0.93; track._tx = (track._tx||0) + v;
+      track._tx = Math.max(Math.min(track._tx, 0), wrap.offsetWidth - track.scrollWidth);
+      track.style.transform = `translateX(${track._tx}px)`;
+      if (Math.abs(v) < 0.5) clearInterval(momentum);
+    }, 16);
+  });
+  document.addEventListener('mousemove', e => {
+    if (!isDragging) return;
+    e.preventDefault();
+    vel = e.pageX - lastX; lastX = e.pageX;
+    track._tx = scrollLeft + (e.pageX - startX);
+    track._tx = Math.max(Math.min(track._tx, 0), wrap.offsetWidth - track.scrollWidth);
+    track.style.transform = `translateX(${track._tx}px)`;
+  });
+
+  // Touch support
+  wrap.addEventListener('touchstart', e => { startX = e.touches[0].pageX; scrollLeft = track._tx || 0; clearInterval(momentum); }, {passive:true});
+  wrap.addEventListener('touchmove', e => {
+    track._tx = scrollLeft + (e.touches[0].pageX - startX);
+    track._tx = Math.max(Math.min(track._tx, 0), wrap.offsetWidth - track.scrollWidth);
+    track.style.transform = `translateX(${track._tx}px)`;
+  }, {passive:true});
+
+  // Auto-scroll hint animation
+  let autoScroll = setInterval(() => {
+    if (!track._touched) {
+      track._tx = (track._tx||0) - 0.5;
+      if (track._tx < wrap.offsetWidth - track.scrollWidth) track._tx = 0;
+      track.style.transform = `translateX(${track._tx}px)`;
+    }
+  }, 16);
+  wrap.addEventListener('mousedown', () => { track._touched = true; clearInterval(autoScroll); });
+  wrap.addEventListener('touchstart', () => { track._touched = true; clearInterval(autoScroll); }, {passive:true});
+})();
+
+// ── 16. PAGE TRANSITION on internal links ───────────────────
+const pt = document.getElementById('page-transition');
+if (pt) {
+  const strips = pt.querySelectorAll('.pt-strip');
+  // Initial page load — strips come in then out
+  function ptLeave(cb) {
+    strips.forEach((s,i) => {
+      s.style.transformOrigin = 'bottom';
+      s.style.transform = 'scaleY(0)';
+      s.style.animation = 'none';
+      setTimeout(() => {
+        s.style.transition = `transform 0.14s ${i*0.05}s ease`;
+        s.style.transform = 'scaleY(1)';
+      }, 10);
+    });
+    setTimeout(cb, 550);
+  }
+  function ptEnter() {
+    strips.forEach((s,i) => {
+      s.style.transformOrigin = 'top';
+      setTimeout(() => {
+        s.style.transition = `transform 0.14s ${i*0.05}s ease`;
+        s.style.transform = 'scaleY(0)';
+      }, 10);
+    });
+  }
+
+  document.querySelectorAll('a[href]').forEach(a => {
+    const href = a.getAttribute('href');
+    if (!href || href.startsWith('#') || href.startsWith('mailto') || href.startsWith('tel') || href.startsWith('http') || href.includes('formspree') || a.dataset.scrollTarget) return;
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      ptLeave(() => { window.location.href = href; });
+    });
+  });
+  // On page load, animate in
+  ptEnter();
+}
+
+// ── 17. SCROLL SECTION DOTS ──────────────────────────────────
+const sectionDots = document.querySelectorAll('.scroll-dot');
+const pageSections = ['hero', 'clients', 'about', 'services', null, 'contact'];
+const siEl = document.getElementById('scrollIndicator');
+if (siEl) {
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 200) siEl.classList.add('visible'); else siEl.classList.remove('visible');
+    let active = 0;
+    pageSections.forEach((id, i) => {
+      if (!id) return;
+      const sec = document.getElementById(id) || (id === 'hero' ? document.querySelector('.hero') : null);
+      if (sec && sec.getBoundingClientRect().top <= window.innerHeight * 0.5) active = i;
+    });
+    sectionDots.forEach((d, i) => d.classList.toggle('active', i === active));
+  }, {passive:true});
+}
+
+// ── 18. CLICK RIPPLE ─────────────────────────────────────────
+document.querySelectorAll('.nav-cta, .cf-btn-submit, .btn-big, .hero-cta').forEach(btn => {
+  btn.style.position = 'relative'; btn.style.overflow = 'hidden';
+  btn.addEventListener('click', function(e) {
+    const r = btn.getBoundingClientRect();
+    const size = Math.max(r.width, r.height) * 2.2;
+    const ripple = document.createElement('span');
+    ripple.style.cssText = `position:absolute;width:${size}px;height:${size}px;left:${e.clientX-r.left-size/2}px;top:${e.clientY-r.top-size/2}px;background:rgba(255,255,255,0.22);border-radius:50%;transform:scale(0);animation:rippleGo 0.55s ease-out forwards;pointer-events:none;z-index:99;`;
+    btn.appendChild(ripple);
+    setTimeout(() => ripple.remove(), 650);
+  });
+});
+const rs = document.createElement('style');
+rs.textContent = `@keyframes rippleGo{to{transform:scale(1);opacity:0}}`;
+document.head.appendChild(rs);
+
+// ── 19. COUNTER GLOW ─────────────────────────────────────────
+const statNums = document.querySelectorAll('.about-stat-num');
+const counterPatch = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      statNums.forEach(el => { setTimeout(() => { el.classList.remove('counting'); el.classList.add('done'); }, 2400); });
+      counterPatch.disconnect();
+    }
+  });
+}, { threshold: 0.5 });
+const statsRow = document.querySelector('.about-bottom-row');
+if (statsRow) counterPatch.observe(statsRow);
+
+// ── 20. FOOTER SCRAMBLE links ────────────────────────────────
+document.querySelectorAll('.footer-socials a').forEach(link => {
+  const orig = link.textContent;
+  link.addEventListener('mouseenter', () => { const fx = new TextScramble(link); fx.setText(orig); });
+});
+
+// ── 21. TICKER SLOWDOWN on hover ────────────────────────────
+const tickerTrack = document.getElementById('tickerTrack');
+if (tickerTrack) {
+  const tickerEl = tickerTrack.closest('.ticker');
+  if (tickerEl) {
+    tickerEl.addEventListener('mouseenter', () => tickerTrack.style.animationDuration='60s');
+    tickerEl.addEventListener('mouseleave', () => tickerTrack.style.animationDuration='30s');
+  }
+}
+
+// ── 22. HSCROLL CARDS tilt on drag ───────────────────────────
+document.querySelectorAll('.hscroll-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const rx = ((e.clientY-r.top-r.height/2)/r.height)*8;
+    const ry = -((e.clientX-r.left-r.width/2)/r.width)*8;
+    card.style.transform = `perspective(700px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-14px)`;
+    card.style.transition = 'transform 0.1s ease, box-shadow 0.45s ease, border-color 0.3s';
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+    card.style.transition = 'transform 0.5s cubic-bezier(0.22,1,0.36,1), box-shadow 0.45s ease, border-color 0.3s';
+  });
+});
+
+// ── 23. KINETIC BAR animate on scroll ───────────────────────
+const kineticNums = document.querySelectorAll('.kinetic-big-num');
+const kineticObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      kineticNums.forEach((el, i) => {
+        setTimeout(() => {
+          el.style.transition = 'color 0.4s ease, -webkit-text-stroke 0.4s ease, transform 0.5s ease';
+          el.style.transform = 'translateY(0)';
+          el.style.opacity = '1';
+        }, i * 120);
+      });
+      kineticObs.disconnect();
+    }
+  });
+}, { threshold: 0.3 });
+const kineticBar = document.querySelector('.kinetic-bar');
+if (kineticBar) { kineticNums.forEach(n => { n.style.opacity='0'; n.style.transform='translateY(20px)'; }); kineticObs.observe(kineticBar); }
 
 </script>
 <script>
