@@ -2443,13 +2443,13 @@ body.lc-grow #liquid-cursor { width: 72px; height: 72px; }
 .kinetic-bar::before {
   content: '';
   position: absolute; inset: 0;
-  background: repeating-linear-gradient(90deg, transparent 0px, transparent calc(25% - 1px), rgba(255,255,255,0.025) calc(25% - 1px), rgba(255,255,255,0.025) 25%);
+  background: repeating-linear-gradient(90deg, transparent 0px, transparent calc(25% - 1px), rgba(255,255,255,0.07) calc(25% - 1px), rgba(255,255,255,0.07) 25%);
   pointer-events: none;
 }
 .kinetic-item {
   text-align: center;
   padding: 1rem;
-  border-right: 1px solid rgba(255,255,255,0.05);
+  border-right: 1px solid rgba(255,255,255,0.15);
   position: relative;
   cursor: default;
   transition: background 0.3s ease;
@@ -2458,16 +2458,16 @@ body.lc-grow #liquid-cursor { width: 72px; height: 72px; }
 .kinetic-item:hover { background: rgba(255,60,31,0.04); }
 .kinetic-big-num {
   font-size: clamp(2.8rem, 5vw, 5rem); font-weight: 700; letter-spacing: -0.05em;
-  color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.12);
+  color: transparent; -webkit-text-stroke: 1.5px rgba(255,255,255,0.6);
   line-height: 1; display: block;
   transition: -webkit-text-stroke 0.4s, color 0.4s;
 }
 .kinetic-item:hover .kinetic-big-num { -webkit-text-stroke: 1px var(--accent); color: var(--accent); }
 .kinetic-label {
   font-size: 0.63rem; letter-spacing: 0.18em; text-transform: uppercase;
-  color: rgba(255,255,255,0.25); display: block; margin-top: 0.5rem; transition: color 0.3s;
+  color: rgba(255,255,255,0.7); display: block; margin-top: 0.5rem; transition: color 0.3s;
 }
-.kinetic-item:hover .kinetic-label { color: rgba(255,255,255,0.6); }
+.kinetic-item:hover .kinetic-label { color: #fff; }
 
 /* REVERSED TICKER */
 .ticker-rev-wrap {
@@ -2863,22 +2863,22 @@ button,
   <div class="kx-gl" aria-hidden="true"></div>
   <div class="kx-top"><h2 class="kx-label">Our Projects</h2><p class="kx-hint">Scroll to explore</p></div>
   <ol class="kx-list">
-    <li class="kx-item" data-no="01" data-a="#e6dfd0" data-b="#a99a7c" data-media="1.jpg,assets/services/brand-01.jpg" data-pts="Logo design, Brand identity, Visual systems, Brand guidelines" data-cta="View brand work">
+    <li class="kx-item" data-no="01" data-a="#e6dfd0" data-b="#a99a7c" data-media="1.jpg" data-pts="Logo design, Brand identity, Visual systems, Brand guidelines" data-cta="View brand work">
       <h3>Brand Identity</h3><p>Logos, visual systems and guidelines that make a brand feel unmistakable.</p><a href="#contact">View brand work ↗</a>
     </li>
-    <li class="kx-item" data-no="02" data-a="#2b2f3a" data-b="#7f8aa3" data-media="1.png,assets/services/ui-01.jpg" data-pts="Website design, App interfaces, User flows, Prototypes" data-cta="View UI/UX work">
+    <li class="kx-item" data-no="02" data-a="#2b2f3a" data-b="#7f8aa3" data-media="1.png" data-pts="Website design, App interfaces, User flows, Prototypes" data-cta="View UI/UX work">
       <h3>UI/UX Design</h3><p>Website and app interfaces, user flows and prototypes designed to be easy to use.</p><a href="#contact">View UI/UX work ↗</a>
     </li>
-    <li class="kx-item" data-no="03" data-a="#3a1a10" data-b="#e0452a" data-media="2.png,assets/services/social-01.jpg" data-pts="Social posts, Campaign creatives, Ad creatives, Content design" data-cta="View social work">
+    <li class="kx-item" data-no="03" data-a="#3a1a10" data-b="#e0452a" data-media="2.png" data-pts="Social posts, Campaign creatives, Ad creatives, Content design" data-cta="View social work">
       <h3>Social Media &amp; Creatives</h3><p>Posts, campaign creatives and ad designs built to stop the scroll.</p><a href="#contact">View social work ↗</a>
     </li>
-    <li class="kx-item" data-no="04" data-a="#0d0d0d" data-b="#7a2a18" data-media="3.png,assets/services/ai-video-01.mp4,assets/services/ai-video-02.mp4,assets/services/ai-video-03.mp4" data-pts="AI videos, Product films, Reels, Motion graphics" data-cta="View AI work">
+    <li class="kx-item" data-no="04" data-a="#0d0d0d" data-b="#7a2a18" data-media="3.png" data-pts="AI videos, Product films, Reels, Motion graphics" data-cta="View AI work">
       <h3>Motion &amp; AI Video</h3><p>AI-powered motion, product films and social videos built with creative direction.</p><a href="#contact">View AI work ↗</a>
     </li>
-    <li class="kx-item" data-no="05" data-a="#3b2f4a" data-b="#d9a07a" data-media="No-Drama-llama.jpg,assets/services/ai-creative-01.jpg,assets/services/ai-creative-02.jpg,assets/services/ai-creative-03.jpg" data-pts="AI product visuals, Lifestyle imagery, Campaign concepts" data-cta="View AI work">
+    <li class="kx-item" data-no="05" data-a="#3b2f4a" data-b="#d9a07a" data-media="No-Drama-llama.jpg" data-pts="AI product visuals, Lifestyle imagery, Campaign concepts" data-cta="View AI work">
       <h3>AI Creative Production</h3><p>AI-assisted visual production for campaigns, products and digital content.</p><a href="#contact">View AI work ↗</a>
     </li>
-    <li class="kx-item" data-no="06" data-a="#d6d3c8" data-b="#6f7d6b" data-media="1.jpg,assets/services/web-01.jpg" data-pts="Landing pages, Business sites, E-commerce, Shopify / WordPress" data-cta="View web work">
+    <li class="kx-item" data-no="06" data-a="#d6d3c8" data-b="#6f7d6b" data-media="1.jpg" data-pts="Landing pages, Business sites, E-commerce, Shopify / WordPress" data-cta="View web work">
       <h3>Web Design</h3><p>Landing pages, business sites and online stores on Shopify and WordPress.</p><a href="#contact">View web work ↗</a>
     </li>
       <li class="kx-item" data-no="07" data-a="#0d0d0d" data-b="#2a3a7a" data-media="Final-5.mp4" data-pts="AI videos, Motion graphics, Reels, Product films" data-cta="View AI work">
@@ -4159,14 +4159,14 @@ if (kineticBar) { kineticNums.forEach(n => { n.style.opacity='0'; n.style.transf
       const tex = new THREE.CanvasTexture(cv); tex.anisotropy = 4; tex.minFilter = THREE.LinearFilter;
       const geo = new THREE.PlaneGeometry(CW, CH, 48, 1), p = geo.attributes.position;
       for (let v = 0; v < p.count; v++) { const th = p.getX(v) / R; p.setXYZ(v, R * Math.sin(th), p.getY(v), -R * Math.cos(th)); }
-      const mat = new THREE.MeshBasicMaterial({ map: tex, transparent: true, side: THREE.DoubleSide, fog: false });
+      const mat = new THREE.MeshBasicMaterial({ map: tex, transparent: true, side: THREE.FrontSide, fog: false });
       const mesh = new THREE.Mesh(geo, mat); mesh.rotation.y = -i * STEP; wall.add(mesh);
       const c = { i, cv, g: cv.getContext('2d'), tex, mesh, mat, items: [], k: 0, dirty: true, hov: 0,
         title: li.querySelector('h3').textContent, no: li.dataset.no, a: li.dataset.a, b: li.dataset.b, pts: li.dataset.pts,
         desc: li.querySelector('p').textContent, cta: li.dataset.cta, files: li.dataset.media.split(',')[0] };
       li.dataset.media.split(',').forEach(src => {
         const isV = /\.(mp4|webm)$/i.test(src), el = document.createElement(isV ? 'video' : 'img');
-        const ok = () => { c.items.push(el); c.dirty = true; };
+        const ok = () => { c.items.push(el); c.dirty = true; if (el.tagName === 'VIDEO' && cur >= 0 && Math.abs(c.i - cur) <= 1) el.play().catch(() => {}); };
         if (isV) { el.muted = true; el.loop = true; el.playsInline = true; el.preload = 'auto'; el.setAttribute('muted', ''); el.setAttribute('playsinline', ''); vids.appendChild(el); el.addEventListener('loadeddata', ok, { once: true }); }
         else el.addEventListener('load', ok, { once: true });
         el.src = src; // missing files just never fire load → placeholder stays
@@ -4182,7 +4182,7 @@ if (kineticBar) { kineticNums.forEach(n => { n.style.opacity='0'; n.style.transf
       if (m) {
         const iw = m.videoWidth || m.naturalWidth, ih = m.videoHeight || m.naturalHeight;
         if (iw) { const s = Math.max(W / iw, H / ih); g.drawImage(m, (W - iw * s) / 2, (H - ih * s) / 2, iw * s, ih * s); }
-        if (!m._chk) { m._chk = 1; try { g.getImageData(0, 0, 1, 1); } catch (e) { console.warn('Media blocked (open the site via http://, not file://):', c.files); c.items = []; c.k = 0; g.restore(); return draw(c); } }
+        if (!m._chk) { m._chk = 1; try { g.getImageData(0, 0, 1, 1); } catch (e) { c.items = []; c.k = 0; g.restore(); return draw(c); } }
       } else {
         g.textAlign = 'center'; g.font = '600 320px ' + F; g.lineWidth = 2; g.strokeStyle = 'rgba(255,255,255,.35)'; g.strokeText(c.no, W / 2, H / 2 + 60);
         g.font = '24px ' + F; g.fillStyle = 'rgba(255,255,255,.6)'; g.fillText('Add ' + c.files, W / 2, H / 2 + 130);
@@ -4212,7 +4212,7 @@ if (kineticBar) { kineticNums.forEach(n => { n.style.opacity='0'; n.style.transf
       const w = sec.clientWidth, h = sec.clientHeight; renderer.setSize(w, h, false);
       cam.aspect = w / h; cam.updateProjectionMatrix();
       const vw = 2 * DC * Math.tan(cam.fov * Math.PI / 360) * cam.aspect;
-      cam.userData.z = Math.max(0, CW / (.74 * vw) * DC - DC) + (CW / (.74 * vw) > 1 ? 0 : 0);
+      cam.userData.z = Math.max(0, CW / (.7 * vw) * DC - DC); cam.position.z = cam.userData.z;
     }
     resize(); addEventListener('resize', resize);
 
@@ -4252,6 +4252,7 @@ if (kineticBar) { kineticNums.forEach(n => { n.style.opacity='0'; n.style.transf
       cards.forEach(c => {
         const a = ease(Math.min(Math.abs(c.i - st.pos), 1));
         c.hov += ((c.i === hover ? 1 : 0) - c.hov) * .12;
+        c.mesh.visible = Math.abs((st.pos - c.i) * STEP) < 1.7;
         const s = 1 + .05 * (1 - a) + .025 * c.hov; c.mesh.scale.set(s, s, 1);
         c.mat.color.setScalar(.5 + .5 * (1 - a));
         const vid = c.items[c.k] && c.items[c.k].tagName === 'VIDEO' && Math.abs(c.i - cur) <= 1;
@@ -4259,7 +4260,6 @@ if (kineticBar) { kineticNums.forEach(n => { n.style.opacity='0'; n.style.transf
       });
       cam.position.x += (mouse.x * .22 - cam.position.x) * .06;
       cam.position.y += (.35 + mouse.y * .1 - cam.position.y) * .06;
-      cam.position.z += ((cam.userData.z || 0) - cam.position.z) * .1;
       cam.lookAt(0, 0, -DC);
       renderer.render(scene, cam);
     }
