@@ -2861,7 +2861,7 @@ button,
 <!-- SERVICES (Three.js curved 3D gallery) -->
 <section class="kx-services" id="services" aria-label="Our Projects">
   <div class="kx-gl" aria-hidden="true"></div>
-  <div class="kx-top"><h2 class="kx-label">Our Projects</h2><p class="kx-hint">Scroll to explore</p></div>
+  <div class="kx-top"><h2 class="kx-label">Our Projects</h2><p class="kx-hint">Hover a card to pause</p></div>
   <ol class="kx-list">
     <li class="kx-item" data-no="01" data-a="#e6dfd0" data-b="#a99a7c" data-media="1.jpg" data-pts="Logo design, Brand identity, Visual systems, Brand guidelines" data-cta="View brand work">
       <h3>Brand Identity</h3><p>Logos, visual systems and guidelines that make a brand feel unmistakable.</p><a href="#contact">View brand work ↗</a>
@@ -2886,6 +2886,18 @@ button,
     </li>
     <li class="kx-item" data-no="08" data-a="#0d0d0d" data-b="#6a2a5a" data-media="Comp_1_1.mp4" data-pts="AI videos, Motion graphics, Reels, Product films" data-cta="View AI work">
       <h3>AI Video Reel 02</h3><p>AI-powered motion, product films and social videos built with creative direction.</p><a href="#contact">View AI work ↗</a>
+    </li>
+      <li class="kx-item" data-no="09" data-a="#0d0d0d" data-b="#1d3557" data-media="final.mp4" data-pts="AI videos, Motion graphics, Reels, Product films" data-cta="View AI work">
+      <h3>AI Video Reel 03</h3><p>AI-powered motion, product films and social videos built with creative direction.</p><a href="#contact">View AI work ↗</a>
+    </li>
+    <li class="kx-item" data-no="10" data-a="#0d0d0d" data-b="#7a4a1a" data-media="Comp-1.mp4" data-pts="AI videos, Motion graphics, Reels, Product films" data-cta="View AI work">
+      <h3>AI Video Reel 04</h3><p>AI-powered motion, product films and social videos built with creative direction.</p><a href="#contact">View AI work ↗</a>
+    </li>
+    <li class="kx-item" data-no="11" data-a="#0d0d0d" data-b="#2a6a6a" data-media="EP-1.mp4" data-pts="AI videos, Motion graphics, Reels, Product films" data-cta="View AI work">
+      <h3>AI Video Reel 05</h3><p>AI-powered motion, product films and social videos built with creative direction.</p><a href="#contact">View AI work ↗</a>
+    </li>
+    <li class="kx-item" data-no="12" data-a="#0d0d0d" data-b="#6a6a2a" data-media="Comp_1_2.mp4" data-pts="AI videos, Motion graphics, Reels, Product films" data-cta="View AI work">
+      <h3>AI Video Reel 06</h3><p>AI-powered motion, product films and social videos built with creative direction.</p><a href="#contact">View AI work ↗</a>
     </li>
   </ol>
   <div class="kx-info" aria-live="polite">
@@ -4166,7 +4178,7 @@ if (kineticBar) { kineticNums.forEach(n => { n.style.opacity='0'; n.style.transf
         desc: li.querySelector('p').textContent, cta: li.dataset.cta, files: li.dataset.media.split(',')[0] };
       li.dataset.media.split(',').forEach(src => {
         const isV = /\.(mp4|webm)$/i.test(src), el = document.createElement(isV ? 'video' : 'img');
-        const ok = () => { c.items.push(el); c.dirty = true; if (el.tagName === 'VIDEO' && cur >= 0 && Math.abs(c.i - cur) <= 1) el.play().catch(() => {}); };
+        const ok = () => { c.items.push(el); c.dirty = true; if (el.tagName === 'VIDEO' && cur >= 0 && cd(c.i, cur) <= 1) el.play().catch(() => {}); };
         if (isV) { el.muted = true; el.loop = true; el.playsInline = true; el.preload = 'auto'; el.setAttribute('muted', ''); el.setAttribute('playsinline', ''); vids.appendChild(el); el.addEventListener('loadeddata', ok, { once: true }); }
         else el.addEventListener('load', ok, { once: true });
         el.src = src; // missing files just never fire load → placeholder stays
@@ -4174,6 +4186,7 @@ if (kineticBar) { kineticNums.forEach(n => { n.style.opacity='0'; n.style.transf
       return c;
     });
     const n = cards.length;
+    const cd = (a, b) => { const d = Math.abs(a - b); return Math.min(d, n - d); }; // circular distance
 
     function draw(c) {
       const g = c.g, W = c.cv.width, H = c.cv.height, m = c.items[c.k];
@@ -4201,7 +4214,7 @@ if (kineticBar) { kineticNums.forEach(n => { n.style.opacity='0'; n.style.transf
     function fill() { const c = cards[cur]; info.num.textContent = pad(cur + 1) + ' / ' + pad(n); info.desc.textContent = c.desc; info.cta.textContent = c.cta + ' ↗'; }
     function activate(i) {
       const first = cur === -1; cur = i;
-      cards.forEach(c => c.items.forEach(el => { if (el.tagName === 'VIDEO') { if (Math.abs(c.i - cur) <= 1) el.play().catch(() => {}); else el.pause(); } }));
+      cards.forEach(c => c.items.forEach(el => { if (el.tagName === 'VIDEO') { if (cd(c.i, cur) <= 1) el.play().catch(() => {}); else el.pause(); } }));
       if (first) return fill();
       gsap.to(info.box, { opacity: 0, y: 6, duration: .18, overwrite: true, onComplete: () => { fill(); gsap.to(info.box, { opacity: 1, y: 0, duration: .35 }); } });
     }
@@ -4216,13 +4229,10 @@ if (kineticBar) { kineticNums.forEach(n => { n.style.opacity='0'; n.style.transf
     }
     resize(); addEventListener('resize', resize);
 
-    // scroll → position
-    const st = { pos: 0 };
-    const tw = gsap.to(st, { pos: n - 1, ease: 'none', scrollTrigger: {
-      trigger: sec, start: 'top top', end: () => '+=' + (n - 1) * Math.max(innerHeight * .8, 520),
-      pin: true, scrub: 1, anticipatePin: 1, invalidateOnRefresh: true,
-      snap: { snapTo: 1 / (n - 1), duration: { min: .2, max: .55 }, delay: .08, ease: 'power2.inOut' } } });
-    ScrollTrigger.refresh();
+    // autoplay loop: moves one card every few seconds, pauses while hovered / touched
+    const st = { pos: 0 }; let paused = false, moving = false, speed = 0;
+    const SPEED = .22; // cards per second (continuous drift)
+    const goTo = t => { moving = true; gsap.to(st, { pos: t, duration: 1.3, ease: 'power3.inOut', overwrite: true, onComplete: () => { moving = false; st.pos = ((st.pos % n) + n) % n; } }); };
 
     // pointer: parallax, hover, click
     const ray = new THREE.Raycaster(), ptr = new THREE.Vector2(9, 9), mouse = { x: 0, y: 0 };
@@ -4230,14 +4240,19 @@ if (kineticBar) { kineticNums.forEach(n => { n.style.opacity='0'; n.style.transf
     let hover = -1;
     const onMove = e => { const r = host.getBoundingClientRect(); ptr.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1); mouse.x = ptr.x; mouse.y = ptr.y; };
     const onLeave = () => { ptr.set(9, 9); mouse.x = mouse.y = 0; };
-    const pick = () => { ray.setFromCamera(ptr, cam); const h = ray.intersectObjects(cards.map(c => c.mesh))[0]; return h ? cards.findIndex(c => c.mesh === h.object) : -1; };
+    const pick = () => { ray.setFromCamera(ptr, cam); const h = ray.intersectObjects(cards.filter(c => c.mesh.visible).map(c => c.mesh))[0]; return h ? cards.findIndex(c => c.mesh === h.object) : -1; };
     const onClick = e => {
       onMove(e); const i = pick(); if (i < 0) return;
-      if (i === Math.round(st.pos)) { const t = document.getElementById('contact'); t && t.scrollIntoView({ behavior: 'smooth' }); }
-      else { const s = tw.scrollTrigger; scrollTo({ top: s.start + (i / (n - 1)) * (s.end - s.start), behavior: 'smooth' }); }
+      if (i === cur && !moving) { const t = document.getElementById('contact'); t && t.scrollIntoView({ behavior: 'smooth' }); }
+      else if (!moving) goTo(st.pos + ((i - st.pos + n / 2) % n + n) % n - n / 2);
     };
     const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
     if (fine) { host.addEventListener('pointermove', onMove); host.addEventListener('pointerleave', onLeave); }
+    // touch: pause only while a finger is held on a card
+    let touching = false;
+    const onDown = e => { if (fine) return; onMove(e); touching = pick() >= 0; };
+    const onUp = () => { touching = false; };
+    host.addEventListener('pointerdown', onDown); host.addEventListener('pointerup', onUp); host.addEventListener('pointercancel', onUp);
     host.addEventListener('click', onClick);
 
     // render loop (only while the section is on screen)
@@ -4245,17 +4260,22 @@ if (kineticBar) { kineticNums.forEach(n => { n.style.opacity='0'; n.style.transf
     const io = new IntersectionObserver(es => { live = es[0].isIntersecting; }, { threshold: 0 }); io.observe(sec);
     const ease = t => t * t * (3 - 2 * t);
     function frame() {
-      if (!live) return;
-      wall.rotation.y = st.pos * STEP;
-      const act = Math.round(st.pos); if (act !== cur) activate(act);
+      if (!live) { frame.t = 0; return; }
+      const now = performance.now(), dt = Math.min((now - (frame.t || now)) / 1000, .25); frame.t = now;
+      paused = fine ? hover >= 0 : touching; // stops only while the pointer is on a card
+      speed += ((paused ? 0 : SPEED) - speed) * Math.min(1, dt * 4); // eases to a stop on hover, eases back in after
+      if (!moving) { st.pos += speed * dt; if (st.pos >= n) st.pos -= n; }
+      const act = ((Math.round(st.pos) % n) + n) % n; if (act !== cur) activate(act);
       if (fine) { const h = pick(); if (h !== hover) { hover = h; document.body.style.cursor = ''; if (curEl) curEl.classList.toggle('hovered', h >= 0); if (curTxt) { curTxt.textContent = 'VIEW'; curTxt.style.opacity = h >= 0 ? '1' : '0'; } } }
       cards.forEach(c => {
-        const a = ease(Math.min(Math.abs(c.i - st.pos), 1));
+        const rel = ((c.i - st.pos + n / 2) % n + n) % n - n / 2;
+        c.mesh.rotation.y = -rel * STEP;
+        const a = ease(Math.min(Math.abs(rel), 1));
         c.hov += ((c.i === hover ? 1 : 0) - c.hov) * .12;
-        c.mesh.visible = Math.abs((st.pos - c.i) * STEP) < 1.7;
+        c.mesh.visible = Math.abs(rel * STEP) < 1.7;
         const s = 1 + .05 * (1 - a) + .025 * c.hov; c.mesh.scale.set(s, s, 1);
         c.mat.color.setScalar(.5 + .5 * (1 - a));
-        const vid = c.items[c.k] && c.items[c.k].tagName === 'VIDEO' && Math.abs(c.i - cur) <= 1;
+        const vid = c.items[c.k] && c.items[c.k].tagName === 'VIDEO' && cd(c.i, cur) <= 1;
         if (c.dirty || vid) draw(c);
       });
       cam.position.x += (mouse.x * .22 - cam.position.x) * .06;
@@ -4267,7 +4287,7 @@ if (kineticBar) { kineticNums.forEach(n => { n.style.opacity='0'; n.style.transf
 
     return () => {
       gsap.ticker.remove(frame); clearInterval(cycle); io.disconnect(); removeEventListener('resize', resize);
-      host.removeEventListener('pointermove', onMove); host.removeEventListener('pointerleave', onLeave); host.removeEventListener('click', onClick);
+      host.removeEventListener('pointermove', onMove); host.removeEventListener('pointerleave', onLeave); host.removeEventListener('click', onClick); host.removeEventListener('pointerdown', onDown); host.removeEventListener('pointerup', onUp); host.removeEventListener('pointercancel', onUp); gsap.killTweensOf(st);
       cards.forEach(c => { c.items.forEach(el => el.pause && el.pause()); c.tex.dispose(); c.mesh.geometry.dispose(); c.mat.dispose(); });
       renderer.dispose(); host.innerHTML = ''; sec.classList.remove('kx-gl-on'); gsap.set(info.box, { clearProps: 'all' });
     };
