@@ -2616,6 +2616,37 @@ button,
     display: none !important;
   }
 }
+
+/* ===== SERVICES — THREE.JS CURVED GALLERY ===== */
+.kx-services { background: #0d0d0d; color: #fff; position: relative; overflow: hidden; padding: 6.5rem 3rem 4rem; border-bottom: 1px solid rgba(255,255,255,.08); }
+.kx-gl, .kx-info, .kx-hint { display: none; }
+.kx-label { font-size: .8rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.7); margin-bottom: 2rem; }
+.kx-list { list-style: none; max-width: 760px; }
+.kx-item { padding: 1.6rem 0; border-top: 1px solid rgba(255,255,255,.12); }
+.kx-item h3 { font-size: clamp(1.6rem, 4vw, 2.6rem); font-weight: 600; letter-spacing: -.03em; }
+.kx-item p { color: rgba(255,255,255,.62); margin: .4rem 0 .8rem; }
+.kx-item a, .kx-cta { color: #fff; font-size: .74rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; text-decoration: none; }
+.kx-item a:focus-visible, .kx-cta:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+/* WebGL mode */
+.kx-services.kx-gl-on { height: 100vh; height: 100svh; padding: 0; }
+.kx-gl-on .kx-gl { display: block; position: absolute; inset: 0; }
+.kx-gl canvas { display: block; width: 100%; height: 100%; }
+.kx-gl-on .kx-top { position: absolute; z-index: 2; top: 5.6rem; left: 3rem; right: 3rem; display: flex; justify-content: space-between; align-items: baseline; pointer-events: none; }
+.kx-gl-on .kx-label { margin: 0; }
+.kx-gl-on .kx-hint { display: block; font-size: .72rem; letter-spacing: .06em; color: rgba(255,255,255,.4); }
+.kx-gl-on .kx-list { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.kx-gl-on .kx-info { display: none; align-items: center; gap: 1.6rem; position: absolute; z-index: 2; left: 3rem; right: 3rem; bottom: 1.8rem; pointer-events: none; }
+.kx-gl-on .kx-info > * { pointer-events: auto; }
+.kx-num { font-size: .78rem; letter-spacing: .14em; color: var(--accent); font-weight: 500; white-space: nowrap; }
+.kx-desc { flex: 1; font-size: .88rem; color: rgba(255,255,255,.65); line-height: 1.5; max-width: 52ch; }
+.kx-cta { padding: .65rem 1.2rem; border: 1px solid rgba(255,255,255,.35); border-radius: 4px; white-space: nowrap; transition: background .25s, border-color .25s; }
+.kx-cta:hover { background: var(--accent); border-color: var(--accent); }
+@media (max-width: 767px) {
+  .kx-services { padding: 6rem 1.2rem 3rem; }
+  .kx-gl-on .kx-top { left: 1.2rem; right: 1.2rem; top: 5rem; }
+  .kx-gl-on .kx-info { left: 1.2rem; right: 1.2rem; bottom: 1.2rem; flex-wrap: wrap; gap: .5rem 1rem; }
+  .kx-desc { flex-basis: 100%; order: 3; font-size: .8rem; }
+}
 </style>
 </head>
 <body>
@@ -2653,7 +2684,6 @@ button,
   <div class="scroll-dot" data-section="2"></div>
   <div class="scroll-dot" data-section="3"></div>
   <div class="scroll-dot" data-section="4"></div>
-  <div class="scroll-dot" data-section="5"></div>
 </div>
 
 <!-- CUSTOM CURSOR -->
@@ -2670,7 +2700,6 @@ button,
   </button>
   <div class="nav-right" id="navRight">
     <ul class="nav-links">
-      <li><a href="index.html#clients" data-scroll-target="clients">Work</a></li>
       <li><a href="index.html#about" data-scroll-target="about">About</a></li>
       <li><a href="index.html#services" data-scroll-target="services">Services</a></li>
       <li><a href="https://tools.kjscreative.in/" id="toolsAccessLink">Tools</a></li>
@@ -2705,7 +2734,7 @@ button,
       <p class="hero-desc">
         A full-service creative agency crafting brand identities, digital experiences, and content that drives real growth.
       </p>
-      <a href="index.html#clients" class="hero-cta" data-scroll-target="clients">
+      <a href="index.html#services" class="hero-cta" data-scroll-target="services">
         See our work <span class="hero-cta-arrow">↗</span>
       </a>
     </div>
@@ -2772,12 +2801,12 @@ button,
   </div>
 </div>
 
-<!-- HORIZONTAL SCROLL — OUR PROCESS -->
+<!-- HORIZONTAL SCROLL — OUR SERVICES -->
 <section class="hscroll-section">
   <div class="hscroll-header reveal">
     <div>
-      <p class="section-eyebrow">How We Work</p>
-      <h2 class="section-title">Our <span class="italic">Process</span></h2>
+      <p class="section-eyebrow">What We Do</p>
+      <h2 class="section-title">Our <span class="italic">Services</span></h2>
     </div>
     <div class="hscroll-drag-hint">← Drag to explore →</div>
   </div>
@@ -2785,70 +2814,84 @@ button,
     <div class="hscroll-track" id="hscrollTrack">
       <div class="hscroll-card">
         <div class="hscroll-card-num">01</div>
-        <div class="hscroll-card-title">Discovery & Strategy</div>
-        <div class="hscroll-card-body">We start by deeply understanding your brand, audience, goals, and competition. This clarity becomes the foundation everything is built on.</div>
-        <span class="hscroll-card-tag">Week 1</span>
+        <div class="hscroll-card-title">Branding &amp; Identity</div>
+        <div class="hscroll-card-body">Logos, brand systems, visual language and guidelines that give your brand a distinct identity.</div>
+        <span class="hscroll-card-tag">Design</span>
       </div>
       <div class="hscroll-card">
         <div class="hscroll-card-num">02</div>
-        <div class="hscroll-card-title">Concept & Moodboard</div>
-        <div class="hscroll-card-body">Visual directions are explored. Moodboards, references, and initial concepts are presented — you choose the path that resonates most.</div>
-        <span class="hscroll-card-tag">Week 1–2</span>
+        <div class="hscroll-card-title">UI/UX Design</div>
+        <div class="hscroll-card-body">Web and mobile interfaces, user flows and prototypes designed around how people actually use them.</div>
+        <span class="hscroll-card-tag">Design</span>
       </div>
       <div class="hscroll-card">
         <div class="hscroll-card-num">03</div>
-        <div class="hscroll-card-title">Design & Creation</div>
-        <div class="hscroll-card-body">Our designers craft pixel-perfect visuals aligned to your brand strategy. Every detail is intentional — from typography to color psychology.</div>
-        <span class="hscroll-card-tag">Week 2–3</span>
+        <div class="hscroll-card-title">Shopify &amp; WordPress</div>
+        <div class="hscroll-card-body">Fast, scalable, conversion-optimised websites built to turn visitors into customers.</div>
+        <span class="hscroll-card-tag">Web</span>
       </div>
       <div class="hscroll-card">
         <div class="hscroll-card-num">04</div>
-        <div class="hscroll-card-title">Review & Refinement</div>
-        <div class="hscroll-card-body">You review. We refine. Collaborative feedback rounds ensure the final output is exactly what you envisioned — and better.</div>
-        <span class="hscroll-card-tag">Week 3–4</span>
+        <div class="hscroll-card-title">Social Media &amp; Creatives</div>
+        <div class="hscroll-card-body">Reels, carousels, motion graphics and video editing made to stop the scroll.</div>
+        <span class="hscroll-card-tag">Social</span>
       </div>
       <div class="hscroll-card">
         <div class="hscroll-card-num">05</div>
-        <div class="hscroll-card-title">Launch & Handoff</div>
-        <div class="hscroll-card-body">Final files, brand guidelines, and assets are delivered in a clean package. We ensure you're fully equipped to use everything confidently.</div>
-        <span class="hscroll-card-tag">Week 4</span>
+        <div class="hscroll-card-title">E-commerce Management</div>
+        <div class="hscroll-card-body">Marketplace strategy, listing and scaling of your store across platforms.</div>
+        <span class="hscroll-card-tag">E-commerce</span>
       </div>
       <div class="hscroll-card">
         <div class="hscroll-card-num">06</div>
-        <div class="hscroll-card-title">Ongoing Support</div>
-        <div class="hscroll-card-body">Great brands evolve. We stay available for updates, new campaigns, and scaling your creative — growing with you long-term.</div>
-        <span class="hscroll-card-tag">Ongoing</span>
+        <div class="hscroll-card-title">Ads &amp; Performance Marketing</div>
+        <div class="hscroll-card-body">ROI-focused paid campaigns across Meta and Google, tracked with proper analytics.</div>
+        <span class="hscroll-card-tag">Marketing</span>
+      </div>
+      <div class="hscroll-card">
+        <div class="hscroll-card-num">07</div>
+        <div class="hscroll-card-title">AI Content &amp; Creative Production</div>
+        <div class="hscroll-card-body">Next-gen AI-powered content delivered at scale and speed.</div>
+        <span class="hscroll-card-tag">New</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- GALLERY EXPANDING CARDS -->
-<section class="gallery-section" id="clients">
-  <div class="gallery-section-header reveal">
-    <p class="section-eyebrow">Work Showcase</p>
-    <h2 class="section-title">Our <span class="italic">Projects</span></h2>
-  </div>
-
-  <div class="gallery-stage">
-    <div class="gallery-carousel">
-      <div class="gallery-container" id="galleryCarousel">
-        <div class="card" tabindex="0" style="background-image: url('1.jpg'); background-color: #1a0a2e;">
-        </div>
-
-        <div class="card" tabindex="0" style="background-image: url('1.png'); background-color: #0a1628;">
-        </div>
-
-        <div class="card" tabindex="0" style="background-image: url('2.png'); background-color: #1a1200;">
-        </div>
-
-        <div class="card" tabindex="0" style="background-image: url('3.png'); background-color: #0a1a0a;">
-        </div>
-
-        <div class="card" tabindex="0" style="background-image: url('No-Drama-llama.jpg'); background-color: #2b1b22;">
-        </div>
-      </div>
-    </div>
+<!-- SERVICES (Three.js curved 3D gallery) -->
+<section class="kx-services" id="services" aria-label="Our Projects">
+  <div class="kx-gl" aria-hidden="true"></div>
+  <div class="kx-top"><h2 class="kx-label">Our Projects</h2><p class="kx-hint">Scroll to explore</p></div>
+  <ol class="kx-list">
+    <li class="kx-item" data-no="01" data-a="#e6dfd0" data-b="#a99a7c" data-media="1.jpg,assets/services/brand-01.jpg" data-pts="Logo design, Brand identity, Visual systems, Brand guidelines" data-cta="View brand work">
+      <h3>Brand Identity</h3><p>Logos, visual systems and guidelines that make a brand feel unmistakable.</p><a href="#contact">View brand work ↗</a>
+    </li>
+    <li class="kx-item" data-no="02" data-a="#2b2f3a" data-b="#7f8aa3" data-media="1.png,assets/services/ui-01.jpg" data-pts="Website design, App interfaces, User flows, Prototypes" data-cta="View UI/UX work">
+      <h3>UI/UX Design</h3><p>Website and app interfaces, user flows and prototypes designed to be easy to use.</p><a href="#contact">View UI/UX work ↗</a>
+    </li>
+    <li class="kx-item" data-no="03" data-a="#3a1a10" data-b="#e0452a" data-media="2.png,assets/services/social-01.jpg" data-pts="Social posts, Campaign creatives, Ad creatives, Content design" data-cta="View social work">
+      <h3>Social Media &amp; Creatives</h3><p>Posts, campaign creatives and ad designs built to stop the scroll.</p><a href="#contact">View social work ↗</a>
+    </li>
+    <li class="kx-item" data-no="04" data-a="#0d0d0d" data-b="#7a2a18" data-media="3.png,assets/services/ai-video-01.mp4,assets/services/ai-video-02.mp4,assets/services/ai-video-03.mp4" data-pts="AI videos, Product films, Reels, Motion graphics" data-cta="View AI work">
+      <h3>Motion &amp; AI Video</h3><p>AI-powered motion, product films and social videos built with creative direction.</p><a href="#contact">View AI work ↗</a>
+    </li>
+    <li class="kx-item" data-no="05" data-a="#3b2f4a" data-b="#d9a07a" data-media="No-Drama-llama.jpg,assets/services/ai-creative-01.jpg,assets/services/ai-creative-02.jpg,assets/services/ai-creative-03.jpg" data-pts="AI product visuals, Lifestyle imagery, Campaign concepts" data-cta="View AI work">
+      <h3>AI Creative Production</h3><p>AI-assisted visual production for campaigns, products and digital content.</p><a href="#contact">View AI work ↗</a>
+    </li>
+    <li class="kx-item" data-no="06" data-a="#d6d3c8" data-b="#6f7d6b" data-media="1.jpg,assets/services/web-01.jpg" data-pts="Landing pages, Business sites, E-commerce, Shopify / WordPress" data-cta="View web work">
+      <h3>Web Design</h3><p>Landing pages, business sites and online stores on Shopify and WordPress.</p><a href="#contact">View web work ↗</a>
+    </li>
+      <li class="kx-item" data-no="07" data-a="#0d0d0d" data-b="#2a3a7a" data-media="Final-5.mp4" data-pts="AI videos, Motion graphics, Reels, Product films" data-cta="View AI work">
+      <h3>AI Video Reel 01</h3><p>AI-powered motion, product films and social videos built with creative direction.</p><a href="#contact">View AI work ↗</a>
+    </li>
+    <li class="kx-item" data-no="08" data-a="#0d0d0d" data-b="#6a2a5a" data-media="Comp_1_1.mp4" data-pts="AI videos, Motion graphics, Reels, Product films" data-cta="View AI work">
+      <h3>AI Video Reel 02</h3><p>AI-powered motion, product films and social videos built with creative direction.</p><a href="#contact">View AI work ↗</a>
+    </li>
+  </ol>
+  <div class="kx-info" aria-live="polite">
+    <p class="kx-num">01 / 06</p>
+    <p class="kx-desc"></p>
+    <a class="kx-cta" href="#contact">View work ↗</a>
   </div>
 </section>
 
@@ -2884,76 +2927,6 @@ button,
   </div>
 </section>
  
-<!-- SERVICES -->
-<section class="services" id="services">
-  <div class="section-header">
-    <div>
-      <p class="section-eyebrow reveal">What We Do</p>
-      <h2 class="section-title reveal d1">Our <span class="italic">Services</span></h2>
-    </div>
-  </div>
-  <div class="services-list">
-    <div class="service-row reveal">
-      <div class="service-num">01</div>
-      <div class="service-name-wrap">
-        <div class="service-name">Branding & Identity</div>
-        <div class="service-sub">Logos, brand systems, visual language, guidelines</div>
-      </div>
-      <div class="service-arrow">↗</div>
-    </div>
-    <div class="service-row reveal d1">
-      <div class="service-num">02</div>
-      <div class="service-name-wrap">
-        <div class="service-name">UI/UX Design</div>
-        <div class="service-sub">Web & mobile interfaces, user flows, prototypes</div>
-      </div>
-      <div class="service-arrow">↗</div>
-    </div>
-    <div class="service-row reveal d2">
-      <div class="service-num">03</div>
-      <div class="service-name-wrap">
-        <div class="service-name">Shopify & WordPress</div>
-        <div class="service-sub">Fast, scalable, conversion-optimised websites</div>
-      </div>
-      <div class="service-arrow">↗</div>
-    </div>
-    <div class="service-row reveal d3">
-      <div class="service-num">04</div>
-      <div class="service-name-wrap">
-        <div class="service-name">Social Media & Creatives</div>
-        <div class="service-sub">Reels, carousels, motion graphics, video editing</div>
-      </div>
-      <div class="service-arrow">↗</div>
-    </div>
-    <div class="service-row reveal d4">
-      <div class="service-num">05</div>
-      <div class="service-name-wrap">
-        <div class="service-name">E-commerce Management</div>
-        <div class="service-sub">Marketplace strategy, listing, scaling across platforms</div>
-      </div>
-      <div class="service-arrow">↗</div>
-    </div>
-    <div class="service-row reveal d5">
-      <div class="service-num">06</div>
-      <div class="service-name-wrap">
-        <div class="service-name">Ads & Performance Marketing</div>
-        <div class="service-sub">ROI-focused paid campaigns, meta, google, analytics</div>
-      </div>
-      <div class="service-arrow">↗</div>
-    </div>
-    <div class="service-row reveal d6">
-      <div class="service-num">07</div>
-      <div class="service-name-wrap">
-        <div class="service-name">
-          AI Content & Creative Production
-          <span class="service-tag">New</span>
-        </div>
-        <div class="service-sub">Next-gen AI-powered content at scale and speed</div>
-      </div>
-      <div class="service-arrow">↗</div>
-    </div>
-  </div>
-</section>
  
 <!-- TESTIMONIALS -->
 <section class="testimonials section-wipe">
@@ -4053,7 +4026,7 @@ if (pt) {
 
 // ── 17. SCROLL SECTION DOTS ──────────────────────────────────
 const sectionDots = document.querySelectorAll('.scroll-dot');
-const pageSections = ['hero', 'clients', 'about', 'services', null, 'contact'];
+const pageSections = ['hero', 'services', 'about', null, 'contact'];
 const siEl = document.getElementById('scrollIndicator');
 if (siEl) {
   window.addEventListener('scroll', () => {
@@ -4147,6 +4120,159 @@ const kineticObs = new IntersectionObserver(entries => {
 const kineticBar = document.querySelector('.kinetic-bar');
 if (kineticBar) { kineticNums.forEach(n => { n.style.opacity='0'; n.style.transform='translateY(20px)'; }); kineticObs.observe(kineticBar); }
 
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+// ── SERVICES: curved 3D gallery (Three.js + GSAP ScrollTrigger) ──
+(function () {
+  const sec = document.getElementById('services');
+  if (!sec || !window.gsap || !window.ScrollTrigger || !window.THREE) return; // fallback = plain list
+  gsap.registerPlugin(ScrollTrigger);
+  const mm = gsap.matchMedia();
+  mm.add('(prefers-reduced-motion: no-preference)', () => {
+    const host = sec.querySelector('.kx-gl');
+    let renderer;
+    try { renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false }); } catch (e) { return; }
+    sec.classList.add('kx-gl-on');
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+    renderer.setClearColor(0x0d0d0d, 1);
+    host.appendChild(renderer.domElement);
+
+    const F = 'Archivo, "Helvetica Neue", Arial, sans-serif';
+    const SHOW_NAMES = false; // service names on cards hidden for now
+    const CW = 2.4, CH = 2.2, R = 4.2, DC = 5.2, GAP = .14, STEP = (CW + GAP) / R;
+    const scene = new THREE.Scene(); scene.fog = new THREE.Fog(0x0d0d0d, 7, 24);
+    const cam = new THREE.PerspectiveCamera(38, 1, .1, 60);
+    const grid = new THREE.GridHelper(80, 80, 0x242424, 0x1a1a1a); grid.position.y = -1.5; scene.add(grid);
+    const wall = new THREE.Group(); wall.position.z = R - DC; scene.add(wall);
+    const vids = document.createElement('div'); vids.style.cssText = 'position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden';
+    host.appendChild(vids);
+
+    const info = { num: sec.querySelector('.kx-num'), desc: sec.querySelector('.kx-desc'), cta: sec.querySelector('.kx-cta'), box: sec.querySelector('.kx-info') };
+    const pad = v => String(v).padStart(2, '0');
+    const rr = (g, x, y, w, h, r) => { g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath(); };
+
+    const cards = [...sec.querySelectorAll('.kx-item')].map((li, i) => {
+      const cv = document.createElement('canvas'); cv.width = 1024; cv.height = Math.round(1024 * CH / CW);
+      const tex = new THREE.CanvasTexture(cv); tex.anisotropy = 4; tex.minFilter = THREE.LinearFilter;
+      const geo = new THREE.PlaneGeometry(CW, CH, 48, 1), p = geo.attributes.position;
+      for (let v = 0; v < p.count; v++) { const th = p.getX(v) / R; p.setXYZ(v, R * Math.sin(th), p.getY(v), -R * Math.cos(th)); }
+      const mat = new THREE.MeshBasicMaterial({ map: tex, transparent: true, side: THREE.DoubleSide, fog: false });
+      const mesh = new THREE.Mesh(geo, mat); mesh.rotation.y = -i * STEP; wall.add(mesh);
+      const c = { i, cv, g: cv.getContext('2d'), tex, mesh, mat, items: [], k: 0, dirty: true, hov: 0,
+        title: li.querySelector('h3').textContent, no: li.dataset.no, a: li.dataset.a, b: li.dataset.b, pts: li.dataset.pts,
+        desc: li.querySelector('p').textContent, cta: li.dataset.cta, files: li.dataset.media.split(',')[0] };
+      li.dataset.media.split(',').forEach(src => {
+        const isV = /\.(mp4|webm)$/i.test(src), el = document.createElement(isV ? 'video' : 'img');
+        const ok = () => { c.items.push(el); c.dirty = true; };
+        if (isV) { el.muted = true; el.loop = true; el.playsInline = true; el.preload = 'auto'; el.setAttribute('muted', ''); el.setAttribute('playsinline', ''); vids.appendChild(el); el.addEventListener('loadeddata', ok, { once: true }); }
+        else el.addEventListener('load', ok, { once: true });
+        el.src = src; // missing files just never fire load → placeholder stays
+      });
+      return c;
+    });
+    const n = cards.length;
+
+    function draw(c) {
+      const g = c.g, W = c.cv.width, H = c.cv.height, m = c.items[c.k];
+      g.clearRect(0, 0, W, H); g.save(); rr(g, 0, 0, W, H, 44); g.clip();
+      const gr = g.createLinearGradient(0, 0, W, H); gr.addColorStop(0, c.a); gr.addColorStop(1, c.b); g.fillStyle = gr; g.fillRect(0, 0, W, H);
+      if (m) {
+        const iw = m.videoWidth || m.naturalWidth, ih = m.videoHeight || m.naturalHeight;
+        if (iw) { const s = Math.max(W / iw, H / ih); g.drawImage(m, (W - iw * s) / 2, (H - ih * s) / 2, iw * s, ih * s); }
+        if (!m._chk) { m._chk = 1; try { g.getImageData(0, 0, 1, 1); } catch (e) { console.warn('Media blocked (open the site via http://, not file://):', c.files); c.items = []; c.k = 0; g.restore(); return draw(c); } }
+      } else {
+        g.textAlign = 'center'; g.font = '600 320px ' + F; g.lineWidth = 2; g.strokeStyle = 'rgba(255,255,255,.35)'; g.strokeText(c.no, W / 2, H / 2 + 60);
+        g.font = '24px ' + F; g.fillStyle = 'rgba(255,255,255,.6)'; g.fillText('Add ' + c.files, W / 2, H / 2 + 130);
+      }
+      
+      g.textAlign = 'left'; g.fillStyle = '#fff'; if (SHOW_NAMES) { g.font = '500 56px ' + F; g.fillText(c.title, 52, H - 92); }
+      
+      g.fillStyle = '#0d0d0d'; g.beginPath(); g.arc(W - 86, H - 86, 38, 0, 7); g.fill();
+      g.fillStyle = '#fff'; g.textAlign = 'center'; g.font = '600 38px ' + F; g.fillText('→', W - 86, H - 73);
+      g.restore(); c.tex.needsUpdate = true; c.dirty = false;
+    }
+    document.fonts && document.fonts.ready.then(() => cards.forEach(c => c.dirty = true));
+
+    // active card handling
+    let cur = -1;
+    function fill() { const c = cards[cur]; info.num.textContent = pad(cur + 1) + ' / ' + pad(n); info.desc.textContent = c.desc; info.cta.textContent = c.cta + ' ↗'; }
+    function activate(i) {
+      const first = cur === -1; cur = i;
+      cards.forEach(c => c.items.forEach(el => { if (el.tagName === 'VIDEO') { if (Math.abs(c.i - cur) <= 1) el.play().catch(() => {}); else el.pause(); } }));
+      if (first) return fill();
+      gsap.to(info.box, { opacity: 0, y: 6, duration: .18, overwrite: true, onComplete: () => { fill(); gsap.to(info.box, { opacity: 1, y: 0, duration: .35 }); } });
+    }
+    const cycle = setInterval(() => { const c = cards[cur]; if (c && c.items.length > 1) { c.k = (c.k + 1) % c.items.length; c.dirty = true; } }, 3500);
+
+    // sizing (pull camera back on narrow screens so the centre card stays comfortable)
+    function resize() {
+      const w = sec.clientWidth, h = sec.clientHeight; renderer.setSize(w, h, false);
+      cam.aspect = w / h; cam.updateProjectionMatrix();
+      const vw = 2 * DC * Math.tan(cam.fov * Math.PI / 360) * cam.aspect;
+      cam.userData.z = Math.max(0, CW / (.74 * vw) * DC - DC) + (CW / (.74 * vw) > 1 ? 0 : 0);
+    }
+    resize(); addEventListener('resize', resize);
+
+    // scroll → position
+    const st = { pos: 0 };
+    const tw = gsap.to(st, { pos: n - 1, ease: 'none', scrollTrigger: {
+      trigger: sec, start: 'top top', end: () => '+=' + (n - 1) * Math.max(innerHeight * .8, 520),
+      pin: true, scrub: 1, anticipatePin: 1, invalidateOnRefresh: true,
+      snap: { snapTo: 1 / (n - 1), duration: { min: .2, max: .55 }, delay: .08, ease: 'power2.inOut' } } });
+    ScrollTrigger.refresh();
+
+    // pointer: parallax, hover, click
+    const ray = new THREE.Raycaster(), ptr = new THREE.Vector2(9, 9), mouse = { x: 0, y: 0 };
+    const curEl = document.getElementById('cursor'), curTxt = document.getElementById('cursorText');
+    let hover = -1;
+    const onMove = e => { const r = host.getBoundingClientRect(); ptr.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1); mouse.x = ptr.x; mouse.y = ptr.y; };
+    const onLeave = () => { ptr.set(9, 9); mouse.x = mouse.y = 0; };
+    const pick = () => { ray.setFromCamera(ptr, cam); const h = ray.intersectObjects(cards.map(c => c.mesh))[0]; return h ? cards.findIndex(c => c.mesh === h.object) : -1; };
+    const onClick = e => {
+      onMove(e); const i = pick(); if (i < 0) return;
+      if (i === Math.round(st.pos)) { const t = document.getElementById('contact'); t && t.scrollIntoView({ behavior: 'smooth' }); }
+      else { const s = tw.scrollTrigger; scrollTo({ top: s.start + (i / (n - 1)) * (s.end - s.start), behavior: 'smooth' }); }
+    };
+    const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
+    if (fine) { host.addEventListener('pointermove', onMove); host.addEventListener('pointerleave', onLeave); }
+    host.addEventListener('click', onClick);
+
+    // render loop (only while the section is on screen)
+    let live = false;
+    const io = new IntersectionObserver(es => { live = es[0].isIntersecting; }, { threshold: 0 }); io.observe(sec);
+    const ease = t => t * t * (3 - 2 * t);
+    function frame() {
+      if (!live) return;
+      wall.rotation.y = st.pos * STEP;
+      const act = Math.round(st.pos); if (act !== cur) activate(act);
+      if (fine) { const h = pick(); if (h !== hover) { hover = h; document.body.style.cursor = ''; if (curEl) curEl.classList.toggle('hovered', h >= 0); if (curTxt) { curTxt.textContent = 'VIEW'; curTxt.style.opacity = h >= 0 ? '1' : '0'; } } }
+      cards.forEach(c => {
+        const a = ease(Math.min(Math.abs(c.i - st.pos), 1));
+        c.hov += ((c.i === hover ? 1 : 0) - c.hov) * .12;
+        const s = 1 + .05 * (1 - a) + .025 * c.hov; c.mesh.scale.set(s, s, 1);
+        c.mat.color.setScalar(.5 + .5 * (1 - a));
+        const vid = c.items[c.k] && c.items[c.k].tagName === 'VIDEO' && Math.abs(c.i - cur) <= 1;
+        if (c.dirty || vid) draw(c);
+      });
+      cam.position.x += (mouse.x * .22 - cam.position.x) * .06;
+      cam.position.y += (.35 + mouse.y * .1 - cam.position.y) * .06;
+      cam.position.z += ((cam.userData.z || 0) - cam.position.z) * .1;
+      cam.lookAt(0, 0, -DC);
+      renderer.render(scene, cam);
+    }
+    gsap.ticker.add(frame);
+
+    return () => {
+      gsap.ticker.remove(frame); clearInterval(cycle); io.disconnect(); removeEventListener('resize', resize);
+      host.removeEventListener('pointermove', onMove); host.removeEventListener('pointerleave', onLeave); host.removeEventListener('click', onClick);
+      cards.forEach(c => { c.items.forEach(el => el.pause && el.pause()); c.tex.dispose(); c.mesh.geometry.dispose(); c.mat.dispose(); });
+      renderer.dispose(); host.innerHTML = ''; sec.classList.remove('kx-gl-on'); gsap.set(info.box, { clearProps: 'all' });
+    };
+  });
+})();
 </script>
 <script>
 (function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="fagsrkLlmJpQHpQxtHP3O";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
