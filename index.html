@@ -95,8 +95,8 @@ nav {
   align-items: center;
   padding: 1.8rem 3rem;
   mix-blend-mode: normal;
-  background: rgba(255, 255, 255, 0);
-  transition: background 0.3s ease;
+  background: rgba(255, 255, 255, 0); /* transparent at the top, fills in on scroll */
+  transition: background 0.3s ease, padding 0.3s ease;
 }
 nav.scrolled {
   background: rgba(255,255,255,0.9);
@@ -2631,8 +2631,9 @@ button,
 .kx-services.kx-gl-on { height: 100vh; height: 100svh; padding: 0; }
 .kx-gl-on .kx-gl { display: block; position: absolute; inset: 0; }
 .kx-gl canvas { display: block; width: 100%; height: 100%; }
-.kx-gl-on .kx-top { position: absolute; z-index: 2; top: 5.6rem; left: 3rem; right: 3rem; display: flex; justify-content: space-between; align-items: baseline; pointer-events: none; }
-.kx-gl-on .kx-label { margin: 0; }
+.kx-gl-on .kx-top { position: absolute; z-index: 2; top: 5rem; left: 3rem; right: 3rem; display: flex; justify-content: space-between; align-items: baseline; pointer-events: none; }
+.kx-gl-on .kx-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); margin: 0; }
+.kx-gl-on .kx-hint { margin-left: auto; }
 .kx-gl-on .kx-hint { display: block; font-size: .72rem; letter-spacing: .06em; color: rgba(255,255,255,.4); }
 .kx-gl-on .kx-list { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 .kx-gl-on .kx-info { display: none; align-items: center; gap: 1.6rem; position: absolute; z-index: 2; left: 3rem; right: 3rem; bottom: 1.8rem; pointer-events: none; }
@@ -2646,6 +2647,20 @@ button,
   .kx-gl-on .kx-top { left: 1.2rem; right: 1.2rem; top: 5rem; }
   .kx-gl-on .kx-info { left: 1.2rem; right: 1.2rem; bottom: 1.2rem; flex-wrap: wrap; gap: .5rem 1rem; }
   .kx-desc { flex-basis: 100%; order: 3; font-size: .8rem; }
+}
+
+/* ===== NAV over the dark opening screen: transparent + slimmer, solid bar after scroll ===== */
+nav:not(.scrolled)::after { opacity: 0; }
+nav::after { transition: opacity .3s; }
+nav:not(.scrolled) .nav-logo { color: #fff; }
+nav:not(.scrolled) .hamburger span { background: #fff; }
+.nav-logo { transition: color .3s; }
+@media (min-width: 769px) {
+  nav { padding: 1rem 3rem; }
+  nav:not(.scrolled) .nav-links a { color: #fff; opacity: .75; }
+  nav:not(.scrolled) .nav-links a:hover { opacity: 1; }
+  nav:not(.scrolled) .nav-cta { background: #fff; color: var(--black); }
+  nav:not(.scrolled) .nav-cta:hover { background: var(--accent); color: #fff; }
 }
 </style>
 </head>
@@ -2709,6 +2724,176 @@ button,
   </div>
 </nav>
  
+<!-- SERVICES (Three.js curved 3D gallery) -->
+<section class="kx-services" id="projects" aria-label="Our Projects">
+  <div class="kx-gl" aria-hidden="true"></div>
+  <div class="kx-top"><h2 class="kx-label">Our Projects</h2><p class="kx-hint">Hover a card to pause</p></div>
+  <ol class="kx-list">
+    <li class="kx-item" data-no="01" data-a="#e6dfd0" data-b="#a99a7c" data-media="1.jpg" data-pts="Logo design, Brand identity, Visual systems, Brand guidelines" data-cta="View brand work">
+      <h3>Brand Identity</h3><p>Logos, visual systems and guidelines that make a brand feel unmistakable.</p><a href="#contact">View brand work ↗</a>
+    </li>
+    <li class="kx-item" data-no="02" data-a="#2b2f3a" data-b="#7f8aa3" data-media="1.png" data-pts="Website design, App interfaces, User flows, Prototypes" data-cta="View UI/UX work">
+      <h3>UI/UX Design</h3><p>Website and app interfaces, user flows and prototypes designed to be easy to use.</p><a href="#contact">View UI/UX work ↗</a>
+    </li>
+    <li class="kx-item" data-no="03" data-a="#3a1a10" data-b="#e0452a" data-media="2.png" data-pts="Social posts, Campaign creatives, Ad creatives, Content design" data-cta="View social work">
+      <h3>Social Media &amp; Creatives</h3><p>Posts, campaign creatives and ad designs built to stop the scroll.</p><a href="#contact">View social work ↗</a>
+    </li>
+    <li class="kx-item" data-no="04" data-a="#0d0d0d" data-b="#7a2a18" data-media="3.png" data-pts="AI videos, Product films, Reels, Motion graphics" data-cta="View AI work">
+      <h3>Motion &amp; AI Video</h3><p>AI-powered motion, product films and social videos built with creative direction.</p><a href="#contact">View AI work ↗</a>
+    </li>
+    <li class="kx-item" data-no="05" data-a="#3b2f4a" data-b="#d9a07a" data-media="No-Drama-llama.jpg" data-pts="AI product visuals, Lifestyle imagery, Campaign concepts" data-cta="View AI work">
+      <h3>AI Creative Production</h3><p>AI-assisted visual production for campaigns, products and digital content.</p><a href="#contact">View AI work ↗</a>
+    </li>
+    <li class="kx-item" data-no="06" data-a="#d6d3c8" data-b="#6f7d6b" data-media="1.jpg" data-pts="Landing pages, Business sites, E-commerce, Shopify / WordPress" data-cta="View web work">
+      <h3>Web Design</h3><p>Landing pages, business sites and online stores on Shopify and WordPress.</p><a href="#contact">View web work ↗</a>
+    </li>
+      <li class="kx-item" data-no="07" data-a="#0d0d0d" data-b="#2a3a7a" data-media="Final-5.mp4" data-pts="AI videos, Motion graphics, Reels, Product films" data-cta="View AI work">
+      <h3>AI Video Reel 01</h3><p>AI-powered motion, product films and social videos built with creative direction.</p><a href="#contact">View AI work ↗</a>
+    </li>
+    <li class="kx-item" data-no="08" data-a="#0d0d0d" data-b="#6a2a5a" data-media="Comp_1_1.mp4" data-pts="AI videos, Motion graphics, Reels, Product films" data-cta="View AI work">
+      <h3>AI Video Reel 02</h3><p>AI-powered motion, product films and social videos built with creative direction.</p><a href="#contact">View AI work ↗</a>
+    </li>
+      <li class="kx-item" data-no="09" data-a="#0d0d0d" data-b="#1d3557" data-media="final.mp4" data-pts="AI videos, Motion graphics, Reels, Product films" data-cta="View AI work">
+      <h3>AI Video Reel 03</h3><p>AI-powered motion, product films and social videos built with creative direction.</p><a href="#contact">View AI work ↗</a>
+    </li>
+    <li class="kx-item" data-no="10" data-a="#0d0d0d" data-b="#7a4a1a" data-media="Comp-1.mp4" data-pts="AI videos, Motion graphics, Reels, Product films" data-cta="View AI work">
+      <h3>AI Video Reel 04</h3><p>AI-powered motion, product films and social videos built with creative direction.</p><a href="#contact">View AI work ↗</a>
+    </li>
+    <li class="kx-item" data-no="11" data-a="#0d0d0d" data-b="#2a6a6a" data-media="EP-1.mp4" data-pts="AI videos, Motion graphics, Reels, Product films" data-cta="View AI work">
+      <h3>AI Video Reel 05</h3><p>AI-powered motion, product films and social videos built with creative direction.</p><a href="#contact">View AI work ↗</a>
+    </li>
+    <li class="kx-item" data-no="12" data-a="#0d0d0d" data-b="#6a6a2a" data-media="Comp_1_2.mp4" data-pts="AI videos, Motion graphics, Reels, Product films" data-cta="View AI work">
+      <h3>AI Video Reel 06</h3><p>AI-powered motion, product films and social videos built with creative direction.</p><a href="#contact">View AI work ↗</a>
+    </li>
+  </ol>
+  <div class="kx-info" aria-live="polite">
+    <p class="kx-num">01 / 06</p>
+    <p class="kx-desc"></p>
+    <a class="kx-cta" href="#contact">View work ↗</a>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-spotlight" id="aboutSpotlight"></div>
+  <div class="about-left">
+    <h2 class="about-big-text reveal">
+      We don't just make things look <span class="italic">good.</span> We make them <span class="italic">work.</span>
+    </h2>
+    <div class="about-bottom-row reveal d2">
+      <div class="about-stat">
+        <div class="about-stat-num">50<span>+</span></div>
+        <div class="about-stat-label">Projects Delivered</div>
+      </div>
+      <div class="about-stat">
+        <div class="about-stat-num">3<span>+</span></div>
+        <div class="about-stat-label">Years Active</div>
+      </div>
+      <div class="about-stat">
+        <div class="about-stat-num">25<span>+</span></div>
+        <div class="about-stat-label">Happy Clients</div>
+      </div>
+    </div>
+  </div>
+  <div class="about-right">
+    <p class="reveal"><strong>At KJS Creative, we believe great design isn't just beautiful — it's strategic.</strong> What started as a passion for visual storytelling has evolved into a full-service creative agency working with startups and growing businesses across industries.</p>
+    <p class="reveal d1">Our approach is collaborative, detail-driven, and modern. We specialize in brand identity, UI/UX design, and social media creatives, focusing not just on aesthetics but on results.</p>
+    <p class="reveal d2">Every project we take on is guided by purpose, simplicity, and a deep understanding of the brand's goals — ensuring every design connects with the right audience and leaves a lasting impression.</p>
+    <a href="get-started/" class="hero-cta reveal d3" style="align-self: flex-start; margin-top: 1rem;">
+      Start a project <span class="hero-cta-arrow">↗</span>
+    </a>
+  </div>
+</section>
+ 
+ 
+<!-- HORIZONTAL SCROLL — OUR SERVICES -->
+<section class="hscroll-section" id="services">
+  <div class="hscroll-header reveal">
+    <div>
+      <p class="section-eyebrow">What We Do</p>
+      <h2 class="section-title">Our <span class="italic">Services</span></h2>
+    </div>
+    <div class="hscroll-drag-hint">← Drag to explore →</div>
+  </div>
+  <div class="hscroll-track-wrap" id="hscrollWrap">
+    <div class="hscroll-track" id="hscrollTrack">
+      <div class="hscroll-card">
+        <div class="hscroll-card-num">01</div>
+        <div class="hscroll-card-title">Branding &amp; Identity</div>
+        <div class="hscroll-card-body">Logos, brand systems, visual language and guidelines that give your brand a distinct identity.</div>
+        <span class="hscroll-card-tag">Design</span>
+      </div>
+      <div class="hscroll-card">
+        <div class="hscroll-card-num">02</div>
+        <div class="hscroll-card-title">UI/UX Design</div>
+        <div class="hscroll-card-body">Web and mobile interfaces, user flows and prototypes designed around how people actually use them.</div>
+        <span class="hscroll-card-tag">Design</span>
+      </div>
+      <div class="hscroll-card">
+        <div class="hscroll-card-num">03</div>
+        <div class="hscroll-card-title">Shopify &amp; WordPress</div>
+        <div class="hscroll-card-body">Fast, scalable, conversion-optimised websites built to turn visitors into customers.</div>
+        <span class="hscroll-card-tag">Web</span>
+      </div>
+      <div class="hscroll-card">
+        <div class="hscroll-card-num">04</div>
+        <div class="hscroll-card-title">Social Media &amp; Creatives</div>
+        <div class="hscroll-card-body">Reels, carousels, motion graphics and video editing made to stop the scroll.</div>
+        <span class="hscroll-card-tag">Social</span>
+      </div>
+      <div class="hscroll-card">
+        <div class="hscroll-card-num">05</div>
+        <div class="hscroll-card-title">E-commerce Management</div>
+        <div class="hscroll-card-body">Marketplace strategy, listing and scaling of your store across platforms.</div>
+        <span class="hscroll-card-tag">E-commerce</span>
+      </div>
+      <div class="hscroll-card">
+        <div class="hscroll-card-num">06</div>
+        <div class="hscroll-card-title">Ads &amp; Performance Marketing</div>
+        <div class="hscroll-card-body">ROI-focused paid campaigns across Meta and Google, tracked with proper analytics.</div>
+        <span class="hscroll-card-tag">Marketing</span>
+      </div>
+      <div class="hscroll-card">
+        <div class="hscroll-card-num">07</div>
+        <div class="hscroll-card-title">AI Content &amp; Creative Production</div>
+        <div class="hscroll-card-body">Next-gen AI-powered content delivered at scale and speed.</div>
+        <span class="hscroll-card-tag">New</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials section-wipe">
+  <p class="section-eyebrow reveal">Client Reviews</p>
+  <h2 class="section-title reveal d1">What They <span class="italic">Say</span></h2>
+  <div class="testimonials-grid">
+    <div class="testi-card reveal d1">
+      <p class="testi-quote">"The creativity, quality, and responsiveness were impressive. Looking forward to working together again — the designs exceeded every expectation."</p>
+      <div class="testi-client">
+        <span>Brand Identity + Social</span>
+        YSS — Your Scent Stories
+      </div>
+    </div>
+    <div class="testi-card reveal d2">
+      <p class="testi-quote">"Karanjeet excels at turning raw shoots into impactful reels and well-structured carousels. Strong visual sense combined with clarity and storytelling."</p>
+      <div class="testi-client">
+        <span>Motion + Creatives</span>
+        The Bamboo Co.
+      </div>
+    </div>
+    <div class="testi-card reveal d3">
+      <p class="testi-quote">"They clearly understood our requirements and delivered on time. Their branding showed in how they experimented with colors, patterns — neat and cohesive."</p>
+      <div class="testi-client">
+        <span>Branding + Design System</span>
+        The Ardour and Co.
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- Sections not in the new layout (hero, tickers, stats, team). Remove the "hidden" attribute below to bring them back. -->
+<div hidden id="kxOff">
 <!-- HERO -->
 <section class="hero">
   <canvas id="hero-canvas"></canvas>
@@ -2801,174 +2986,6 @@ button,
   </div>
 </div>
 
-<!-- HORIZONTAL SCROLL — OUR SERVICES -->
-<section class="hscroll-section">
-  <div class="hscroll-header reveal">
-    <div>
-      <p class="section-eyebrow">What We Do</p>
-      <h2 class="section-title">Our <span class="italic">Services</span></h2>
-    </div>
-    <div class="hscroll-drag-hint">← Drag to explore →</div>
-  </div>
-  <div class="hscroll-track-wrap" id="hscrollWrap">
-    <div class="hscroll-track" id="hscrollTrack">
-      <div class="hscroll-card">
-        <div class="hscroll-card-num">01</div>
-        <div class="hscroll-card-title">Branding &amp; Identity</div>
-        <div class="hscroll-card-body">Logos, brand systems, visual language and guidelines that give your brand a distinct identity.</div>
-        <span class="hscroll-card-tag">Design</span>
-      </div>
-      <div class="hscroll-card">
-        <div class="hscroll-card-num">02</div>
-        <div class="hscroll-card-title">UI/UX Design</div>
-        <div class="hscroll-card-body">Web and mobile interfaces, user flows and prototypes designed around how people actually use them.</div>
-        <span class="hscroll-card-tag">Design</span>
-      </div>
-      <div class="hscroll-card">
-        <div class="hscroll-card-num">03</div>
-        <div class="hscroll-card-title">Shopify &amp; WordPress</div>
-        <div class="hscroll-card-body">Fast, scalable, conversion-optimised websites built to turn visitors into customers.</div>
-        <span class="hscroll-card-tag">Web</span>
-      </div>
-      <div class="hscroll-card">
-        <div class="hscroll-card-num">04</div>
-        <div class="hscroll-card-title">Social Media &amp; Creatives</div>
-        <div class="hscroll-card-body">Reels, carousels, motion graphics and video editing made to stop the scroll.</div>
-        <span class="hscroll-card-tag">Social</span>
-      </div>
-      <div class="hscroll-card">
-        <div class="hscroll-card-num">05</div>
-        <div class="hscroll-card-title">E-commerce Management</div>
-        <div class="hscroll-card-body">Marketplace strategy, listing and scaling of your store across platforms.</div>
-        <span class="hscroll-card-tag">E-commerce</span>
-      </div>
-      <div class="hscroll-card">
-        <div class="hscroll-card-num">06</div>
-        <div class="hscroll-card-title">Ads &amp; Performance Marketing</div>
-        <div class="hscroll-card-body">ROI-focused paid campaigns across Meta and Google, tracked with proper analytics.</div>
-        <span class="hscroll-card-tag">Marketing</span>
-      </div>
-      <div class="hscroll-card">
-        <div class="hscroll-card-num">07</div>
-        <div class="hscroll-card-title">AI Content &amp; Creative Production</div>
-        <div class="hscroll-card-body">Next-gen AI-powered content delivered at scale and speed.</div>
-        <span class="hscroll-card-tag">New</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SERVICES (Three.js curved 3D gallery) -->
-<section class="kx-services" id="services" aria-label="Our Projects">
-  <div class="kx-gl" aria-hidden="true"></div>
-  <div class="kx-top"><h2 class="kx-label">Our Projects</h2><p class="kx-hint">Hover a card to pause</p></div>
-  <ol class="kx-list">
-    <li class="kx-item" data-no="01" data-a="#e6dfd0" data-b="#a99a7c" data-media="1.jpg" data-pts="Logo design, Brand identity, Visual systems, Brand guidelines" data-cta="View brand work">
-      <h3>Brand Identity</h3><p>Logos, visual systems and guidelines that make a brand feel unmistakable.</p><a href="#contact">View brand work ↗</a>
-    </li>
-    <li class="kx-item" data-no="02" data-a="#2b2f3a" data-b="#7f8aa3" data-media="1.png" data-pts="Website design, App interfaces, User flows, Prototypes" data-cta="View UI/UX work">
-      <h3>UI/UX Design</h3><p>Website and app interfaces, user flows and prototypes designed to be easy to use.</p><a href="#contact">View UI/UX work ↗</a>
-    </li>
-    <li class="kx-item" data-no="03" data-a="#3a1a10" data-b="#e0452a" data-media="2.png" data-pts="Social posts, Campaign creatives, Ad creatives, Content design" data-cta="View social work">
-      <h3>Social Media &amp; Creatives</h3><p>Posts, campaign creatives and ad designs built to stop the scroll.</p><a href="#contact">View social work ↗</a>
-    </li>
-    <li class="kx-item" data-no="04" data-a="#0d0d0d" data-b="#7a2a18" data-media="3.png" data-pts="AI videos, Product films, Reels, Motion graphics" data-cta="View AI work">
-      <h3>Motion &amp; AI Video</h3><p>AI-powered motion, product films and social videos built with creative direction.</p><a href="#contact">View AI work ↗</a>
-    </li>
-    <li class="kx-item" data-no="05" data-a="#3b2f4a" data-b="#d9a07a" data-media="No-Drama-llama.jpg" data-pts="AI product visuals, Lifestyle imagery, Campaign concepts" data-cta="View AI work">
-      <h3>AI Creative Production</h3><p>AI-assisted visual production for campaigns, products and digital content.</p><a href="#contact">View AI work ↗</a>
-    </li>
-    <li class="kx-item" data-no="06" data-a="#d6d3c8" data-b="#6f7d6b" data-media="1.jpg" data-pts="Landing pages, Business sites, E-commerce, Shopify / WordPress" data-cta="View web work">
-      <h3>Web Design</h3><p>Landing pages, business sites and online stores on Shopify and WordPress.</p><a href="#contact">View web work ↗</a>
-    </li>
-      <li class="kx-item" data-no="07" data-a="#0d0d0d" data-b="#2a3a7a" data-media="Final-5.mp4" data-pts="AI videos, Motion graphics, Reels, Product films" data-cta="View AI work">
-      <h3>AI Video Reel 01</h3><p>AI-powered motion, product films and social videos built with creative direction.</p><a href="#contact">View AI work ↗</a>
-    </li>
-    <li class="kx-item" data-no="08" data-a="#0d0d0d" data-b="#6a2a5a" data-media="Comp_1_1.mp4" data-pts="AI videos, Motion graphics, Reels, Product films" data-cta="View AI work">
-      <h3>AI Video Reel 02</h3><p>AI-powered motion, product films and social videos built with creative direction.</p><a href="#contact">View AI work ↗</a>
-    </li>
-      <li class="kx-item" data-no="09" data-a="#0d0d0d" data-b="#1d3557" data-media="final.mp4" data-pts="AI videos, Motion graphics, Reels, Product films" data-cta="View AI work">
-      <h3>AI Video Reel 03</h3><p>AI-powered motion, product films and social videos built with creative direction.</p><a href="#contact">View AI work ↗</a>
-    </li>
-    <li class="kx-item" data-no="10" data-a="#0d0d0d" data-b="#7a4a1a" data-media="Comp-1.mp4" data-pts="AI videos, Motion graphics, Reels, Product films" data-cta="View AI work">
-      <h3>AI Video Reel 04</h3><p>AI-powered motion, product films and social videos built with creative direction.</p><a href="#contact">View AI work ↗</a>
-    </li>
-    <li class="kx-item" data-no="11" data-a="#0d0d0d" data-b="#2a6a6a" data-media="EP-1.mp4" data-pts="AI videos, Motion graphics, Reels, Product films" data-cta="View AI work">
-      <h3>AI Video Reel 05</h3><p>AI-powered motion, product films and social videos built with creative direction.</p><a href="#contact">View AI work ↗</a>
-    </li>
-    <li class="kx-item" data-no="12" data-a="#0d0d0d" data-b="#6a6a2a" data-media="Comp_1_2.mp4" data-pts="AI videos, Motion graphics, Reels, Product films" data-cta="View AI work">
-      <h3>AI Video Reel 06</h3><p>AI-powered motion, product films and social videos built with creative direction.</p><a href="#contact">View AI work ↗</a>
-    </li>
-  </ol>
-  <div class="kx-info" aria-live="polite">
-    <p class="kx-num">01 / 06</p>
-    <p class="kx-desc"></p>
-    <a class="kx-cta" href="#contact">View work ↗</a>
-  </div>
-</section>
-
-<!-- ABOUT -->
-<section class="about" id="about">
-  <div class="about-spotlight" id="aboutSpotlight"></div>
-  <div class="about-left">
-    <h2 class="about-big-text reveal">
-      We don't just make things look <span class="italic">good.</span> We make them <span class="italic">work.</span>
-    </h2>
-    <div class="about-bottom-row reveal d2">
-      <div class="about-stat">
-        <div class="about-stat-num">50<span>+</span></div>
-        <div class="about-stat-label">Projects Delivered</div>
-      </div>
-      <div class="about-stat">
-        <div class="about-stat-num">3<span>+</span></div>
-        <div class="about-stat-label">Years Active</div>
-      </div>
-      <div class="about-stat">
-        <div class="about-stat-num">25<span>+</span></div>
-        <div class="about-stat-label">Happy Clients</div>
-      </div>
-    </div>
-  </div>
-  <div class="about-right">
-    <p class="reveal"><strong>At KJS Creative, we believe great design isn't just beautiful — it's strategic.</strong> What started as a passion for visual storytelling has evolved into a full-service creative agency working with startups and growing businesses across industries.</p>
-    <p class="reveal d1">Our approach is collaborative, detail-driven, and modern. We specialize in brand identity, UI/UX design, and social media creatives, focusing not just on aesthetics but on results.</p>
-    <p class="reveal d2">Every project we take on is guided by purpose, simplicity, and a deep understanding of the brand's goals — ensuring every design connects with the right audience and leaves a lasting impression.</p>
-    <a href="get-started/" class="hero-cta reveal d3" style="align-self: flex-start; margin-top: 1rem;">
-      Start a project <span class="hero-cta-arrow">↗</span>
-    </a>
-  </div>
-</section>
- 
- 
-<!-- TESTIMONIALS -->
-<section class="testimonials section-wipe">
-  <p class="section-eyebrow reveal">Client Reviews</p>
-  <h2 class="section-title reveal d1">What They <span class="italic">Say</span></h2>
-  <div class="testimonials-grid">
-    <div class="testi-card reveal d1">
-      <p class="testi-quote">"The creativity, quality, and responsiveness were impressive. Looking forward to working together again — the designs exceeded every expectation."</p>
-      <div class="testi-client">
-        <span>Brand Identity + Social</span>
-        YSS — Your Scent Stories
-      </div>
-    </div>
-    <div class="testi-card reveal d2">
-      <p class="testi-quote">"Karanjeet excels at turning raw shoots into impactful reels and well-structured carousels. Strong visual sense combined with clarity and storytelling."</p>
-      <div class="testi-client">
-        <span>Motion + Creatives</span>
-        The Bamboo Co.
-      </div>
-    </div>
-    <div class="testi-card reveal d3">
-      <p class="testi-quote">"They clearly understood our requirements and delivered on time. Their branding showed in how they experimented with colors, patterns — neat and cohesive."</p>
-      <div class="testi-client">
-        <span>Branding + Design System</span>
-        The Ardour and Co.
-      </div>
-    </div>
-  </div>
-</section>
- 
 <!-- TEAM -->
 <section class="team" id="team">
   <div class="section-header">
@@ -3023,6 +3040,8 @@ button,
   </div>
 </section>
  
+</div>
+
 <!-- TEAM MEMBER MODAL -->
 <div id="teamModal" class="team-modal">
   <div class="team-modal-overlay"></div>
@@ -4038,7 +4057,7 @@ if (pt) {
 
 // ── 17. SCROLL SECTION DOTS ──────────────────────────────────
 const sectionDots = document.querySelectorAll('.scroll-dot');
-const pageSections = ['hero', 'services', 'about', null, 'contact'];
+const pageSections = ['projects', 'about', 'services', null, 'contact'];
 const siEl = document.getElementById('scrollIndicator');
 if (siEl) {
   window.addEventListener('scroll', () => {
@@ -4139,7 +4158,7 @@ if (kineticBar) { kineticNums.forEach(n => { n.style.opacity='0'; n.style.transf
 <script>
 // ── SERVICES: curved 3D gallery (Three.js + GSAP ScrollTrigger) ──
 (function () {
-  const sec = document.getElementById('services');
+  const sec = document.getElementById('projects');
   if (!sec || !window.gsap || !window.ScrollTrigger || !window.THREE) return; // fallback = plain list
   gsap.registerPlugin(ScrollTrigger);
   const mm = gsap.matchMedia();
