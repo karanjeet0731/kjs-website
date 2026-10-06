@@ -15,22 +15,44 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Patch contact form
+      - name: Patch contact form tracking
         run: |
           python3 <<'PY'
           from pathlib import Path
           p = Path('index.html')
           s = p.read_text()
-          endpoint = 'https://psxyqzgezjfzuawdyzmp.supabase.co/functions/v1/website-lead'
-          old = "const contactForm = document.getElementById('contactForm');\nconst submitBtn = document.getElementById('submitBtn');"
-          new = "const contactForm = document.getElementById('contactForm');\nconst submitBtn = document.getElementById('submitBtn');\nconst crmLeadEndpoint = '" + endpoint + "';"
-          if 'const crmLeadEndpoint' not in s:
-              s = s.replace(old, new, 1)
-          marker = "  // Send form data to Formspree\n  fetch(contactForm.action, {"
-          replacement = "  // Send the same enquiry to the KJS CRM first.\n  fetch(crmLeadEndpoint, {\n    method: 'POST',\n    headers: {'Content-Type': 'application/json'},\n    body: JSON.stringify({\n      fullname: fname,\n      email: email,\n      service: document.getElementById('service').value,\n      message: message\n    })\n  }).then(r => { if (!r.ok) throw new Error('CRM submission failed'); });\n\n  // Send form data to Formspree\n  fetch(contactForm.action, {"
-          if 'fetch(crmLeadEndpoint' not in s:
-              s = s.replace(marker, replacement, 1)
-          p.write_text(s)
+          old = """  fetch(crmLeadEndpoint, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      fullname: fname,
+      email: email,
+      service: document.getElementById('service').value,
+      message: message
+    })
+  }).then(r => { if (!r.ok) throw new Error('CRM submission failed'); });"""
+          new = """  const crmParams = new URLSearchParams(window.location.search);
+  fetch(crmLeadEndpoint, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      fullname: fname,
+      email: email,
+      phone: document.getElementById('phone')?.value || '',
+      service: document.getElementById('service').value,
+      message: message,
+      source: crmParams.get('utm_source') || document.referrer || 'Website',
+      page: window.location.href,
+      utm_source: crmParams.get('utm_source') || '',
+      utm_medium: crmParams.get('utm_medium') || '',
+      utm_campaign: crmParams.get('utm_campaign') || '',
+      utm_term: crmParams.get('utm_term') || '',
+      utm_content: crmParams.get('utm_content') || ''
+    })
+  }).then(r => { if (!r.ok) throw new Error('CRM submission failed'); });"""
+          if old not in s:
+              raise SystemExit('Expected CRM fetch block not found')
+          p.write_text(s.replace(old, new, 1))
           PY
 
       - name: Commit patch
@@ -38,5 +60,5 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add index.html .github/workflows/connect-website-contact-form.yml
-          git commit -m 'Connect contact form to CRM' || exit 0
+          git commit -m 'Track website lead source and UTM data' || exit 0
           git push
