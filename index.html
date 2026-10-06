@@ -3461,6 +3461,7 @@ document.addEventListener('keydown', (e) => {
 // CONTACT FORM HANDLER
 const contactForm = document.getElementById('contactForm');
 const submitBtn = document.getElementById('submitBtn');
+const crmLeadEndpoint = 'https://psxyqzgezjfzuawdyzmp.supabase.co/functions/v1/website-lead';
  
 contactForm.addEventListener('submit', function(e) {
   e.preventDefault();
@@ -3484,6 +3485,18 @@ contactForm.addEventListener('submit', function(e) {
   submitBtn.style.opacity = '0.7';
   submitBtn.disabled = true;
  
+  // Send the same enquiry to the KJS CRM first.
+  fetch(crmLeadEndpoint, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      fullname: fname,
+      email: email,
+      service: document.getElementById('service').value,
+      message: message
+    })
+  }).then(r => { if (!r.ok) throw new Error('CRM submission failed'); });
+
   // Send form data to Formspree
   fetch(contactForm.action, {
     method: 'POST',
