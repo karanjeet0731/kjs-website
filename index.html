@@ -2662,9 +2662,24 @@ nav:not(.scrolled) .hamburger span { background: #fff; }
   nav:not(.scrolled) .nav-cta { background: #fff; color: var(--black); }
   nav:not(.scrolled) .nav-cta:hover { background: var(--accent); color: #fff; }
 }
+
+/* ===== INTRO: falling 3D creative tools ===== */
+html.kx-lock { overflow: hidden !important; }
+#kx-intro { position: fixed; inset: 0; z-index: 2147483000; background: #000; cursor: default; transition: transform .95s cubic-bezier(.76,0,.24,1); }
+#kx-intro.out { transform: translateY(-100%); }
+#kx-intro .kx-it { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: #fff; opacity: 0; transition: opacity 1.1s ease; pointer-events: none; }
+#kx-intro .kx-it.on { opacity: 1; }
+#kx-intro .kx-it h1 { font-size: clamp(2.8rem, 11vw, 8.5rem); letter-spacing: -.045em; margin: 0; font-weight: 700; line-height: .95; }
+#kx-intro .kx-it p { margin: 1.1rem 0 0; font-size: .78rem; letter-spacing: .32em; text-transform: uppercase; color: #8d8d86; }
+#kx-ic { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+#kx-skip { position: absolute; right: 1.5rem; bottom: 1.5rem; z-index: 2; background: none; color: #bdbdb6; border: 1px solid #ffffff3a; border-radius: 99px; padding: .5rem 1.1rem; font: 600 .75rem system-ui, sans-serif; letter-spacing: .12em; text-transform: uppercase; cursor: pointer !important; }
+#kx-skip:hover { color: #fff; border-color: #fff; }
 </style>
 </head>
 <body>
+<!-- INTRO -->
+<div id="kx-intro" aria-hidden="true"><div class="kx-it"><h1>KJS Creative</h1><p>Design · Motion · AI</p></div><canvas id="kx-ic"></canvas><button id="kx-skip" type="button">Skip</button></div>
+<script>try{if(sessionStorage.getItem('kjsIntro')&&!/[?&]intro/.test(location.search))document.getElementById('kx-intro').remove()}catch(e){}</script>
  
 <!-- SCROLL PROGRESS -->
 <div id="scroll-progress"></div>
@@ -3461,7 +3476,6 @@ document.addEventListener('keydown', (e) => {
 // CONTACT FORM HANDLER
 const contactForm = document.getElementById('contactForm');
 const submitBtn = document.getElementById('submitBtn');
-const crmLeadEndpoint = 'https://psxyqzgezjfzuawdyzmp.supabase.co/functions/v1/website-lead';
  
 contactForm.addEventListener('submit', function(e) {
   e.preventDefault();
@@ -3485,18 +3499,18 @@ contactForm.addEventListener('submit', function(e) {
   submitBtn.style.opacity = '0.7';
   submitBtn.disabled = true;
  
-  // Send the same enquiry to the KJS CRM first.
-  fetch(crmLeadEndpoint, {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({
-      fullname: fname,
-      email: email,
-      service: document.getElementById('service').value,
-      message: message
-    })
-  }).then(r => { if (!r.ok) throw new Error('CRM submission failed'); });
-
+  // Also save the lead to the KJS CRM (Supabase). Never blocks or breaks the Formspree email.
+  const CRM_URL = 'https://psxyqzgezjfzuawdyzmp.supabase.co', CRM_KEY = 'sb_publishable_Iw7QyPNmZkVPpELo_LMDmA_lcFbUq3s';
+  if (!CRM_URL.startsWith('PASTE')) {
+    try {
+      fetch(CRM_URL + '/rest/v1/leads', {
+        method: 'POST', keepalive: true,
+        headers: { 'apikey': CRM_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+        body: JSON.stringify({ name: fname, email: email, service: document.getElementById('service').value || null, message: message,
+          source: 'Website', status: 'New', log: [{ t: Date.now(), text: 'Came in from website form' }] })
+      }).catch(() => {});
+    } catch (e) {}
+  }
   // Send form data to Formspree
   fetch(contactForm.action, {
     method: 'POST',
@@ -4324,6 +4338,121 @@ if (kineticBar) { kineticNums.forEach(n => { n.style.opacity='0'; n.style.transf
       renderer.dispose(); host.innerHTML = ''; sec.classList.remove('kx-gl-on'); gsap.set(info.box, { clearProps: 'all' });
     };
   });
+})();
+</script>
+<script>
+// ── INTRO: creative tools fall in 3D (Three.js) ──
+(function () {
+  const el = document.getElementById('kx-intro'); if (!el) return;
+  const root = document.documentElement;
+  let raf = 0, ended = false, R = null;
+  const finish = () => { cancelAnimationFrame(raf); try { R && R.dispose(); } catch (e) {} root.classList.remove('kx-lock'); el.remove(); };
+  if (!window.THREE || matchMedia('(prefers-reduced-motion: reduce)').matches) return finish();
+  try { sessionStorage.setItem('kjsIntro', '1'); } catch (e) {}
+  root.classList.add('kx-lock');
+  setTimeout(() => { if (document.getElementById('kx-intro')) finish(); }, 15000); // safety net
+
+  try {
+    const cv = document.getElementById('kx-ic'), txt = el.querySelector('.kx-it');
+    R = new THREE.WebGLRenderer({ canvas: cv, antialias: true, alpha: true });
+    R.setPixelRatio(Math.min(devicePixelRatio, 2));
+    const sc = new THREE.Scene(), cam = new THREE.PerspectiveCamera(40, 1, .1, 100); cam.position.z = 14;
+    sc.add(new THREE.AmbientLight(0xffffff, .75));
+    const dl = new THREE.DirectionalLight(0xffffff, .9); dl.position.set(3, 6, 8); sc.add(dl);
+    const pl = new THREE.PointLight(0xe0452a, 1.3, 30); pl.position.set(-5, -3, 6); sc.add(pl);
+    let W = 1, H = 1, S = 1;
+    const size = () => { R.setSize(innerWidth, innerHeight, false); cam.aspect = innerWidth / innerHeight; cam.updateProjectionMatrix();
+      H = 2 * 14 * Math.tan(20 * Math.PI / 180); W = H * cam.aspect; S = Math.max(.72, Math.min(1.35, W / 6.2)); };
+    size(); addEventListener('resize', size);
+
+    // ---- tool icons drawn on canvas ----
+    const L = (g, ...p) => { g.beginPath(); g.moveTo(p[0], p[1]); for (let i = 2; i < p.length; i += 2) g.lineTo(p[i], p[i + 1]); g.stroke(); };
+    const ICONS = [
+      g => { g.beginPath(); g.moveTo(128,48); g.lineTo(174,118); g.lineTo(150,196); g.lineTo(106,196); g.lineTo(82,118); g.closePath(); g.stroke(); g.beginPath(); g.arc(128,128,9,0,7); g.fill(); L(g,128,137,128,196); L(g,100,196,156,196); },
+      g => { g.beginPath(); g.ellipse(128,108,64,44,0,0,7); g.stroke(); g.beginPath(); g.moveTo(104,148); g.quadraticCurveTo(84,200,128,206); g.quadraticCurveTo(160,210,170,184); g.stroke(); },
+      g => { g.beginPath(); g.moveTo(88,56); g.lineTo(88,196); g.lineTo(124,162); g.lineTo(152,210); g.lineTo(178,196); g.lineTo(150,150); g.lineTo(198,150); g.closePath(); g.fill(); },
+      g => { g.save(); g.translate(128,120); g.rotate(-.65); g.beginPath(); g.rect(-62,-34,124,68); g.stroke(); L(g,-8,-34,-8,34); g.restore(); L(g,60,206,196,206); },
+      g => { L(g,176,56,116,140); g.lineWidth = 26; L(g,176,56,150,94); g.lineWidth = 13; g.beginPath(); g.moveTo(116,140); g.quadraticCurveTo(80,148,76,190); g.quadraticCurveTo(122,196,124,150); g.fill(); g.stroke(); },
+      g => { g.beginPath(); g.rect(58,86,86,86); g.stroke(); g.beginPath(); g.arc(158,158,46,0,7); g.stroke(); },
+      g => { g.font = '800 170px system-ui, sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('T', 128, 138); },
+      g => { L(g,74,194,150,118); g.beginPath(); g.arc(172,96,32,0,7); g.stroke(); L(g,66,202,82,186); },
+      g => { L(g,128,52,128,204); L(g,52,128,204,128); L(g,128,52,108,74); L(g,128,52,148,74); L(g,128,204,108,182); L(g,128,204,148,182); L(g,52,128,74,108); L(g,52,128,74,148); L(g,204,128,182,108); L(g,204,128,182,148); },
+      g => { L(g,84,48,84,172,208,172); L(g,48,84,172,84,172,208); },
+      g => { g.beginPath(); g.arc(116,116,54,0,7); g.stroke(); L(g,156,156,204,204); },
+      g => { const gr = g.createLinearGradient(56,0,200,0); gr.addColorStop(0,'rgba(255,255,255,0)'); gr.addColorStop(1,g.strokeStyle); g.fillStyle = gr; g.beginPath(); g.rect(56,76,144,104); g.fill(); g.stroke(); }
+    ];
+    const THEMES = [['#ff6a4d', '#d63a20', '#ffffff'], ['#f6f4ef', '#d6d3c8', '#16161a'], ['#34343a', '#18181b', '#ffffff']];
+    const rr = (g, x, y, w, h, r) => { g.beginPath(); g.moveTo(x+r,y); g.arcTo(x+w,y,x+w,y+h,r); g.arcTo(x+w,y+h,x,y+h,r); g.arcTo(x,y+h,x,y,r); g.arcTo(x,y,x+w,y,r); g.closePath(); };
+    const makeTex = i => {
+      const c = document.createElement('canvas'); c.width = c.height = 256; const g = c.getContext('2d'), th = THEMES[i % 3];
+      rr(g, 4, 4, 248, 248, 48); const gr = g.createLinearGradient(0,0,256,256); gr.addColorStop(0, th[0]); gr.addColorStop(1, th[1]); g.fillStyle = gr; g.fill();
+      g.strokeStyle = th[2]; g.fillStyle = th[2]; g.lineWidth = 13; g.lineCap = g.lineJoin = 'round'; ICONS[i](g);
+      const t = new THREE.CanvasTexture(c); t.anisotropy = 4; return t;
+    };
+
+    // ---- 3D tile: rounded slab + icon faces ----
+    const sh = new THREE.Shape(), a = .5, r = .19;
+    sh.moveTo(-a+r,-a); sh.lineTo(a-r,-a); sh.quadraticCurveTo(a,-a,a,-a+r); sh.lineTo(a,a-r); sh.quadraticCurveTo(a,a,a-r,a);
+    sh.lineTo(-a+r,a); sh.quadraticCurveTo(-a,a,-a,a-r); sh.lineTo(-a,-a+r); sh.quadraticCurveTo(-a,-a,-a+r,-a);
+    const slab = new THREE.ExtrudeGeometry(sh, { depth: .22, bevelEnabled: false }); slab.translate(0, 0, -.11);
+    const slabMat = new THREE.MeshStandardMaterial({ color: 0x1a1a1d, metalness: .55, roughness: .38 });
+    const face = new THREE.PlaneGeometry(1.032, 1.032);
+    const order = [...ICONS.keys()].sort(() => Math.random() - .5);
+    const bodies = order.map((ic, n) => {
+      const m = new THREE.Group(), tx = makeTex(ic), fm = new THREE.MeshBasicMaterial({ map: tx, transparent: true });
+      m.add(new THREE.Mesh(slab, slabMat));
+      const f = new THREE.Mesh(face, fm); f.position.z = .112; m.add(f);
+      const b = new THREE.Mesh(face, fm); b.position.z = -.112; b.rotation.y = Math.PI; m.add(b);
+      m.scale.setScalar(S); m.visible = false; sc.add(m);
+      return { m, live: false, at: .35 + n * .27, z: (n % 3 - 1) * .3, x: 0, y: 0, vx: 0, vy: 0, rx: 0, ry: 0, rz: 0, wx: 0, wy: 0, wz: 0, settle: false };
+    });
+
+    const ptr = { x: 99, y: 99 };
+    const onMove = e => { ptr.x = (e.clientX / innerWidth - .5) * W; ptr.y = -(e.clientY / innerHeight - .5) * H; };
+    addEventListener('pointermove', onMove);
+    const rnd = (a, b) => a + Math.random() * (b - a), TAU = Math.PI * 2, near = v => Math.round(v / TAU) * TAU;
+    let open = false, t0 = performance.now(), last = t0;
+
+    const end = () => {
+      if (ended) return; ended = true; open = true;
+      bodies.forEach(b => { b.live = true; b.m.visible = true; b.vy -= rnd(0, 4); b.wx += rnd(-3, 3); });
+      setTimeout(() => el.classList.add('out'), 650);
+      setTimeout(() => { removeEventListener('resize', size); removeEventListener('pointermove', onMove); finish(); }, 1700);
+    };
+    document.getElementById('kx-skip').onclick = end;
+    addEventListener('keydown', e => { if (e.key === 'Escape') end(); });
+
+    const frame = now => {
+      raf = requestAnimationFrame(frame);
+      const dt = Math.min((now - last) / 1000, .033); last = now;
+      const t = (now - t0) / 1000;
+      if (t > 1.2) txt.classList.add('on');
+      if (t > 6.4) end();
+      const rad = .62 * S, floor = -H / 2 + rad + .2;
+      bodies.forEach(b => {
+        if (!b.live && !ended && t >= b.at) { b.live = true; b.m.visible = true; b.m.scale.setScalar(S);
+          b.x = rnd(-.38, .38) * W; b.y = H / 2 + 1.6 * S; b.vy = -rnd(0, 3); b.vx = rnd(-1, 1);
+          b.rx = rnd(0, TAU); b.ry = rnd(0, TAU); b.rz = rnd(0, TAU); b.wx = rnd(-5, 5); b.wy = rnd(-5, 5); b.wz = rnd(-4, 4); }
+        if (!b.live) return;
+        b.vy -= 26 * dt; b.x += b.vx * dt; b.y += b.vy * dt; b.rx += b.wx * dt; b.ry += b.wy * dt; b.rz += b.wz * dt;
+        const dx = b.x - ptr.x, dy = b.y - ptr.y, d = Math.hypot(dx, dy);
+        if (!open && d < 1.4 * S && d > .01) { b.vx += dx / d * 38 * dt; b.vy += dy / d * 38 * dt; b.wz += (dx > 0 ? -1 : 1) * 3 * dt; }
+        if (!open && b.y < floor) { b.y = floor; b.vy = b.vy < -1.6 ? -b.vy * .36 : 0; b.vx *= .88; b.wx *= .6; b.wy *= .6; b.wz *= .75; b.settle = true; }
+        if (!open) { const lim = W / 2 - rad; if (b.x < -lim) { b.x = -lim; b.vx = Math.abs(b.vx) * .5; } if (b.x > lim) { b.x = lim; b.vx = -Math.abs(b.vx) * .5; } }
+        if (b.settle && !open) { const k = Math.min(1, dt * 5); b.rx += (near(b.rx) - b.rx) * k; b.ry += (near(b.ry) - b.ry) * k; }
+      });
+      if (!open) for (let it = 0; it < 3; it++) for (let i = 0; i < bodies.length; i++) for (let j = i + 1; j < bodies.length; j++) {
+        const p = bodies[i], q = bodies[j]; if (!p.live || !q.live) continue;
+        const dx = q.x - p.x, dy = q.y - p.y, d = Math.hypot(dx, dy) || .001, min = rad * 1.9;
+        if (d < min) { const nx = dx / d, ny = dy / d, o = (min - d) / 2; p.x -= nx * o; p.y -= ny * o; q.x += nx * o; q.y += ny * o;
+          const vn = (q.vx - p.vx) * nx + (q.vy - p.vy) * ny;
+          if (vn < 0) { const j2 = -(1 + .2) * vn / 2; p.vx -= j2 * nx; p.vy -= j2 * ny; q.vx += j2 * nx; q.vy += j2 * ny; } }
+      }
+      bodies.forEach(b => { if (!b.live) return; b.m.position.set(b.x, b.y, b.z); b.m.rotation.set(b.rx, b.ry, b.rz); });
+      R.render(sc, cam);
+    };
+    raf = requestAnimationFrame(frame);
+  } catch (e) { console.warn('intro skipped', e); finish(); }
 })();
 </script>
 <script>
