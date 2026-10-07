@@ -3,22 +3,28 @@
 import{useEffect,useState}from'react'
 import{createClient}from'@/lib/supabase/client'
 
-type Project={id:string,name:string,description?:string|null,status?:string|null,created_at?:string|null}
-
-const emptyForm={name:'',description:'',status:'active'}
+type Client={id:string,name:string,company?:string|null}
+type Project={id:string,client_id:string,title:string,description?:string|null,status?:string|null,created_at?:string|null}
+const emptyForm={client_id:'',title:'',description:'',status:'planning'}
 
 export default function Projects(){
   const s=createClient()
   const[rows,setRows]=useState<Project[]>([])
+  const[clients,setClients]=useState<Client[]>([])
   const[form,setForm]=useState(emptyForm)
   const[editing,setEditing]=useState<string|null>(null)
   const[msg,setMsg]=useState('')
   const[saving,setSaving]=useState(false)
 
   const load=async()=>{
-    const{data,error}=await s.from('projects').select('*').order('created_at',{ascending:false})
-    if(error)setMsg(error.message)
-    setRows(data??[])
+    const[{data:projects,error:pError},{data:clientRows,error:cError}]=await Promise.all([
+      s.from('projects').select('*').order('created_at',{ascending:false}),
+      s.from('clients').select('id,name,company').order('name')
+    ])
+    if(pError)setMsg(pError.message)
+    else setRows(projects??[])
+    if(cError)setMsg(cError.message)
+    else setClients(clientRows??[])
   }
 
   useEffect(()=>{load()},[])
@@ -28,7 +34,16 @@ export default function Projects(){
   async function save(e:any){
     e.preventDefault()
     setSaving(true);setMsg('')
-    const payload={name:form.name.trim(),description:form.description.trim()||null,status:form.status}
+
+    if(!form.client_id){setMsg('Please select a client.');setSaving(false);return}
+
+    const payload={
+      client_id:form.client_id,
+      title:form.title.trim(),
+      description:form.description.trim()||null,
+      status:form.status
+    }
+
     const{error}=editing
       ? await s.from('projects').update(payload).eq('id',editing)
       : await s.from('projects').insert(payload)
@@ -44,13 +59,18 @@ export default function Projects(){
 
   function startEdit(x:Project){
     setEditing(x.id)
-    setForm({name:x.name||'',description:x.description||'',status:x.status||'active'})
+    setForm({
+      client_id:x.client_id||'',
+      title:x.title||'',
+      description:x.description||'',
+      status:x.status||'planning'
+    })
     setMsg('')
     window.scrollTo({top:0,behavior:'smooth'})
   }
 
   async function remove(x:Project){
-    if(!window.confirm(`Delete project “${x.name}”? This cannot be undone.`))return
+    if(!window.confirm(`Delete project “${x.title}”? This cannot be undone.`))return
     setMsg('')
     const{error}=await s.from('projects').delete().eq('id',x.id)
     if(error)setMsg(error.message)
@@ -59,6 +79,11 @@ export default function Projects(){
       if(editing===x.id)reset()
       setMsg('Project deleted successfully.')
     }
+  }
+
+  const clientName=(id:string)=>{
+    const c=clients.find(x=>x.id===id)
+    return c?.company?c.company+' · '+c.name:(c?.name||'Unknown client')
   }
 
   return <main className="main">
@@ -71,16 +96,29 @@ export default function Projects(){
         <div><b>{editing?'Edit project':'New project'}</b>{editing&&<div className="panel-meta">Update the project details below.</div>}</div>
         {editing&&<button type="button" className="icon-button" onClick={reset}>Cancel</button>}
       </div>
+
       <form className="lead-form" onSubmit={save}>
         <div className="form-grid">
-          <input required placeholder="Project name" value={form.name} onChange={e=>setForm({...form,name:e.target.value})}/>
+          <select required value={form.client_id} onChange={e=>setForm({...form,client_id:e.target.value})}>
+            <option value="">Select client *</option>
+            {clients.map(c=><option key={c.id} value={c.id}>{c.company?c.company+' · ':''}{c.name}</option>)}
+          </select>
+          <input required placeholder="Project title *" value={form.title} onChange={e=>setForm({...form,title:e.target.value})}/>
           <input placeholder="Description" value={form.description} onChange={e=>setForm({...form,description:e.target.value})}/>
           <select value={form.status} onChange={e=>setForm({...form,status:e.target.value})}>
-            <option value="active">active</option><option value="completed">completed</option><option value="on_hold">on hold</option>
+            <option value="planning">Planning</option>
+            <option value="active">Active</option>
+            <option value="on_hold">On hold</option>
+            <option value="completed">Completed</option>
+            <option value="cancelled">Cancelled</option>
           </select>
         </div>
+
         <div className="form-actions">
-          <button className="primary-button compact" disabled={saving}>{saving?(editing?'Saving…':'Creating…'):(editing?'Save changes':'Create project')}</button>
+          <button className="primary-button compact" disabled={saving||!clients.length}>
+            {saving?(editing?'Saving…':'Creating…'):(editing?'Save changes':'Create project')}
+          </button>
+          {!clients.length&&<span className="form-message">Add a client first, then create a project.</span>}
           {msg&&<span className="form-message">{msg}</span>}
         </div>
       </form>
@@ -88,16 +126,21 @@ export default function Projects(){
 
     <section className="panel section-gap">
       <div className="panel-head"><b>Projects</b><span className="panel-meta">{rows.length} records</span></div>
+
       {rows.map(x=><div className="lead-row project-row" key={x.id}>
-        <div><div className="lead-name">{x.name}</div><div className="lead-service">{x.description||'No description'}</div></div>
+        <div>
+          <div className="lead-name">{x.title}</div>
+          <div className="lead-service">{clientName(x.client_id)}{x.description?' · '+x.description:''}</div>
+        </div>
         <div></div>
-        <span className="pill new">{x.status||'active'}</span>
+        <span className="pill new">{x.status||'planning'}</span>
         <div className="lead-date">{x.created_at?new Date(x.created_at).toLocaleDateString('en-IN'):''}</div>
         <div className="row-actions">
           <button type="button" className="icon-button" onClick={()=>startEdit(x)}>Edit</button>
           <button type="button" className="delete-button" onClick={()=>remove(x)}>Delete</button>
         </div>
       </div>)}
+
       {!rows.length&&<div className="empty">No projects yet.</div>}
     </section>
   </main>
