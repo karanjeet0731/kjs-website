@@ -36,6 +36,11 @@ export default function Invoices(){
     return c?.company?c.company+' · '+c.name:(c?.name||'Client')
   }
 
+  const projectName=(id?:string|null)=>{
+    if(!id) return ''
+    return projects.find(x=>x.id===id)?.title||''
+  }
+
   const makeNumber=()=>`KJS-${new Date().getFullYear()}-${Date.now().toString().slice(-6)}`
 
   async function add(e:any){
@@ -109,7 +114,11 @@ export default function Invoices(){
     <section className="panel section-gap">
       <div className="panel-head"><b>Invoices</b><span className="panel-meta">{rows.length} records</span></div>
       {rows.map(x=><div className="lead-row" key={x.id}>
-        <div><div className="lead-name">{x.invoice_number}</div><div className="lead-service">{clientName(x.client_id)}</div></div>
+        <div>
+          <div className="lead-name">{x.invoice_number}</div>
+          <div className="lead-service">{clientName(x.client_id)}</div>
+          {projectName(x.project_id)&&<div className="lead-service">Project: {projectName(x.project_id)}</div>}
+        </div>
         <div className="lead-name">₹{Number(x.amount||0).toLocaleString('en-IN')}</div>
         <span className="pill pending">{x.status}</span>
         <div className="lead-date">{x.due_date?'Due '+new Date(x.due_date).toLocaleDateString('en-IN'):''}</div>
