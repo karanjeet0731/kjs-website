@@ -2676,6 +2676,32 @@ html.kx-lock { overflow: hidden !important; }
 #kx-skip:hover { color: #fff; border-color: #fff; }
 
 @media (hover: none) { .kx-gl-on .kx-hint { display: none; } } /* no 'hover to pause' hint on touch screens */
+
+
+/* RESPONSIVE HARDENING — small phones / tablets */
+html, body { max-width: 100%; overflow-x: hidden; }
+img, video, canvas, iframe { max-width: 100%; }
+button, input, select, textarea { min-width: 0; }
+
+@media (max-width: 768px) {
+  .cta { width: 100%; }
+  .cf-card { width: 100%; min-width: 0; }
+  .cf-row { width: 100%; }
+  .cf-field, .cf-field-full { min-width: 0; }
+  .cf-field input, .cf-field select, .cf-field textarea { min-width: 0; }
+  .form-submit-row { width: 100%; }
+  .gallery-carousel { width: calc(100vw - 1.5rem); max-width: 100%; }
+  .gallery-stage { overflow: hidden; }
+}
+
+@media (max-width: 480px) {
+  .cta { padding-left: 1rem; padding-right: 1rem; gap: 2rem; }
+  .cf-card { padding: 1.15rem; border-radius: 14px; }
+  .cf-buttons { width: 100%; }
+  .cf-btn-submit, .cf-btn-back { width: 100%; min-height: 46px; }
+  .contact-item { gap: .75rem; }
+  .contact-val { max-width: 62%; overflow-wrap: anywhere; text-align: right; }
+}
 </style>
 </head>
 <body>
