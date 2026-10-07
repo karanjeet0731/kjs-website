@@ -2674,6 +2674,8 @@ html.kx-lock { overflow: hidden !important; }
 #kx-ic { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 #kx-skip { position: absolute; right: 1.5rem; bottom: 1.5rem; z-index: 2; background: none; color: #bdbdb6; border: 1px solid #ffffff3a; border-radius: 99px; padding: .5rem 1.1rem; font: 600 .75rem system-ui, sans-serif; letter-spacing: .12em; text-transform: uppercase; cursor: pointer !important; }
 #kx-skip:hover { color: #fff; border-color: #fff; }
+
+@media (hover: none) { .kx-gl-on .kx-hint { display: none; } } /* no 'hover to pause' hint on touch screens */
 </style>
 </head>
 <body>
@@ -4200,7 +4202,9 @@ if (kineticBar) { kineticNums.forEach(n => { n.style.opacity='0'; n.style.transf
 
     const F = 'Archivo, "Helvetica Neue", Arial, sans-serif';
     const SHOW_NAMES = false; // service names on cards hidden for now
-    const CW = 2.4, CH = 2.2, R = 4.2, DC = 5.2, GAP = .14, STEP = (CW + GAP) / R;
+    const PORTRAIT = innerWidth / innerHeight < .9;           // phones held upright
+    const PHONE_CARD_HEIGHT = 3.0; // phone only: card height (laptop stays 2.2). Higher = taller, e.g. 3.4
+    const CW = 2.4, CH = PORTRAIT ? PHONE_CARD_HEIGHT : 2.2, R = 4.2, DC = 5.2, GAP = .14, STEP = (CW + GAP) / R;
     const scene = new THREE.Scene(); scene.fog = new THREE.Fog(0x0d0d0d, 7, 24);
     const cam = new THREE.PerspectiveCamera(38, 1, .1, 60);
     const grid = new THREE.GridHelper(80, 80, 0x242424, 0x1a1a1a); grid.position.y = -1.5; scene.add(grid);
