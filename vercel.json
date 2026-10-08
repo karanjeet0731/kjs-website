@@ -1,13 +1,6 @@
 {
   "routes": [
     { "handle": "filesystem" },
-    {
-      "src": "/blog(?:/(.*))?$",
-      "dest": "/blog/index.html"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
+    { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
