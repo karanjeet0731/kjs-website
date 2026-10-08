@@ -1,23 +1,10 @@
-const client = {
-  projectId: "nceyom8c",
-  dataset: "production"
-}
-
-async function getPosts() {
-  const query = encodeURIComponent(`*[_type == "post"]{
-    title,
-    slug,
-    content
-  }`)
-
-  const url = `https://${client.projectId}.api.sanity.io/v2024-01-01/data/query/${client.dataset}?query=${query}`
-
-  try {
-    const res = await fetch(url)
-    const data = await res.json()
-    console.log(data) // 👈 DEBUG
-    return data.result
-  } catch (err) {
-    console.error("Error:", err)
-  }
-}
+const BLOG_API="https://psxyqzgezjfzuawdyzmp.supabase.co/functions/v1/public-blog";
+const esc=(v)=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+const fmt=(v)=>v?new Date(v).toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"}):"";
+async function getPosts(){const r=await fetch(BLOG_API);if(!r.ok)throw new Error("Unable to load articles");return r.json()}
+async function getPost(slug){const r=await fetch(BLOG_API+"?slug="+encodeURIComponent(slug));if(!r.ok)throw new Error("Unable to load article");return r.json()}
+function card(p){return '<article class="post-card"><a class="post-image-wrap" href="/blog/'+encodeURIComponent(p.slug)+'">'+(p.featured_image_url?'<img class="post-image" src="'+esc(p.featured_image_url)+'" alt="'+esc(p.title)+'" loading="lazy">':'<div class="post-image placeholder">KJS</div>')+'</a><div class="post-card-body"><div class="post-meta">'+esc(p.category||"Insights")+' · '+fmt(p.published_at)+' · '+esc(p.reading_time||5)+' min read</div><h2><a href="/blog/'+encodeURIComponent(p.slug)+'">'+esc(p.title)+'</a></h2><p>'+esc(p.excerpt||"Read the latest insight from KJS Creative.")+'</p><a class="read-more" href="/blog/'+encodeURIComponent(p.slug)+'">Read more ↗</a></div></article>'}
+function layout(content,title){document.title=(title?title+" | ":"")+"KJS Creative";document.querySelector("#blog-container").innerHTML=content}
+async function render(){const root=document.querySelector("#blog-container");try{const parts=location.pathname.split("/").filter(Boolean);if(parts.length>1){const p=await getPost(decodeURIComponent(parts[1]));if(!p){layout('<div class="empty-state"><h2>Article not found</h2><a href="/blog">← Back to Blog</a></div>',"Article not found");return}renderArticle(p);return}const posts=await getPosts();const input=document.querySelector("#blog-search");const draw=(q="")=>{const term=q.trim().toLowerCase();const list=term?posts.filter(p=>[p.title,p.excerpt,p.category,(p.tags||[]).join(" ")].join(" ").toLowerCase().includes(term)):posts;layout('<div class="blog-grid">'+(list.length?list.map(card).join(""):'<div class="empty-state"><h2>No articles found</h2><p>Try another search.</p></div>')+'</div>',"Blog")};draw();if(input)input.addEventListener("input",e=>draw(e.target.value))}catch(e){console.error(e);root.innerHTML='<div class="empty-state"><h2>Blog is temporarily unavailable</h2><p>Please try again shortly.</p></div>'}}
+function renderArticle(p){layout('<div class="article-head"><a class="back-link" href="/blog">← Back to Articles</a><div class="post-meta">'+esc(p.category||"Insights")+' · '+fmt(p.published_at)+' · '+esc(p.reading_time||5)+' min read</div><h1>'+esc(p.title)+'</h1><p class="article-excerpt">'+esc(p.excerpt||"")+'</p><div class="article-author">By <strong>'+esc(p.author_name||"KJS Creative")+'</strong></div></div>'+(p.featured_image_url?'<img class="article-hero" src="'+esc(p.featured_image_url)+'" alt="'+esc(p.title)+'">':"")+'<div class="article-layout">'+(p.toc_json&&p.toc_json.length?'<aside class="toc"><strong>In this article</strong><ul>'+p.toc_json.map(x=>'<li><a href="#'+esc(x.id||"")+'">'+esc(x.title||"")+'</a></li>').join("")+'</ul></aside>':"")+'<article class="article-content">'+(p.content_html||"")+'</article></div><div class="article-footer"><a href="/blog">← More articles</a></div>',p.seo_title||p.title);if(p.meta_description){let m=document.querySelector('meta[name="description"]');if(!m){m=document.createElement("meta");m.name="description";document.head.appendChild(m)}m.content=p.meta_description}}
+document.addEventListener("DOMContentLoaded",render);
