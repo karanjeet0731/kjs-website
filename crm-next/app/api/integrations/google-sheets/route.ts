@@ -62,7 +62,7 @@ export async function POST(request: Request) {
       if (!endpoint) return NextResponse.json({ error: 'Add GOOGLE_SHEETS_WEB_APP_URL in Vercel environment variables first.' }, { status: 503 })
       const { data, error } = await supabase.from('leads').select(columns.join(',')).order('created_at', { ascending: true })
       if (error) throw error
-      const response = await fetch(endpoint, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ action: 'push', leads: data || [] }), cache: 'no-store' })
+      const response = await fetch(endpoint, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ action: 'push', secret: process.env.GOOGLE_SHEETS_SYNC_SECRET, leads: data || [] }), cache: 'no-store' })
       const result = await response.json().catch(() => ({}))
       if (!response.ok || result.ok === false) throw new Error(result.error || 'Google Sheets push failed.')
       return NextResponse.json({ ok: true, count: (data || []).length, message: 'CRM leads sent to Google Sheets.' })
