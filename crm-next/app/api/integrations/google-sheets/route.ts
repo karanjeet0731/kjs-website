@@ -72,7 +72,9 @@ export async function POST(request: Request) {
     if (body.leads.length > 1000) return NextResponse.json({ error: 'Import is limited to 1,000 rows per request.' }, { status: 413 })
     const admin = serviceClient()
     let inserted = 0, updated = 0
-    for (const input of body.leads as LeadRow[]) {
+    const created: Array<{ index: number; id: string }> = []
+    for (let index = 0; index < body.leads.length; index++) {
+      const input = body.leads[index] as LeadRow
       const lead = cleanLead(input)
       const id = typeof lead.id === 'string' ? lead.id : ''
       if (id) {
@@ -87,8 +89,9 @@ export async function POST(request: Request) {
       }
       delete lead.id
       if (!lead.source) lead.source = 'Google Sheets'
-      const { error } = await admin.from('leads').insert(lead)
+      const { data: createdLead, error } = await admin.from('leads').insert(lead).select('id').single()
       if (error) throw error
+      created.push({ index, id: createdLead.id })
       inserted++
     }
     return NextResponse.json({ ok: true, inserted, updated, created, message: 'Google Sheets changes imported into CRM.' })
