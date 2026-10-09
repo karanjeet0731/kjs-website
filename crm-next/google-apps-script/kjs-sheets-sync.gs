@@ -5,6 +5,38 @@
  */
 const SHEET_NAME = 'KJS Leads';
 const HEADERS = ['id','name','company','email','phone','service','source','status','message','created_at','updated_at'];
+function doPost(e) {
+  try {
+    const body = JSON.parse((e && e.postData && e.postData.contents) || '{}');
+    if (body.action === 'push') {
+      const sheet = getSheet_();
+      setupSheet();
+      const leads = body.leads || [];
+      const existingRows = Math.max(0, sheet.getLastRow() - 1);
+      const rowById = {};
+      if (existingRows) {
+        const ids = sheet.getRange(2, 1, existingRows, 1).getValues();
+        ids.forEach((v, i) => { if (v[0]) rowById[String(v[0])] = i + 2; });
+      }
+      const append = [];
+      leads.forEach(lead => {
+        const values = HEADERS.map(key => lead[key] == null ? '' : lead[key]);
+        const row = lead.id ? rowById[String(lead.id)] : null;
+        if (row) sheet.getRange(row, 1, 1, HEADERS.length).setValues([values]);
+        else append.push(values);
+      });
+      if (append.length) sheet.getRange(sheet.getLastRow() + 1, 1, append.length, HEADERS.length).setValues(append);
+      return json_({ ok: true, count: leads.length, appended: append.length });
+    }
+    if (Array.isArray(body.leads)) return json_(postRows_(body.leads));
+    return json_({ ok: false, error: 'Expected action=push or a leads array.' });
+  } catch (err) {
+    return json_({ ok: false, error: String(err && err.message || err) });
+  }
+}
+function json_(data) {
+  return ContentService.createTextOutput(JSON.stringify(data)).setMimeType(ContentService.MimeType.JSON);
+}
 function setupSheet() {
   const sheet = getSheet_();
   sheet.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
