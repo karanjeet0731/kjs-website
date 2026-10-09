@@ -73,7 +73,8 @@ function onEdit(e) {
   const lead = {};
   HEADERS.forEach((key, i) => { if (row[i] !== '') lead[key] = row[i] instanceof Date ? row[i].toISOString() : row[i]; });
   if (!lead.name) return;
-  postRows_([lead]);
+  const result = postRows_([lead]);
+  if (!lead.id && result.created && result.created.length && result.created[0].id) sheet.getRange(rowNumber, 1).setValue(result.created[0].id);
 }
 function importSheetToCrm() {
   const sheet = getSheet_();
