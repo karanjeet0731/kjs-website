@@ -8,7 +8,7 @@ const HEADERS = ['id','name','company','email','phone','service','source','statu
 function doPost(e) {
   try {
     const body = JSON.parse((e && e.postData && e.postData.contents) || '{}');
-    if (body.action === 'push') {
+    if (body.action === 'push') {\n      const expectedSecret = PropertiesService.getScriptProperties().getProperty('SYNC_SECRET');\n      if (!expectedSecret || body.secret !== expectedSecret) throw new Error('Unauthorized CRM push. Check SYNC_SECRET.');
       const sheet = getSheet_();
       setupSheet();
       const leads = body.leads || [];
