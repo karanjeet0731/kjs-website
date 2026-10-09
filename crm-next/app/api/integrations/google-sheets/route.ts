@@ -91,7 +91,7 @@ export async function POST(request: Request) {
       if (error) throw error
       inserted++
     }
-    return NextResponse.json({ ok: true, inserted, updated, message: 'Google Sheets changes imported into CRM.' })
+    return NextResponse.json({ ok: true, inserted, updated, created, message: 'Google Sheets changes imported into CRM.' })
   } catch (error) {
     return NextResponse.json({ error: error instanceof Error ? error.message : 'Sync failed.' }, { status: 500 })
   }
