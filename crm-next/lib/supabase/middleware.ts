@@ -15,7 +15,10 @@ export async function updateSession(request: NextRequest) {
   })
   const { data: { user } } = await supabase.auth.getUser()
   const path = request.nextUrl.pathname
-  const publicPath = path === '/login' || path.startsWith('/auth')
+  // This endpoint performs its own authentication using the shared sync secret
+  // for Apps Script requests, or the signed-in admin session for CRM UI requests.
+  const isGoogleSheetsSyncApi = path === '/api/integrations/google-sheets'
+  const publicPath = path === '/login' || path.startsWith('/auth') || isGoogleSheetsSyncApi
   if (!user && !publicPath) {
     const url = request.nextUrl.clone(); url.pathname = '/login'
     return NextResponse.redirect(url)
