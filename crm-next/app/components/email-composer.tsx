@@ -77,7 +77,7 @@ export default function EmailComposer({
       if (!response.ok || !data.sent) throw new Error(data.error || 'Email was not confirmed sent.')
       if (data.crmUpdated && data.log) {
         onSent({ log: data.log, status: data.status ?? null })
-        setMessage('Email sent successfully. CRM has been updated.')
+        setMessage(data.activityLogged === false ? 'Email sent and lead status updated. The activity timeline could not save this event.' : 'Email sent successfully. CRM has been updated.')
         window.setTimeout(onClose, 1200)
       } else {
         setError(true)
