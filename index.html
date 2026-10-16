@@ -2741,6 +2741,100 @@ button, input, select, textarea { min-width: 0; }
   .contact-item { gap: .75rem; }
   .contact-val { max-width: 62%; overflow-wrap: anywhere; text-align: right; }
 }
+
+
+/* MOBILE SERVICES: compact text-first layout; all services visible together */
+@media (max-width: 768px) {
+  .hscroll-section {
+    padding: 2rem 0 1rem;
+  }
+  .hscroll-header {
+    padding: 0 1rem .6rem;
+    align-items: flex-start;
+  }
+  .hscroll-header .section-title {
+    font-size: clamp(1.9rem, 7.5vw, 2.4rem);
+    margin-bottom: 0;
+  }
+  .hscroll-drag-hint {
+    display: none !important;
+  }
+  .hscroll-track-wrap {
+    overflow: visible;
+    cursor: default;
+    user-select: text;
+    padding: 0 1rem;
+  }
+  .hscroll-track {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: .9rem;
+    row-gap: 0;
+    width: 100% !important;
+    padding: 0 !important;
+    transform: none !important;
+    will-change: auto;
+  }
+  .hscroll-card {
+    width: auto !important;
+    min-width: 0;
+    padding: .6rem 0;
+    margin: 0;
+    background: transparent;
+    border: 0;
+    border-top: 1px solid var(--gray-light);
+    border-radius: 0;
+    box-shadow: none !important;
+    transform: none !important;
+    overflow: visible;
+  }
+  .hscroll-card::before {
+    display: none !important;
+  }
+  .hscroll-card-num {
+    font-size: .62rem;
+    line-height: 1;
+    margin-bottom: .3rem;
+    color: var(--accent);
+    letter-spacing: .04em;
+  }
+  .hscroll-card-title {
+    font-size: clamp(.88rem, 3.9vw, 1.02rem);
+    line-height: 1.18;
+    letter-spacing: -.02em;
+    margin-bottom: .25rem;
+    overflow-wrap: anywhere;
+  }
+  .hscroll-card-body {
+    font-size: .69rem;
+    line-height: 1.35;
+    font-weight: 400;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+  .hscroll-card-tag,
+  .hscroll-card-link {
+    display: none !important;
+  }
+}
+@media (max-width: 390px) {
+  .hscroll-track {
+    column-gap: .7rem;
+  }
+  .hscroll-card {
+    padding: .52rem 0;
+  }
+  .hscroll-card-title {
+    font-size: .86rem;
+  }
+  .hscroll-card-body {
+    font-size: .66rem;
+    line-height: 1.3;
+  }
+}
+
 </style>
 </head>
 <body>
