@@ -36,3 +36,25 @@ a{color:inherit;text-decoration:none}
   .row-actions .icon-button,.row-actions .delete-button{flex:1}
   .project-row .row-actions,.client-row .row-actions{grid-column:1/-1;grid-row:auto}
 }
+
+
+/* AI-assisted lead email composer */
+.email-lead-button{border:1px solid #f0b7aa!important;background:#fff7f4!important;color:#bd3b24!important;border-radius:8px!important;padding:.55rem .72rem!important;font-size:.74rem!important;font-weight:750!important;white-space:nowrap!important}
+.email-lead-button:hover{background:#ffede7!important;border-color:#e89d8d!important}
+.email-lead-button:disabled{opacity:.4;cursor:not-allowed!important}
+.email-modal-backdrop{position:fixed;inset:0;z-index:1000;background:rgba(13,13,15,.55);backdrop-filter:blur(3px);display:grid;place-items:center;padding:1rem}
+.email-modal{width:min(100%,720px);max-height:min(92vh,920px);overflow:auto;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 24px 80px #0003}
+.email-modal-head{padding:1.25rem 1.4rem;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-start;gap:1rem}
+.email-modal-title{font-size:1.35rem;letter-spacing:-.025em;line-height:1.2;margin:.25rem 0}
+.email-modal-sub{font-size:.85rem;color:var(--mute);margin:0}
+.email-modal-body{padding:1.15rem 1.4rem;display:grid;gap:.85rem}
+.email-field{display:grid;gap:.35rem;min-width:0}
+.email-field>span{font-size:.75rem;font-weight:700;color:#55554f}
+.email-field input,.email-field textarea{width:100%;min-width:0;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:9px;padding:.72rem .8rem;font:inherit}
+.email-field input[readonly]{background:#f7f6f3;color:#65645e}
+.email-field input:focus,.email-field textarea:focus{outline:2px solid #e0452a55;border-color:var(--accent)}
+.email-field textarea{resize:vertical;min-height:230px;line-height:1.6;white-space:pre-wrap}
+.email-feedback{padding:.65rem .75rem;border:1px solid #bde6ca;background:#f0faf3;color:#16753d;font-size:.82rem;border-radius:8px;margin:0}
+.email-feedback.is-error{border-color:#f1c2bd;background:#fff0ef;color:#a72d22}
+.email-modal-actions{padding:1rem 1.4rem;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:.75rem;flex-wrap:wrap}
+@media(max-width:620px){.email-modal-backdrop{padding:.45rem;align-items:end}.email-modal{max-height:94dvh;border-radius:16px 16px 9px 9px}.email-modal-head,.email-modal-body{padding:1rem}.email-modal-actions{padding:.85rem 1rem}.email-modal-actions button{flex:1}.email-field textarea{min-height:200px}}
