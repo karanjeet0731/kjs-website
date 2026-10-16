@@ -13,7 +13,7 @@ Next.js + Supabase CRM for KJS Creative.
 ## AI email outreach
 - Open Leads and click Email for a lead with an email address.
 - The CRM requests a tailored draft from OpenAI using that lead's service and enquiry notes.
-- Review and edit the recipient (shown from the lead record), subject, and body before confirming Send.
+- Confirm the recipient shown from the lead record, then review and edit the subject and body before confirming Send.
 - On successful Gmail SMTP send, the lead's `log.mail_status`, `log.last_email_subject`, `log.last_email_sent_at`, and `log.email_history` are updated. A New or Unassigned lead is moved to Contacted.
 - If Gmail succeeds but the CRM database update fails, the UI warns not to resend to avoid a duplicate message.
 
