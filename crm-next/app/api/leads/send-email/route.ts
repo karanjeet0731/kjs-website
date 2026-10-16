@@ -79,7 +79,7 @@ export async function POST(request: Request) {
 
     const { error: updateError } = await access.supabase
       .from('leads')
-      .update({ log: nextLog, status: nextStatus || null })
+      .update({ log: nextLog, status: nextStatus || null, updated_at: sentAt })
       .eq('id', leadId)
 
     // Sending already succeeded. Never report "email failed" when only the CRM write failed,
@@ -94,11 +94,21 @@ export async function POST(request: Request) {
       })
     }
 
+    const { error: activityError } = await access.supabase
+      .from('activities')
+      .insert({
+        type: 'email_sent',
+        summary: `Email sent to ${to}: ${subject}`,
+        lead_id: leadId,
+        actor_id: access.user.id,
+      })
+
     return NextResponse.json({
       ok: true,
       sent: true,
       crmUpdated: true,
-      message: 'Email sent with Gmail. Lead activity updated.',
+      activityLogged: !activityError,
+      message: 'Email sent with Gmail. Lead status and email history updated.',
       log: nextLog,
       status: nextStatus,
       messageId: sent.messageId || null,
