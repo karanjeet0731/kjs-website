@@ -161,19 +161,20 @@ export async function POST(request: Request) {
       from: smtpUser,
       message_id: sent.messageId || null,
     }
+    const nextStatus = ['new', 'unassigned'].includes(String(lead.status || '').toLowerCase())
+      ? 'Contacted'
+      : lead.status
+    const startsAutoFollowUp = String(nextStatus || '').toLowerCase() === 'contacted'
     const nextLog = {
       ...priorLog,
       mail_status: 'Sent',
       last_email_subject: subject,
       last_email_sent_at: sentAt,
-      auto_follow_up_active: true,
+      auto_follow_up_active: startsAutoFollowUp,
       auto_lost_at: null,
-      follow_up_status: 'Waiting 48h',
+      follow_up_status: startsAutoFollowUp ? 'Waiting 48h' : 'Paused',
       email_history: [...priorHistory, emailRecord].slice(-30),
     }
-    const nextStatus = ['new', 'unassigned'].includes(String(lead.status || '').toLowerCase())
-      ? 'Contacted'
-      : lead.status
 
     const { error: updateError } = await access.supabase
       .from('leads')
