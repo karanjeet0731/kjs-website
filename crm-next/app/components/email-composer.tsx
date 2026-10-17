@@ -119,7 +119,7 @@ export default function EmailComposer({
         </div>
         <div className="email-modal-actions">
           <button type="button" className="icon-button" onClick={generateDraft} disabled={drafting || sending}>{drafting ? 'Generating…' : '↻ Regenerate draft'}</button>
-          <button type="button" className="primary-button compact" onClick={sendEmail} disabled={!readyToSend || !to || !subject.trim() || !body.trim() || drafting || sending}>{sending ? 'Sending…' : 'Send with Gmail ↗'}</button>
+          <button type="button" className="primary-button compact" onClick={sendEmail} disabled={!readyToSend || !to || !subject.trim() || !body.trim() || drafting || sending}>{sending ? 'Sending…' : 'Send email ↗'}</button>
         </div>
       </section>
     </div>
