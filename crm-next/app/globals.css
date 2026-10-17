@@ -87,3 +87,12 @@ a{color:inherit;text-decoration:none}
 .lead-card>.lead-actions{grid-column:4;grid-row:1}
 @media(max-width:860px){.lead-card>.lead-follow-up{grid-row:auto}.lead-card>.lead-actions{grid-column:1/-1;grid-row:auto}.lead-checks{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
 @media(max-width:620px){.followup-overview{padding:.85rem}.followup-overview-head{align-items:flex-start;flex-direction:column}.followup-overview-grid{grid-template-columns:1fr}.lead-follow-up{align-items:flex-start;gap:.55rem}.lead-follow-up .followup-date-field{width:100%;justify-content:space-between}.followup-date-field input{flex:1;max-width:none}.lead-card>.lead-follow-up,.lead-card>.lead-actions{grid-column:1/-1}}
+
+/* Automatic follow-up status shown in each lead card */
+.lead-auto-follow-up{grid-column:1/-1;grid-row:2;display:flex;align-items:center;gap:.65rem;flex-wrap:wrap;padding:.7rem 0 0;border-top:1px solid #efeee9;min-width:0}
+.followup-status-pill.timer-running{border-color:#c9dcfa;background:#eef5ff;color:#2d65ad}
+.followup-status-pill.due-for-auto-loss{border-color:#f1c2bd;background:#fff0ef;color:#c9362b}
+.followup-status-pill.auto-lost{border-color:#f1c2bd;background:#fff0ef;color:#c9362b}
+.followup-status-pill.paused{border-color:#dedbd3;background:#f6f5f2;color:#5f5e59}
+@media(max-width:860px){.lead-card>.lead-auto-follow-up{grid-row:auto}.lead-card>.lead-actions{grid-column:1/-1;grid-row:auto}}
+@media(max-width:620px){.lead-card>.lead-auto-follow-up{grid-column:1/-1}.lead-auto-follow-up{align-items:flex-start}}
