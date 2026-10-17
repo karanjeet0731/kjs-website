@@ -170,9 +170,12 @@ export async function POST(request: Request) {
       mail_status: 'Sent',
       last_email_subject: subject,
       last_email_sent_at: sentAt,
+      initial_email_sent_at: startsAutoFollowUp ? sentAt : (priorLog.initial_email_sent_at || null),
+      last_follow_up_sent_at: null,
+      auto_follow_up_stage: startsAutoFollowUp ? 'initial_sent' : 'paused',
       auto_follow_up_active: startsAutoFollowUp,
       auto_lost_at: null,
-      follow_up_status: startsAutoFollowUp ? 'Waiting 48h' : 'Paused',
+      follow_up_status: startsAutoFollowUp ? 'Waiting 48h for automatic follow-up' : 'Paused',
       email_history: [...priorHistory, emailRecord].slice(-30),
     }
 
