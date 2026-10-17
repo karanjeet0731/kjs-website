@@ -39,6 +39,7 @@ a{color:inherit;text-decoration:none}
 
 
 /* AI-assisted lead email composer */
+.whatsapp-lead-button{display:inline-flex!important;align-items:center!important;justify-content:center!important;text-decoration:none!important;border:1px solid #b8e4c6!important;background:#effaf2!important;color:#16743b!important;border-radius:8px!important;padding:.55rem .72rem!important;font:inherit!important;font-size:.74rem!important;font-weight:750!important;white-space:nowrap!important;cursor:pointer!important}.whatsapp-lead-button:hover{background:#e1f6e7!important;border-color:#92d5a7!important}.whatsapp-lead-button:disabled{opacity:.4!important;cursor:not-allowed!important}
 .email-lead-button{border:1px solid #f0b7aa!important;background:#fff7f4!important;color:#bd3b24!important;border-radius:8px!important;padding:.55rem .72rem!important;font-size:.74rem!important;font-weight:750!important;white-space:nowrap!important}
 .email-lead-button:hover{background:#ffede7!important;border-color:#e89d8d!important}
 .email-lead-button:disabled{opacity:.4;cursor:not-allowed!important}
