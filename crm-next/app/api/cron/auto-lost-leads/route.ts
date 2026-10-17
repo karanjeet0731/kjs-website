@@ -112,7 +112,7 @@ export async function GET(request: Request) {
     try {
       for (const c of candidates) {
         const searchResult = await imap.search({ from: c.email, since: new Date(c.initialSentAt) })
-        if (searchResult === false || searchResult.length === 0) continue
+        if (!searchResult || searchResult.length === 0) continue
         const uids = searchResult as number[]
         for await (const message of imap.fetch(uids, { internalDate: true }, { uid: true })) {
           const received = message.internalDate instanceof Date ? message.internalDate.getTime() : NaN
