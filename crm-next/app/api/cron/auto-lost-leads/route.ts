@@ -111,8 +111,9 @@ export async function GET(request: Request) {
     const lock = await imap.getMailboxLock('INBOX')
     try {
       for (const c of candidates) {
-        const uids = await imap.search({ from: c.email, since: new Date(c.initialSentAt) })
-        if (!uids?.length) continue
+        const searchResult = await imap.search({ from: c.email, since: new Date(c.initialSentAt) })
+        if (searchResult === false || searchResult.length === 0) continue
+        const uids = searchResult as number[]
         for await (const message of imap.fetch(uids, { internalDate: true }, { uid: true })) {
           const received = message.internalDate instanceof Date ? message.internalDate.getTime() : NaN
           if (Number.isFinite(received) && received > c.initialSentAt) {
