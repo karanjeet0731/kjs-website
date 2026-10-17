@@ -29,9 +29,9 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Add the client’s email address to this lead first.' }, { status: 400 })
     }
 
-    const apiKey = process.env.OPENAI_API_KEY
+    const apiKey = process.env.GROQ_API_KEY
     if (!apiKey) {
-      return NextResponse.json({ error: 'AI drafting is not configured yet. Add OPENAI_API_KEY to the CRM project’s server environment variables.' }, { status: 503 })
+      return NextResponse.json({ error: 'AI drafting is not configured yet. Add GROQ_API_KEY to the CRM project’s server environment variables.' }, { status: 503 })
     }
 
     const context = {
@@ -44,14 +44,14 @@ export async function POST(request: Request) {
       notes: lead.notes || '',
     }
 
-    const completion = await fetch('https://api.openai.com/v1/chat/completions', {
+    const completion = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: process.env.OPENAI_MODEL || 'gpt-4o-mini',
+        model: process.env.GROQ_MODEL || 'openai/gpt-oss-20b',
         temperature: 0.65,
         response_format: { type: 'json_object' },
         messages: [
