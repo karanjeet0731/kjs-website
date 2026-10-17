@@ -59,3 +59,31 @@ a{color:inherit;text-decoration:none}
 .email-feedback.is-error{border-color:#f1c2bd;background:#fff0ef;color:#a72d22}
 .email-modal-actions{padding:1rem 1.4rem;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:.75rem;flex-wrap:wrap}
 @media(max-width:620px){.email-modal-backdrop{padding:.45rem;align-items:end}.email-modal{max-height:94dvh;border-radius:16px 16px 9px 9px}.email-modal-head,.email-modal-body{padding:1rem}.email-modal-actions{padding:.85rem 1rem}.email-modal-actions button{flex:1}.email-field textarea{min-height:200px}}
+
+/* Free CRM follow-up reminder controls */
+.followup-overview{margin-top:1rem;padding:1rem 1.15rem;border:1px solid var(--line);border-radius:14px;background:#fff}
+.followup-overview-head{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:.8rem}
+.followup-overview-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.65rem}
+.followup-summary-item{display:flex;align-items:center;justify-content:space-between;gap:.5rem;text-align:left;padding:.7rem .85rem;border:1px solid var(--line);border-radius:10px;background:#faf9f7;color:var(--ink);cursor:pointer}
+.followup-summary-item span{font-size:.8rem;font-weight:650;color:#53524d}
+.followup-summary-item strong{display:grid;place-items:center;min-width:29px;height:29px;padding:0 .45rem;border-radius:999px;background:#e9e7e0;color:#33312c;font-size:.82rem}
+.followup-summary-item.overdue strong{background:#fff0ef;color:#b52d23}
+.followup-summary-item.upcoming strong{background:#eef5ff;color:#2d65ad}
+.followup-summary-item.selected{border-color:#e0452a;background:#fff5f2;box-shadow:0 0 0 1px #e0452a1a}
+.lead-follow-up{grid-column:1/-1;grid-row:2;display:flex;align-items:center;gap:.65rem;flex-wrap:wrap;padding:.75rem 0 0;border-top:1px solid #efeee9;min-width:0}
+.lead-follow-up .followup-date-field{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+.followup-date-field label{font-size:.72rem;font-weight:700;color:#5f5e59;white-space:nowrap}
+.followup-date-field input{max-width:160px;min-width:125px;padding:.48rem .55rem;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);font:inherit;font-size:.77rem}
+.followup-status-pill{display:inline-flex;align-items:center;border:1px solid #dedbd3;border-radius:999px;padding:.35rem .6rem;background:#f6f5f2;color:#5f5e59;font-size:.7rem;font-weight:750;white-space:nowrap}
+.followup-status-pill.due-today{border-color:#f0dda5;background:#fff7df;color:#996b00}
+.followup-status-pill.overdue{border-color:#f1c2bd;background:#fff0ef;color:#c9362b}
+.followup-status-pill.upcoming{border-color:#c9dcfa;background:#eef5ff;color:#2d65ad}
+.followup-status-pill.completed{border-color:#bde6ca;background:#eaf8ef;color:#16753d}
+.followup-complete-button,.followup-reopen-button,.followup-clear-button{border:1px solid var(--line);border-radius:8px;background:#fff;padding:.45rem .6rem;font-size:.72rem;font-weight:700;white-space:nowrap;cursor:pointer}
+.followup-complete-button{border-color:#bde6ca;background:#f0faf3;color:#16753d}
+.followup-reopen-button{border-color:#c9dcfa;background:#eef5ff;color:#2d65ad}
+.followup-clear-button{color:#77756e}
+.followup-hint{font-size:.72rem;color:var(--mute)}
+.lead-card>.lead-actions{grid-column:4;grid-row:1}
+@media(max-width:860px){.lead-card>.lead-follow-up{grid-row:auto}.lead-card>.lead-actions{grid-column:1/-1;grid-row:auto}.lead-checks{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:620px){.followup-overview{padding:.85rem}.followup-overview-head{align-items:flex-start;flex-direction:column}.followup-overview-grid{grid-template-columns:1fr}.lead-follow-up{align-items:flex-start;gap:.55rem}.lead-follow-up .followup-date-field{width:100%;justify-content:space-between}.followup-date-field input{flex:1;max-width:none}.lead-card>.lead-follow-up,.lead-card>.lead-actions{grid-column:1/-1}}
