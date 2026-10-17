@@ -77,8 +77,13 @@ export default function EmailComposer({
       if (!response.ok || !data.sent) throw new Error(data.error || 'Email was not confirmed sent.')
       if (data.crmUpdated && data.log) {
         onSent({ log: data.log, status: data.status ?? null })
-        setMessage(data.activityLogged === false ? 'Email sent and lead status updated. The activity timeline could not save this event.' : 'Email sent successfully. CRM has been updated.')
-        window.setTimeout(onClose, 1200)
+        if (data.sentFolderSaved === false) {
+          setError(true)
+          setMessage('Email was sent and CRM updated, but a copy could not be saved to Hostinger Sent. Do not resend this email.')
+        } else {
+          setMessage(data.activityLogged === false ? 'Email sent and lead status updated. The activity timeline could not save this event.' : 'Email sent successfully. CRM and Hostinger Sent have been updated.')
+          window.setTimeout(onClose, 1500)
+        }
       } else {
         setError(true)
         setMessage(data.warning || 'Email was sent, but the CRM update needs attention. Do not send it again.')
