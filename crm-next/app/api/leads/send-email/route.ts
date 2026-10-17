@@ -161,11 +161,15 @@ export async function POST(request: Request) {
       from: smtpUser,
       message_id: sent.messageId || null,
     }
+    const nextFollowUp = new Date(sentAtDate)
+    nextFollowUp.setDate(nextFollowUp.getDate() + 2)
     const nextLog = {
       ...priorLog,
       mail_status: 'Sent',
       last_email_subject: subject,
       last_email_sent_at: sentAt,
+      next_follow_up_date: nextFollowUp.toISOString().slice(0, 10),
+      follow_up_status: 'Pending',
       email_history: [...priorHistory, emailRecord].slice(-30),
     }
     const nextStatus = ['new', 'unassigned'].includes(String(lead.status || '').toLowerCase())
