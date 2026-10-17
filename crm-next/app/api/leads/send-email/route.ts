@@ -1,9 +1,81 @@
 import { NextResponse } from 'next/server'
 import nodemailer from 'nodemailer'
+import { ImapFlow } from 'imapflow'
+import { randomUUID } from 'node:crypto'
 import { requireAdmin } from '@/lib/admin'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
+
+function encodeBase64Lines(value: string): string {
+  const encoded = Buffer.from(value, 'utf8').toString('base64')
+  return encoded.match(/.{1,76}/g)?.join('\r\n') || ''
+}
+
+async function saveCopyToSentFolder(options: {
+  smtpUser: string
+  smtpPassword: string
+  to: string
+  subject: string
+  body: string
+  date: Date
+  messageId: string
+}): Promise<boolean> {
+  const imap = new ImapFlow({
+    host: process.env.IMAP_HOST || 'imap.hostinger.com',
+    port: Number(process.env.IMAP_PORT || 993),
+    secure: process.env.IMAP_SECURE
+      ? process.env.IMAP_SECURE.toLowerCase() === 'true'
+      : true,
+    auth: { user: options.smtpUser, pass: options.smtpPassword },
+    logger: false,
+  })
+
+  let connected = false
+  try {
+    await imap.connect()
+    connected = true
+    const mailboxes = await imap.list()
+    const sentMailbox =
+      mailboxes.find((mailbox) => String(mailbox.specialUse || '').toLowerCase() === '\\sent') ||
+      mailboxes.find((mailbox) => /(^|[./])sent(?: items)?$/i.test(mailbox.path)) ||
+      mailboxes.find((mailbox) => /^sent(?: items)?$/i.test(mailbox.name))
+
+    if (!sentMailbox) return false
+
+    const encodedSubject = '=?UTF-8?B?' + Buffer.from(options.subject, 'utf8').toString('base64') + '?='
+    const rawMessage = [
+      'From: "KJS Creative" <' + options.smtpUser + '>',
+      'To: <' + options.to + '>',
+      'Subject: ' + encodedSubject,
+      'Date: ' + options.date.toUTCString(),
+      'Message-ID: <' + options.messageId + '>',
+      'Reply-To: <' + options.smtpUser + '>',
+      'MIME-Version: 1.0',
+      'Content-Type: text/plain; charset=UTF-8',
+      'Content-Transfer-Encoding: base64',
+      '',
+      encodeBase64Lines(options.body),
+      '',
+    ].join('\r\n')
+
+    const appended = await imap.append(sentMailbox.path, rawMessage, ['\\Seen'], options.date)
+    return Boolean(appended)
+  } catch {
+    // SMTP may already have delivered the message; do not turn a Sent-folder copy failure into a resend prompt.
+    return false
+  } finally {
+    if (connected) {
+      try {
+        await imap.logout()
+      } catch {
+        imap.close()
+      }
+    } else {
+      imap.close()
+    }
+  }
+}
 
 export async function POST(request: Request) {
   try {
@@ -55,13 +127,28 @@ export async function POST(request: Request) {
       auth: { user: smtpUser, pass: smtpPassword },
     })
 
-    const sentAt = new Date().toISOString()
+    const sentAtDate = new Date()
+    const sentAt = sentAtDate.toISOString()
+    const messageId = 'crm-' + randomUUID() + '@' + (smtpUser.split('@')[1] || 'localhost')
     const sent = await transporter.sendMail({
       from: { name: 'KJS Creative', address: smtpUser },
       to,
       subject,
       text: body,
       replyTo: smtpUser,
+      date: sentAtDate,
+      messageId,
+    })
+
+    // SMTP sends the message, but doesn't automatically save it to the mailbox's Sent folder.
+    const sentFolderSaved = await saveCopyToSentFolder({
+      smtpUser,
+      smtpPassword,
+      to,
+      subject,
+      body,
+      date: sentAtDate,
+      messageId,
     })
 
     const priorLog = lead.log && typeof lead.log === 'object' && !Array.isArray(lead.log) ? lead.log : {}
@@ -99,6 +186,7 @@ export async function POST(request: Request) {
         crmUpdated: false,
         warning: 'Email was sent, but CRM status could not be updated. Do not resend; refresh and update the lead manually.',
         messageId: sent.messageId || null,
+        sentFolderSaved,
       })
     }
 
@@ -117,6 +205,7 @@ export async function POST(request: Request) {
       crmUpdated: true,
       activityLogged: !activityError,
       message: 'Email sent successfully. Lead status and email history updated.',
+      sentFolderSaved,
       log: nextLog,
       status: nextStatus,
       messageId: sent.messageId || null,
