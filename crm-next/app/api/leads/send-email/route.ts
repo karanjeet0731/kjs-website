@@ -161,8 +161,15 @@ export async function POST(request: Request) {
       from: smtpUser,
       message_id: sent.messageId || null,
     }
-    const nextFollowUp = new Date(sentAtDate)
-    nextFollowUp.setDate(nextFollowUp.getDate() + 2)
+    // Use India-local calendar dates so the reminder is correct for the CRM owner.
+    const indiaDateParts = new Intl.DateTimeFormat('en-CA', {
+      timeZone: 'Asia/Kolkata',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    }).formatToParts(sentAtDate)
+    const indiaPart = (type: string) => Number(indiaDateParts.find((part) => part.type === type)?.value || 0)
+    const nextFollowUp = new Date(Date.UTC(indiaPart('year'), indiaPart('month') - 1, indiaPart('day') + 2))
     const nextLog = {
       ...priorLog,
       mail_status: 'Sent',
