@@ -91,7 +91,7 @@ export async function GET(request: Request) {
           from: candidate.email,
           since: new Date(candidate.sentAt),
         })
-        if (!uids.length) continue
+        if (!uids || !uids.length) continue
 
         for await (const message of imap.fetch(uids, { internalDate: true }, { uid: true })) {
           const receivedAt = message.internalDate instanceof Date ? message.internalDate.getTime() : NaN
