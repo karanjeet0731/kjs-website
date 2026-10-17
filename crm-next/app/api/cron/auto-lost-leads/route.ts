@@ -75,7 +75,7 @@ export async function GET(request: Request) {
       log.auto_follow_up_active === true &&
       !log.auto_lost_at &&
       typeof lead.email === 'string' &&
-      /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(lead.email.trim()) &&
+      /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(lead.email.trim()) &&
       Number.isFinite(initialSentAt) &&
       Number.isFinite(dueAt) &&
       now.getTime() - dueAt >= WAIT_MS
