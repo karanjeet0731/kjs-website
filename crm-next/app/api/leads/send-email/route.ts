@@ -34,26 +34,34 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'This lead does not have a valid client email address.' }, { status: 400 })
     }
 
-    const gmailUser = process.env.GMAIL_USER
-    const gmailPassword = process.env.GMAIL_APP_PASSWORD
-    if (!gmailUser || !gmailPassword) {
-      return NextResponse.json({ error: 'Gmail sending is not configured yet. Add GMAIL_USER and GMAIL_APP_PASSWORD to the CRM project’s server environment variables.' }, { status: 503 })
+    const smtpHost = process.env.SMTP_HOST
+    const smtpUser = process.env.SMTP_USER
+    const smtpPassword = process.env.SMTP_PASSWORD
+    const smtpPort = Number(process.env.SMTP_PORT || 465)
+    const smtpSecure = process.env.SMTP_SECURE
+      ? process.env.SMTP_SECURE.toLowerCase() === 'true'
+      : smtpPort === 465
+
+    if (!smtpHost || !smtpUser || !smtpPassword || !Number.isInteger(smtpPort) || smtpPort < 1 || smtpPort > 65535) {
+      return NextResponse.json({
+        error: 'Email sending is not configured yet. Add SMTP_HOST, SMTP_PORT, SMTP_SECURE, SMTP_USER, and SMTP_PASSWORD to the CRM project’s server environment variables.',
+      }, { status: 503 })
     }
 
     const transporter = nodemailer.createTransport({
-      host: 'smtp.gmail.com',
-      port: 465,
-      secure: true,
-      auth: { user: gmailUser, pass: gmailPassword.replace(/\s/g, '') },
+      host: smtpHost,
+      port: smtpPort,
+      secure: smtpSecure,
+      auth: { user: smtpUser, pass: smtpPassword },
     })
 
     const sentAt = new Date().toISOString()
     const sent = await transporter.sendMail({
-      from: { name: 'KJS Creative', address: gmailUser },
+      from: { name: 'KJS Creative', address: smtpUser },
       to,
       subject,
       text: body,
-      replyTo: gmailUser,
+      replyTo: smtpUser,
     })
 
     const priorLog = lead.log && typeof lead.log === 'object' && !Array.isArray(lead.log) ? lead.log : {}
@@ -63,7 +71,7 @@ export async function POST(request: Request) {
       subject,
       body,
       sent_at: sentAt,
-      from: gmailUser,
+      from: smtpUser,
       message_id: sent.messageId || null,
     }
     const nextLog = {
@@ -108,7 +116,7 @@ export async function POST(request: Request) {
       sent: true,
       crmUpdated: true,
       activityLogged: !activityError,
-      message: 'Email sent with Gmail. Lead status and email history updated.',
+      message: 'Email sent successfully. Lead status and email history updated.',
       log: nextLog,
       status: nextStatus,
       messageId: sent.messageId || null,
