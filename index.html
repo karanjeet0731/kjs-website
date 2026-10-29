@@ -4773,11 +4773,43 @@ if (kineticBar) { kineticNums.forEach(n => { n.style.opacity='0'; n.style.transf
  const sparks=[...board.querySelectorAll('.kpg-spark')], score=document.getElementById('kpg-score'), status=document.getElementById('kpg-status'), start=document.getElementById('kpg-start'), unlocked=document.getElementById('kpg-unlocked');
  let caught=0,playing=false,timer=null,remaining=15;
  function paint(){score.textContent='SPARKS '+caught+' / 7';}
- function stop(){playing=false;if(timer){clearInterval(timer);timer=null;}start.textContent=caught===7?'Play again ↻':'Try again ↻';}
- function reset(){if(timer){clearInterval(timer);timer=null;}caught=0;remaining=15;playing=false;unlocked.classList.remove('is-visible');sparks.forEach(s=>{s.hidden=false;s.classList.remove('is-caught');s.disabled=false;});paint();status.textContent='Catch all 7 sparks in 15 seconds!';start.textContent='Start playing ↗';}
- function begin(){if(playing)return;reset();playing=true;start.textContent='15s left';status.textContent='Go go go! Catch those sparks ✦';timer=setInterval(()=>{remaining--;start.textContent=remaining+'s left';if(remaining<=0){stop();sparks.forEach(s=>{if(!s.classList.contains('is-caught'))s.disabled=true;});status.textContent=caught===7?'You did it!':'Time’s up! You caught '+caught+' of 7 — give it another go.';},1000);}
- sparks.forEach(s=>s.addEventListener('click',()=>{if(!playing||s.classList.contains('is-caught'))return;s.classList.add('is-caught');s.disabled=true;caught++;paint();if(caught===7){stop();sparks.forEach(x=>x.disabled=true);status.textContent='All sparks collected. Creative mode: ON.';start.textContent='Play again ↻';unlocked.classList.add('is-visible');}else status.textContent='Nice! '+(7-caught)+' more to go ✨';}));
- start.addEventListener('click',()=>{if(caught===7||!playing)begin();});
+ function stop(){playing=false;if(timer){clearInterval(timer);timer=null;}sparks.forEach(s=>{s.disabled=true;});start.textContent=caught===7?'Play again ↻':'Try again ↻';}
+ function moveSpark(s){
+   const x=8+Math.random()*78, y=22+Math.random()*52;
+   s.style.left=x+'%';s.style.top=y+'%';
+   s.style.setProperty('--spark-color',['#ff765c','#ffc857','#a5e6c8','#c4b5fd','#7dd3fc','#ff9fba','#fca5a5'][Math.floor(Math.random()*7)]);
+ }
+ function reset(){
+   if(timer){clearInterval(timer);timer=null;}
+   caught=0;remaining=15;playing=false;unlocked.classList.remove('is-visible');
+   sparks.forEach(s=>{s.hidden=false;s.classList.remove('is-caught');s.disabled=true;s.style.opacity='1';moveSpark(s);});
+   paint();status.textContent='Hit start, then catch all 7 in 15 seconds!';start.textContent='Start playing ↗';
+ }
+ function begin(){
+   if(playing)return;
+   reset();playing=true;sparks.forEach(s=>s.disabled=false);
+   start.textContent='15s left';status.textContent='Go go go! The sparks are moving ✦';
+   timer=setInterval(()=>{
+     remaining--;start.textContent=remaining+'s left';
+     if(remaining<=0){
+       stop();
+       status.textContent=caught===7?'You did it!':'Time’s up! You caught '+caught+' of 7 — try again!';
+     }
+   },1000);
+ }
+ sparks.forEach(s=>s.addEventListener('click',()=>{
+   if(!playing||s.classList.contains('is-caught'))return;
+   s.classList.add('is-caught');s.disabled=true;caught++;paint();
+   if(caught===7){
+     stop();status.textContent='All sparks collected. Creative mode: ON ✨';
+     start.textContent='Play again ↻';unlocked.classList.add('is-visible');
+   } else {
+     status.textContent=['Nice catch!','You’re on fire 🔥','Creative reflexes!','Keep going ✨'][Math.floor(Math.random()*4)];
+     const next=sparks.find(x=>!x.classList.contains('is-caught'));
+     if(next)moveSpark(next);
+   }
+ }));
+ start.addEventListener('click',()=>{if(!playing)begin();});
  reset();
 })();
 </script>
