@@ -2838,6 +2838,51 @@ button, input, select, textarea { min-width: 0; }
 }
 
 </style>
+
+<style>
+/* KJS Creative Playground — tiny scroll-time game */
+#kjs-playground{position:relative;overflow:hidden;background:#171717;color:#f8f6f1;padding:clamp(70px,9vw,130px) clamp(22px,7vw,100px);isolation:isolate}
+#kjs-playground:before{content:"";position:absolute;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,#ff4b2b26,transparent 68%);right:-140px;top:-160px;z-index:-1;pointer-events:none}
+.kpg-topline{display:flex;justify-content:space-between;gap:20px;align-items:center;font:600 11px/1.4 'Archivo',Arial,sans-serif;letter-spacing:1.8px;text-transform:uppercase;color:#b6b3ae}
+.kpg-topline span:last-child{color:#ff765c}
+.kpg-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,.92fr);gap:clamp(30px,7vw,100px);align-items:center;margin-top:35px}
+.kpg-copy h2{font-size:clamp(42px,6.5vw,88px);line-height:.93;letter-spacing:-.065em;font-weight:600;margin:0 0 24px;max-width:650px}
+.kpg-copy h2 em{font-family:Georgia,serif;font-weight:400;color:#ff6a4c}
+.kpg-copy>p{font-size:16px;line-height:1.7;color:#c7c3bd;max-width:440px;margin:0 0 28px}
+.kpg-instructions{display:flex;align-items:center;gap:12px;font-size:12px;color:#b6b3ae}
+.kpg-instructions b{display:inline-grid;place-items:center;width:28px;height:28px;border:1px solid #4a4946;border-radius:50%;color:#ff765c;font-size:13px}
+.kpg-board{position:relative;min-height:380px;border:1px solid #3c3a37;border-radius:22px;background:linear-gradient(145deg,#232220,#1b1a19);overflow:hidden;box-shadow:0 24px 70px #0003}
+.kpg-board:before{content:"";position:absolute;inset:0;background-image:radial-gradient(#ffffff1b 1px,transparent 1px);background-size:20px 20px;opacity:.45;pointer-events:none}
+.kpg-board-head{position:absolute;top:18px;left:20px;right:20px;display:flex;justify-content:space-between;align-items:center;z-index:2;font:600 10px/1.4 'Archivo',Arial,sans-serif;letter-spacing:1.5px;color:#a7a39d}
+.kpg-score{color:#fff;font-size:12px;letter-spacing:.3px}
+.kpg-spark{position:absolute;z-index:3;display:grid;place-items:center;width:54px;height:54px;border:0;border-radius:50%;background:var(--spark-color,#ff4b2b);color:#171717;font-size:25px;line-height:1;box-shadow:0 0 0 8px color-mix(in srgb,var(--spark-color,#ff4b2b) 14%,transparent),0 8px 25px #0005;transition:transform .18s ease,opacity .18s ease;animation:kpg-bob 2.4s ease-in-out infinite;cursor:pointer!important}
+.kpg-spark:hover{transform:scale(1.16) rotate(12deg)}
+.kpg-spark.is-caught{transform:scale(1.7) rotate(40deg);opacity:0;pointer-events:none}
+.kpg-spark[hidden]{display:none}
+.kpg-spark:nth-of-type(3n){animation-delay:-.8s}
+.kpg-spark:nth-of-type(4n){animation-delay:-1.4s}
+@keyframes kpg-bob{0%,100%{translate:0 0}50%{translate:0 -9px}}
+.kpg-spark[data-spark="1"]{left:13%;top:27%;--spark-color:#ff765c}
+.kpg-spark[data-spark="2"]{left:43%;top:22%;--spark-color:#ffc857}
+.kpg-spark[data-spark="3"]{left:70%;top:35%;--spark-color:#a5e6c8}
+.kpg-spark[data-spark="4"]{left:28%;top:61%;--spark-color:#c4b5fd}
+.kpg-spark[data-spark="5"]{left:67%;top:68%;--spark-color:#7dd3fc}
+.kpg-spark[data-spark="6"]{left:48%;top:48%;--spark-color:#ff9fba}
+.kpg-spark[data-spark="7"]{left:81%;top:57%;--spark-color:#fca5a5}
+.kpg-board-footer{position:absolute;bottom:16px;left:18px;right:18px;display:flex;justify-content:space-between;align-items:center;gap:10px;z-index:2}
+#kpg-status{font-size:12px;color:#c7c3bd;line-height:1.4}
+#kpg-start{border:0;border-radius:99px;padding:12px 16px;background:#ff4b2b;color:white;font:600 12px 'Archivo',Arial,sans-serif;white-space:nowrap;cursor:pointer!important;transition:transform .2s ease,background .2s ease}
+#kpg-start:hover{transform:translateY(-2px);background:#ff684d}
+#kpg-unlocked{display:none;margin-top:20px;padding:17px 18px;border:1px solid #ff765c55;border-radius:14px;background:#ff4b2b12}
+#kpg-unlocked.is-visible{display:block;animation:kpg-reveal .35s ease both}
+#kpg-unlocked strong{display:block;color:#fff;font-size:15px;margin-bottom:6px}
+#kpg-unlocked p{margin:0 0 12px;font-size:13px;color:#c7c3bd;line-height:1.55}
+#kpg-unlocked a{color:#ff765c;text-decoration:none;font-size:12px;font-weight:700}
+@keyframes kpg-reveal{from{opacity:0;translate:0 8px}to{opacity:1;translate:0 0}}
+@media(max-width:760px){#kjs-playground{padding:68px 20px}.kpg-layout{grid-template-columns:1fr;gap:35px;margin-top:28px}.kpg-copy h2{font-size:clamp(44px,12vw,68px)}.kpg-board{min-height:330px}.kpg-spark{width:46px;height:46px;font-size:22px}.kpg-topline{font-size:9px;letter-spacing:1.1px}}
+@media(prefers-reduced-motion:reduce){.kpg-spark,#kpg-unlocked{animation:none!important;transition:none!important}}
+</style>
+
 </head>
 <body>
 <!-- INTRO -->
@@ -2949,6 +2994,30 @@ button, input, select, textarea { min-width: 0; }
     <p class="kx-num">01 / 06</p>
     <p class="kx-desc"></p>
     <a class="kx-cta" href="#contact">View work ↗</a>
+  </div>
+</section>
+
+
+<section id="kjs-playground" aria-labelledby="kpg-title">
+  <div class="kpg-topline"><span>Not just a portfolio</span><span>01 small game · 1 big idea</span></div>
+  <div class="kpg-layout">
+    <div class="kpg-copy">
+      <h2 id="kpg-title">A little play.<br>A little <em>creative</em> chaos.</h2>
+      <p>Good ideas don’t sit still. Catch the floating sparks before time runs out and unlock a little surprise from our creative studio.</p>
+      <div class="kpg-instructions"><b>↗</b><span>Tap or click the sparks. Collect all 7 to unlock your surprise.</span></div>
+      <div id="kpg-unlocked" aria-live="polite"><strong>✨ You’ve got the creative spark.</strong><p>Now let’s turn that energy into something your audience remembers.</p><a href="#contact">LET’S MAKE SOMETHING →</a></div>
+    </div>
+    <div class="kpg-board" id="kpg-board" aria-label="Catch the creative sparks mini game">
+      <div class="kpg-board-head"><span>THE CREATIVE PLAYGROUND</span><span class="kpg-score" id="kpg-score">SPARKS 0 / 7</span></div>
+      <button class="kpg-spark" type="button" data-spark="1" aria-label="Catch spark 1">✦</button>
+      <button class="kpg-spark" type="button" data-spark="2" aria-label="Catch spark 2">✧</button>
+      <button class="kpg-spark" type="button" data-spark="3" aria-label="Catch spark 3">✦</button>
+      <button class="kpg-spark" type="button" data-spark="4" aria-label="Catch spark 4">✧</button>
+      <button class="kpg-spark" type="button" data-spark="5" aria-label="Catch spark 5">✦</button>
+      <button class="kpg-spark" type="button" data-spark="6" aria-label="Catch spark 6">✧</button>
+      <button class="kpg-spark" type="button" data-spark="7" aria-label="Catch spark 7">✦</button>
+      <div class="kpg-board-footer"><span id="kpg-status" aria-live="polite">Ready when you are 👀</span><button id="kpg-start" type="button">Start playing ↗</button></div>
+    </div>
   </div>
 </section>
 
@@ -4697,6 +4766,22 @@ if (kineticBar) { kineticNums.forEach(n => { n.style.opacity='0'; n.style.transf
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&panel.classList.contains('kjs-open'))closeChat();});
 })();
 </script>
+
+<script>
+(function(){
+ const board=document.getElementById('kpg-board'); if(!board)return;
+ const sparks=[...board.querySelectorAll('.kpg-spark')], score=document.getElementById('kpg-score'), status=document.getElementById('kpg-status'), start=document.getElementById('kpg-start'), unlocked=document.getElementById('kpg-unlocked');
+ let caught=0,playing=false,timer=null,remaining=15;
+ function paint(){score.textContent='SPARKS '+caught+' / 7';}
+ function stop(){playing=false;if(timer){clearInterval(timer);timer=null;}start.textContent=caught===7?'Play again ↻':'Try again ↻';}
+ function reset(){if(timer){clearInterval(timer);timer=null;}caught=0;remaining=15;playing=false;unlocked.classList.remove('is-visible');sparks.forEach(s=>{s.hidden=false;s.classList.remove('is-caught');s.disabled=false;});paint();status.textContent='Catch all 7 sparks in 15 seconds!';start.textContent='Start playing ↗';}
+ function begin(){if(playing)return;reset();playing=true;start.textContent='15s left';status.textContent='Go go go! Catch those sparks ✦';timer=setInterval(()=>{remaining--;start.textContent=remaining+'s left';if(remaining<=0){stop();sparks.forEach(s=>{if(!s.classList.contains('is-caught'))s.disabled=true;});status.textContent=caught===7?'You did it!':'Time’s up! You caught '+caught+' of 7 — give it another go.';},1000);}
+ sparks.forEach(s=>s.addEventListener('click',()=>{if(!playing||s.classList.contains('is-caught'))return;s.classList.add('is-caught');s.disabled=true;caught++;paint();if(caught===7){stop();sparks.forEach(x=>x.disabled=true);status.textContent='All sparks collected. Creative mode: ON.';start.textContent='Play again ↻';unlocked.classList.add('is-visible');}else status.textContent='Nice! '+(7-caught)+' more to go ✨';}));
+ start.addEventListener('click',()=>{if(caught===7||!playing)begin();});
+ reset();
+})();
+</script>
+
 </body>
 </html>
  
