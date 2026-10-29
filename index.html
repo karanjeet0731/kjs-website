@@ -2883,6 +2883,61 @@ button, input, select, textarea { min-width: 0; }
 @media(prefers-reduced-motion:reduce){.kpg-spark,#kpg-unlocked{animation:none!important;transition:none!important}}
 </style>
 
+
+<style>
+/* KJS immersive 3D hero experience */
+#kjs-3d-hero{position:relative;isolation:isolate;overflow:hidden;min-height:min(850px,calc(100svh - 70px));background:#08090c;color:#f7f5f0;padding:clamp(64px,8vw,112px) clamp(22px,7vw,100px) 46px;display:flex;flex-direction:column;justify-content:center}
+#kjs-3d-hero:before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 68% 44%,#ff4b2b22 0,transparent 32%),radial-gradient(ellipse at 28% 72%,#4032a322 0,transparent 35%),linear-gradient(115deg,#08090c 0%,#101014 60%,#09090b 100%);z-index:-3}
+#kjs-3d-hero:after{content:"";position:absolute;inset:0;opacity:.16;z-index:-2;pointer-events:none;background-image:linear-gradient(#ffffff0b 1px,transparent 1px),linear-gradient(90deg,#ffffff0b 1px,transparent 1px);background-size:56px 56px;mask-image:linear-gradient(to bottom,transparent,black 20%,black 80%,transparent)}
+.k3d-topline{display:flex;align-items:center;justify-content:space-between;gap:18px;font:600 10px/1.5 'Archivo',Arial,sans-serif;letter-spacing:2px;text-transform:uppercase;color:#a8a6ac;position:relative;z-index:2}
+.k3d-live{display:inline-flex;align-items:center;gap:8px}.k3d-live:before{content:"";width:7px;height:7px;border-radius:50%;background:#ff684d;box-shadow:0 0 14px #ff684d;animation:k3d-pulse 1.7s infinite}
+.k3d-stage{position:absolute;inset:0 0 0 38%;perspective:1200px;pointer-events:none;z-index:0;overflow:hidden}
+.k3d-orbit{position:absolute;width:min(55vw,720px);aspect-ratio:1;left:50%;top:48%;transform:translate(-50%,-50%) rotateX(62deg) rotateZ(-25deg);transform-style:preserve-3d;border:1px solid #ff775c50;border-radius:50%;box-shadow:0 0 70px #ff4b2b0b,inset 0 0 60px #ff4b2b0a;animation:k3d-orbit 24s linear infinite}
+.k3d-orbit:before,.k3d-orbit:after{content:"";position:absolute;inset:9%;border:1px solid #f4eee51e;border-radius:50%;transform:rotateY(58deg)}
+.k3d-orbit:after{inset:20%;transform:rotateY(-62deg);border-color:#ff775c42}
+.k3d-core-wrap{position:absolute;left:50%;top:47%;width:clamp(220px,27vw,380px);aspect-ratio:1;transform:translate(-50%,-50%);transform-style:preserve-3d;animation:k3d-float 6s ease-in-out infinite}
+.k3d-core{position:absolute;inset:11%;border-radius:36% 64% 58% 42%/43% 38% 62% 57%;background:radial-gradient(circle at 30% 25%,#ffd4a7 0,#ff8058 10%,#ed3f2a 27%,#671a21 48%,#15141b 69%,#09090c 100%);box-shadow:inset -26px -24px 42px #050509c9,inset 13px 12px 25px #ffd5aa82,0 0 90px #ff4b2b3a;filter:saturate(1.1);animation:k3d-morph 9s ease-in-out infinite alternate}
+.k3d-core:before{content:"";position:absolute;inset:8%;border-radius:inherit;background:linear-gradient(130deg,#fff9 0%,transparent 22%,transparent 60%,#ff9b6b26 75%,#08080b88);mix-blend-mode:screen}
+.k3d-core:after{content:"";position:absolute;width:48%;height:22%;left:13%;top:13%;border-radius:50%;background:#fff8;filter:blur(18px);transform:rotate(-38deg)}
+.k3d-ring{position:absolute;inset:2%;border:2px solid #ff936eaa;border-radius:50%;transform:rotateX(70deg) rotateZ(-28deg);box-shadow:0 0 18px #ff4b2b2b;animation:k3d-ring 12s linear infinite}
+.k3d-ring.r2{inset:-8%;border:1px solid #f7f0e65c;transform:rotateY(66deg) rotateZ(22deg);animation-duration:17s;animation-direction:reverse}
+.k3d-ring.r3{inset:15%;border:1px dashed #ff80586b;transform:rotateX(75deg) rotateZ(65deg);animation-duration:21s}
+.k3d-orb-label{position:absolute;right:9%;top:21%;padding:10px 13px;border:1px solid #ffffff24;border-radius:99px;background:#151519b8;backdrop-filter:blur(12px);font:600 9px 'Archivo',Arial,sans-serif;letter-spacing:1.5px;color:#e5e1dc;transform:translateZ(80px);box-shadow:0 12px 32px #0004}
+.k3d-float-card{position:absolute;min-width:128px;padding:13px 15px;border:1px solid #ffffff22;border-radius:12px;background:linear-gradient(140deg,#ffffff15,#ffffff05);backdrop-filter:blur(14px);box-shadow:0 18px 45px #0005;transform-style:preserve-3d;color:#f4f1ed;font-family:'Archivo',Arial,sans-serif}
+.k3d-float-card small{display:block;font-size:8px;letter-spacing:1.8px;color:#b8b4b5;text-transform:uppercase;margin-bottom:7px}.k3d-float-card strong{font-size:14px;letter-spacing:-.3px}
+.k3d-float-card.c1{left:8%;top:28%;transform:rotateY(15deg) rotateX(4deg);animation:k3d-card-a 7s ease-in-out infinite}
+.k3d-float-card.c2{right:9%;top:57%;transform:rotateY(-14deg) rotateX(-5deg);animation:k3d-card-b 8s ease-in-out infinite}
+.k3d-float-card.c3{left:15%;bottom:17%;transform:rotateY(13deg);animation:k3d-card-a 9s ease-in-out infinite reverse}
+.k3d-float-card .mini-bars{display:flex;align-items:end;gap:4px;height:22px;margin-top:8px}.k3d-float-card .mini-bars i{display:block;width:6px;border-radius:3px;background:linear-gradient(#ffb18b,#ff4b2b)}
+.k3d-copy{position:relative;z-index:2;width:min(59%,700px);pointer-events:none}.k3d-copy>*{pointer-events:auto}
+.k3d-eyebrow{display:flex;align-items:center;gap:10px;color:#ff896d;font:600 10px 'Archivo',Arial,sans-serif;letter-spacing:2.4px;text-transform:uppercase;margin-bottom:24px}
+.k3d-eyebrow span{display:inline-block;width:34px;height:1px;background:#ff684d}
+.k3d-title{font-size:clamp(54px,8.5vw,124px);line-height:.82;letter-spacing:-.085em;font-weight:600;margin:0;max-width:760px}
+.k3d-title .line2{display:block;color:transparent;-webkit-text-stroke:1px #f4eee5;margin-top:12px}
+.k3d-title .orange{color:#ff684d;-webkit-text-stroke:0;font-family:Georgia,serif;font-weight:400;font-style:italic;letter-spacing:-.09em}
+.k3d-description{font-size:clamp(13px,1.2vw,16px);line-height:1.75;color:#b6b3b6;max-width:410px;margin:30px 0 26px}
+.k3d-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.k3d-primary{display:inline-flex;align-items:center;gap:24px;padding:15px 18px;border-radius:3px;background:#ff5a3b;color:#fff;text-decoration:none;font:700 11px 'Archivo',Arial,sans-serif;letter-spacing:.5px;box-shadow:0 10px 32px #ff4b2b22;transition:transform .25s,background .25s}
+.k3d-primary:hover{transform:translateY(-3px);background:#ff765c}
+.k3d-secondary{display:inline-flex;align-items:center;gap:10px;color:#f4eee5;text-decoration:none;font:600 11px 'Archivo',Arial,sans-serif;padding:15px 5px}
+.k3d-secondary span{display:grid;place-items:center;width:28px;height:28px;border:1px solid #ffffff44;border-radius:50%;transition:transform .25s}
+.k3d-secondary:hover span{transform:translateY(3px);border-color:#ff684d}
+.k3d-bottom{position:relative;z-index:2;margin-top:auto;padding-top:68px;display:flex;align-items:end;justify-content:space-between;gap:20px;color:#8e8b92;font:600 9px 'Archivo',Arial,sans-serif;letter-spacing:1.7px;text-transform:uppercase}
+.k3d-bottom strong{display:block;font-size:11px;color:#f3eee7;letter-spacing:.3px;margin-top:7px}
+.k3d-scroll{display:flex;align-items:center;gap:12px}.k3d-scroll i{display:block;width:1px;height:38px;background:linear-gradient(transparent,#ff684d);animation:k3d-scrollline 1.8s ease-in-out infinite}
+@keyframes k3d-pulse{50%{opacity:.4;box-shadow:0 0 3px #ff684d}}
+@keyframes k3d-orbit{to{transform:translate(-50%,-50%) rotateX(62deg) rotateZ(335deg)}}
+@keyframes k3d-ring{to{rotate:0 0 1 360deg}}
+@keyframes k3d-float{0%,100%{translate:0 0;rotate:0deg}50%{translate:0 -13px;rotate:2deg}}
+@keyframes k3d-morph{0%{border-radius:36% 64% 58% 42%/43% 38% 62% 57%;transform:rotate(-9deg) scale(.98)}100%{border-radius:57% 43% 39% 61%/53% 60% 40% 47%;transform:rotate(9deg) scale(1.04)}}
+@keyframes k3d-card-a{0%,100%{translate:0 0}50%{translate:0 -12px}}
+@keyframes k3d-card-b{0%,100%{translate:0 0}50%{translate:0 13px}}
+@keyframes k3d-scrollline{0%,100%{opacity:.4;scale:1 .6;transform-origin:top}50%{opacity:1;scale:1 1}}
+@media(max-width:800px){#kjs-3d-hero{min-height:780px;min-height:calc(100svh - 60px);padding:50px 22px 30px;justify-content:flex-start}.k3d-topline{font-size:8px;letter-spacing:1.2px}.k3d-stage{inset:20% -18% 4% 12%;opacity:.92}.k3d-orbit{width:min(95vw,560px);top:51%}.k3d-core-wrap{width:clamp(230px,62vw,330px);top:50%}.k3d-copy{width:100%;padding-top:clamp(60px,12vh,110px)}.k3d-title{font-size:clamp(58px,13.5vw,92px)}.k3d-description{max-width:340px;margin:24px 0}.k3d-float-card{min-width:105px;padding:10px 11px}.k3d-float-card strong{font-size:11px}.k3d-float-card.c1{left:0;top:20%}.k3d-float-card.c2{right:0;top:59%}.k3d-float-card.c3{left:4%;bottom:15%}.k3d-orb-label{right:4%;top:22%;font-size:7px}.k3d-bottom{padding-top:35px;font-size:8px}.k3d-bottom>div:first-child{max-width:180px}.k3d-scroll{display:none}}
+@media(max-width:420px){#kjs-3d-hero{min-height:800px}.k3d-copy{padding-top:64px}.k3d-title{font-size:57px}.k3d-description{font-size:12px;max-width:290px}.k3d-stage{inset:28% -26% 2% 0}.k3d-float-card.c1{top:19%}.k3d-float-card.c2{top:63%}.k3d-float-card.c3{bottom:12%}.k3d-bottom{align-items:flex-start}}
+@media(prefers-reduced-motion:reduce){#kjs-3d-hero *,#kjs-3d-hero *:before,#kjs-3d-hero *:after{animation:none!important;scroll-behavior:auto!important;transition:none!important}}
+</style>
+
 </head>
 <body>
 <!-- INTRO -->
@@ -2948,6 +3003,26 @@ button, input, select, textarea { min-width: 0; }
   </div>
 </nav>
  
+
+<section id="kjs-3d-hero" aria-labelledby="k3d-title">
+  <div class="k3d-topline"><span>KJS CREATIVE® — INDEPENDENT CREATIVE STUDIO</span><span class="k3d-live">AVAILABLE FOR SELECT PROJECTS</span></div>
+  <div class="k3d-stage" id="k3d-stage" aria-hidden="true">
+    <div class="k3d-orbit"></div>
+    <div class="k3d-core-wrap" id="k3d-core-wrap"><div class="k3d-core"></div><div class="k3d-ring"></div><div class="k3d-ring r2"></div><div class="k3d-ring r3"></div></div>
+    <div class="k3d-orb-label">IDEAS IN MOTION · 001</div>
+    <div class="k3d-float-card c1"><small>01 / Intelligence</small><strong>AI Creative</strong><div class="mini-bars"><i style="height:9px"></i><i style="height:16px"></i><i style="height:12px"></i><i style="height:21px"></i><i style="height:15px"></i></div></div>
+    <div class="k3d-float-card c2"><small>02 / Identity</small><strong>Brand Systems</strong></div>
+    <div class="k3d-float-card c3"><small>03 / Experience</small><strong>Digital Worlds ↗</strong></div>
+  </div>
+  <div class="k3d-copy">
+    <div class="k3d-eyebrow"><span></span> We make brands impossible to ignore</div>
+    <h1 class="k3d-title" id="k3d-title">MAKE IT<br><span class="line2">FEEL <span class="orange">REAL.</span></span></h1>
+    <p class="k3d-description">AI-powered visuals. Distinctive identities. Digital experiences with a little more feeling — and a lot more impact.</p>
+    <div class="k3d-actions"><a class="k3d-primary" href="#projects">EXPLORE THE WORK <span>↗</span></a><a class="k3d-secondary" href="#about"><span>↓</span> Discover KJS</a></div>
+  </div>
+  <div class="k3d-bottom"><div>DESIGN × TECHNOLOGY × IMAGINATION<strong>Ideas don’t sit still. Neither do we.</strong></div><div class="k3d-scroll"><i></i> SCROLL TO EXPLORE</div></div>
+</section>
+
 <!-- SERVICES (Three.js curved 3D gallery) -->
 <section class="kx-services" id="projects" aria-label="Our Projects">
   <div class="kx-gl" aria-hidden="true"></div>
@@ -4811,6 +4886,25 @@ if (kineticBar) { kineticNums.forEach(n => { n.style.opacity='0'; n.style.transf
  }));
  start.addEventListener('click',()=>{if(!playing)begin();});
  reset();
+})();
+</script>
+
+
+<script>
+(function(){
+ const hero=document.getElementById('kjs-3d-hero'),stage=document.getElementById('k3d-stage'),core=document.getElementById('k3d-core-wrap');
+ if(!hero||!stage||!core)return;
+ const reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ if(!reduce&&window.matchMedia('(pointer:fine)').matches){
+   hero.addEventListener('pointermove',function(e){
+     const r=hero.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+     core.style.transform='translate(calc(-50% + '+(x*22)+'px),calc(-50% + '+(y*18)+'px)) rotateX('+(-y*12)+'deg) rotateY('+(x*15)+'deg)';
+     stage.style.setProperty('--pointer-x',(x*16)+'px');stage.style.setProperty('--pointer-y',(y*16)+'px');
+   });
+   hero.addEventListener('pointerleave',function(){core.style.transform='';stage.style.setProperty('--pointer-x','0px');stage.style.setProperty('--pointer-y','0px');});
+ }
+ const reveal=()=>{const p=Math.max(0,Math.min(1,(window.scrollY-hero.offsetTop)/Math.max(1,hero.offsetHeight)));hero.style.setProperty('--hero-scroll',p);stage.style.opacity=String(1-p*.38);};
+ window.addEventListener('scroll',reveal,{passive:true});reveal();
 })();
 </script>
 
