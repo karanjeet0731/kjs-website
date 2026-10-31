@@ -1334,8 +1334,80 @@
       }
     });
 
-    nextButton.addEventListener("click", () => {
-      if (!canAdvance(steps[currentStep])) {
+    const SUPABASE_URL = "https://psxyqzgezjfzuawdyzmp.supabase.co";
+    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_Iw7QyPNmZkVPpELo_LMDmA_lcFbUq3s";
+
+    function getOptionLabel(stepIndex, value) {
+      const option = steps[stepIndex].options.find((item) => item.id === value);
+      return option ? option.title : value;
+    }
+
+    async function submitLeadToCRM() {
+      const businessType = formState.businessType === "other"
+        ? formState.otherBusiness.trim()
+        : getOptionLabel(0, formState.businessType);
+      const budget = getOptionLabel(1, formState.budget);
+      const services = formState.services.map((value) => getOptionLabel(2, value));
+      const goals = formState.goals.map((value) => getOptionLabel(3, value));
+      const message = [
+        "Business type: " + businessType,
+        "Budget: " + budget,
+        "Goals: " + (goals.join(", ") || "Not specified")
+      ].join("\\n");
+
+      const lead = {
+        name: formState.contact.name.trim(),
+        email: formState.contact.email.trim(),
+        phone: formState.contact.phone.trim() || null,
+        company: formState.contact.company.trim() || null,
+        business_type: businessType,
+        budget,
+        services,
+        goals,
+        service: services.join(", "),
+        source: "Website",
+        status: "New",
+        message,
+        owner_id: null,
+        created_by: null
+      };
+
+      const response = await fetch(SUPABASE_URL + "/rest/v1/leads", {
+        method: "POST",
+        headers: {
+          "apikey": SUPABASE_PUBLISHABLE_KEY,
+          "Content-Type": "application/json",
+          "Prefer": "return=minimal"
+        },
+        body: JSON.stringify(lead)
+      });
+
+      if (!response.ok) {
+        const details = await response.text();
+        throw new Error("CRM submission failed (" + response.status + "): " + details);
+      }
+    }
+
+    nextButton.addEventListener("click", async () => {
+      if (!canAdvance(steps[currentStep]) || nextButton.disabled) {
+        return;
+      }
+
+      if (steps[currentStep].type === "form") {
+        const originalLabel = nextButton.innerHTML;
+        nextButton.disabled = true;
+        nextButton.innerHTML = "<span>Submitting...</span>";
+
+        try {
+          await submitLeadToCRM();
+          currentStep += 1;
+          render();
+        } catch (error) {
+          console.error(error);
+          alert("We couldn't submit your enquiry right now. Please check your internet connection and try again.");
+          nextButton.innerHTML = originalLabel;
+          nextButton.disabled = !canAdvance(steps[currentStep]);
+        }
         return;
       }
 
