@@ -4674,29 +4674,96 @@ if (kineticBar) { kineticNums.forEach(n => { n.style.opacity='0'; n.style.transf
 })();
 </script>
 <style>
-#kjs-chat-launcher{position:fixed;right:24px;bottom:24px;z-index:10001;width:56px;height:56px;padding:0;border:1px solid rgba(255,255,255,.18);border-radius:50%;background:#171717;color:#fff;box-shadow:0 7px 24px rgba(0,0,0,.18);display:grid;place-items:center;cursor:pointer!important;transition:transform .22s ease,background .22s ease,box-shadow .22s ease}
-#kjs-chat-launcher:hover{transform:translateY(-3px);background:#292929;box-shadow:0 11px 30px rgba(0,0,0,.22)}
+/* KJS Creative — premium assistant interface */
+#kjs-chat-launcher{
+  position:fixed;right:24px;bottom:24px;z-index:10001;width:56px;height:56px;
+  padding:0;border:1px solid rgba(255,255,255,.18);border-radius:50%;
+  background:#171717;color:#fff;box-shadow:0 8px 28px rgba(0,0,0,.2);
+  display:grid;place-items:center;cursor:pointer!important;
+  transition:transform .25s ease,background .25s ease,box-shadow .25s ease
+}
+#kjs-chat-launcher:hover{transform:translateY(-3px);background:#292929;box-shadow:0 12px 32px rgba(0,0,0,.24)}
 #kjs-chat-launcher svg{width:23px;height:23px;display:block}
 #kjs-chat-launcher .kjs-chat-dot{display:none}
-#kjs-chat-panel{position:fixed;right:24px;bottom:88px;width:min(390px,calc(100vw - 28px));height:min(570px,calc(100dvh - 120px));z-index:10001;background:#fff;color:#161616;border:1px solid #e8e5e1;border-radius:18px;box-shadow:0 24px 80px #0002;display:none;overflow:hidden;font-family:'Archivo',Arial,sans-serif}
-#kjs-chat-panel.kjs-open{display:flex;flex-direction:column}
-#kjs-chat-head{background:#111;color:#fff;padding:18px 18px 15px;display:flex;align-items:center;justify-content:space-between}
-#kjs-chat-head strong{font-size:15px;letter-spacing:.01em}
-#kjs-chat-head small{display:block;color:#c8c8c8;font-size:12px;margin-top:4px}
-#kjs-chat-close{border:0;background:transparent;color:#fff;font-size:25px;line-height:1;cursor:pointer!important;padding:4px 8px}
-#kjs-chat-messages{flex:1;overflow:auto;padding:16px;background:#faf9f7;display:flex;flex-direction:column;gap:11px}
-.kjs-chat-bubble{max-width:88%;white-space:pre-wrap;overflow-wrap:anywhere;border-radius:14px;padding:11px 13px;font-size:13px;line-height:1.55}
-.kjs-chat-bubble.bot{align-self:flex-start;background:#fff;border:1px solid #ece9e4;border-bottom-left-radius:5px}
-.kjs-chat-bubble.user{align-self:flex-end;background:#ff4b2b;color:#fff;border-bottom-right-radius:5px}
-#kjs-chat-quick{display:flex;gap:7px;flex-wrap:wrap;padding:0 14px 12px;background:#faf9f7}
-.kjs-chat-quick button{border:1px solid #ddd7d0;border-radius:99px;background:#fff;padding:7px 10px;font-size:11px;color:#333;cursor:pointer!important}
-#kjs-chat-form{display:flex;gap:8px;padding:13px;border-top:1px solid #eee;background:#fff}
-#kjs-chat-input{min-width:0;flex:1;resize:none;border:1px solid #dedbd6;border-radius:11px;padding:11px 12px;font:13px/1.4 'Archivo',Arial,sans-serif;outline:none;max-height:100px}
-#kjs-chat-input:focus{border-color:#ff4b2b}
-#kjs-chat-send{border:0;border-radius:11px;background:#ff4b2b;color:#fff;padding:0 15px;font-size:13px;font-weight:600;cursor:pointer!important}
-#kjs-chat-send:disabled{opacity:.5}
-#kjs-chat-foot{text-align:center;color:#888;font-size:10px;padding:0 10px 10px;background:#fff}
-@media(max-width:480px){#kjs-chat-launcher{right:14px;bottom:14px;width:52px;height:52px}#kjs-chat-panel{right:8px;bottom:76px;width:calc(100vw - 16px);height:min(590px,calc(100dvh - 95px))}}
+#kjs-chat-panel{
+  position:fixed;right:24px;bottom:94px;width:min(410px,calc(100vw - 32px));
+  height:min(610px,calc(100dvh - 125px));z-index:10001;
+  background:#fbfaf8;color:#191919;border:1px solid rgba(20,20,20,.09);
+  border-radius:22px;box-shadow:0 28px 90px rgba(0,0,0,.22);
+  display:none;overflow:hidden;font-family:'Archivo',Arial,sans-serif
+}
+#kjs-chat-panel.kjs-open{display:flex;flex-direction:column;animation:kjs-chat-enter .28s cubic-bezier(.2,.8,.2,1) both}
+@keyframes kjs-chat-enter{from{opacity:0;transform:translateY(12px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+#kjs-chat-head{
+  position:relative;background:#151515;color:#fff;padding:20px 20px 18px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  border-bottom:1px solid rgba(255,255,255,.09)
+}
+#kjs-chat-head:after{content:"";position:absolute;left:0;bottom:0;width:100%;height:2px;background:linear-gradient(90deg,#ff4b2b,rgba(255,75,43,0))}
+#kjs-chat-head>div{display:flex;align-items:center;gap:12px}
+.kjs-chat-brandmark{
+  width:42px;height:42px;flex:0 0 42px;border-radius:13px;
+  display:grid;place-items:center;background:linear-gradient(145deg,#ff6748,#e83e22);
+  color:#fff;font:600 14px/1 'Archivo',Arial,sans-serif;letter-spacing:-.04em;
+  box-shadow:0 5px 16px rgba(255,75,43,.24)
+}
+#kjs-chat-head strong{display:block;font-size:14px;font-weight:600;letter-spacing:.01em}
+#kjs-chat-head small{display:flex;align-items:center;gap:6px;color:#aaa;font-size:11px;margin-top:5px}
+#kjs-chat-head small:before{content:"";width:6px;height:6px;border-radius:50%;background:#63c78a;box-shadow:0 0 0 3px rgba(99,199,138,.12)}
+#kjs-chat-close{
+  width:34px;height:34px;border:1px solid rgba(255,255,255,.14);border-radius:50%;
+  background:rgba(255,255,255,.06);color:#fff;font-size:21px;line-height:1;
+  cursor:pointer!important;display:grid;place-items:center;transition:background .2s ease
+}
+#kjs-chat-close:hover{background:rgba(255,255,255,.15)}
+#kjs-chat-messages{
+  flex:1;overflow:auto;padding:22px 17px 18px;background:
+  radial-gradient(circle at 100% 0%,rgba(255,75,43,.045),transparent 34%),#f8f7f4;
+  display:flex;flex-direction:column;gap:13px;scroll-behavior:smooth
+}
+.kjs-chat-bubble{
+  max-width:86%;white-space:pre-wrap;overflow-wrap:anywhere;
+  border-radius:16px;padding:12px 15px;font-size:13px;line-height:1.65;
+  box-shadow:0 2px 8px rgba(0,0,0,.035)
+}
+.kjs-chat-bubble.bot{align-self:flex-start;background:#fff;color:#292929;border:1px solid #eeece8;border-bottom-left-radius:5px}
+.kjs-chat-bubble.user{align-self:flex-end;background:#202020;color:#fff;border:1px solid #202020;border-bottom-right-radius:5px}
+#kjs-chat-quick{display:flex;gap:7px;flex-wrap:wrap;padding:2px 16px 14px;background:#f8f7f4}
+#kjs-chat-quick button{
+  border:1px solid #e5e1dc;border-radius:99px;background:#fff;padding:8px 12px;
+  font:500 11px 'Archivo',Arial,sans-serif;color:#444;cursor:pointer!important;
+  transition:border-color .2s ease,color .2s ease,background .2s ease
+}
+#kjs-chat-quick button:hover{border-color:#ff8a73;color:#e94a2d;background:#fffaf8}
+#kjs-chat-form{
+  display:flex;align-items:flex-end;gap:9px;padding:13px 14px 10px;
+  border-top:1px solid #eeece8;background:#fff
+}
+#kjs-chat-input{
+  min-width:0;flex:1;resize:none;border:1px solid #e7e3de;border-radius:13px;
+  padding:12px 13px;background:#faf9f7;color:#222;
+  font:13px/1.45 'Archivo',Arial,sans-serif;outline:none;max-height:100px;
+  transition:border-color .2s ease,box-shadow .2s ease
+}
+#kjs-chat-input:focus{border-color:#f28a75;box-shadow:0 0 0 3px rgba(255,75,43,.08);background:#fff}
+#kjs-chat-input::placeholder{color:#a09b95}
+#kjs-chat-send{
+  min-width:43px;height:43px;border:0;border-radius:12px;
+  background:#ff4b2b;color:#fff;padding:0 14px;font-size:12px;font-weight:600;
+  cursor:pointer!important;box-shadow:0 4px 12px rgba(255,75,43,.2);
+  transition:transform .2s ease,background .2s ease
+}
+#kjs-chat-send:hover{transform:translateY(-1px);background:#ed4022}
+#kjs-chat-send:disabled{opacity:.5;cursor:not-allowed!important}
+#kjs-chat-foot{text-align:center;color:#aaa;font-size:10px;letter-spacing:.02em;padding:0 10px 12px;background:#fff}
+@media(max-width:480px){
+  #kjs-chat-launcher{right:14px;bottom:14px;width:52px;height:52px}
+  #kjs-chat-panel{right:8px;bottom:76px;width:calc(100vw - 16px);height:min(640px,calc(100dvh - 95px));border-radius:19px}
+  #kjs-chat-head{padding:17px 16px 15px}
+  #kjs-chat-messages{padding:18px 13px}
+  #kjs-chat-quick{padding-left:12px;padding-right:12px}
+}
+@media(prefers-reduced-motion:reduce){#kjs-chat-panel.kjs-open{animation:none}#kjs-chat-launcher,#kjs-chat-quick button,#kjs-chat-send{transition:none}}
 </style>
 
 <style>
@@ -4753,7 +4820,7 @@ if (kineticBar) { kineticNums.forEach(n => { n.style.opacity='0'; n.style.transf
 
 <button id="kjs-chat-launcher" type="button" aria-label="Open KJS Creative chat" title="Chat with KJS Creative"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H5l1.5-3.2A7.5 7.5 0 1 1 20 11.5Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.5 11.5h7M8.5 14.5h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
 <section id="kjs-chat-panel" role="dialog" aria-label="KJS Creative AI assistant" aria-modal="false">
-  <header id="kjs-chat-head"><div><strong>KJS Creative Assistant</strong><small>Ask about services, projects or quotes</small></div><button id="kjs-chat-close" type="button" aria-label="Close chat">×</button></header>
+  <header id="kjs-chat-head"><div><span class="kjs-chat-brandmark" aria-hidden="true">KJS</span><div><strong>KJS Creative Studio</strong><small>Here to help with your next project</small></div></div><button id="kjs-chat-close" type="button" aria-label="Close chat">×</button></header>
   <div id="kjs-chat-messages" aria-live="polite"><div class="kjs-chat-bubble bot">Hey! 👋 Welcome to KJS Creative. How can I help with your next creative project?</div></div>
   <div id="kjs-chat-quick"><button type="button" data-prompt="What services do you offer?">Our services</button><button type="button" data-prompt="How can I get a quote?">Get a quote</button><button type="button" data-prompt="Can I see your portfolio?">Portfolio</button></div>
   <form id="kjs-chat-form"><textarea id="kjs-chat-input" rows="1" maxlength="1200" placeholder="Type your message…" aria-label="Your message" required></textarea><button id="kjs-chat-send" type="submit">Send</button></form>
