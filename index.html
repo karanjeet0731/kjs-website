@@ -79,29 +79,37 @@ button,
   cursor: none !important;
 }
  
-/* CUSTOM CURSOR */
+/* REFINED PREMIUM CURSOR — one clear, subtle interaction */
 .cursor {
   position: fixed;
-  width: 20px;
-  height: 20px;
-  border: 2px solid var(--black);
+  width: 8px;
+  height: 8px;
+  border: 0;
   border-radius: 50%;
+  background: #fff;
+  mix-blend-mode: difference;
   pointer-events: none;
   z-index: 10010;
   left: 0;
   top: 0;
   transform: translate(-50%, -50%);
-  transition: width 0.2s ease, height 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  transition: width 0.22s cubic-bezier(.2,.8,.2,1), height 0.22s cubic-bezier(.2,.8,.2,1), border-color 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
   display: block;
-  will-change: transform;
+  will-change: transform, width, height;
 }
 
 .cursor.hovered {
-  width: 40px;
-  height: 40px;
-  border-color: var(--accent);
-  background: rgba(255, 60, 31, 0.1);
-  box-shadow: 0 0 0 4px rgba(255, 60, 31, 0.05);
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(255,255,255,.9);
+  background: rgba(255,255,255,.08);
+  box-shadow: 0 0 0 5px rgba(255,255,255,.035);
+}
+
+/* Remove the duplicate liquid cursor and decorative cursor trail */
+#liquid-cursor,
+.trail-dot {
+  display: none !important;
 }
  
 .cursor-text {
