@@ -152,10 +152,13 @@
 
     .page {
       width: 100%;
-      max-width: 1480px;
+      width: min(1180px, calc(100% - 64px));
       margin: 0 auto;
-      min-height: calc(100vh - 146px);
-      padding: 88px 24px 18px;
+      min-height: calc(100vh - 118px);
+      padding: 124px 0 42px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
       position: relative;
     }
 
@@ -271,9 +274,10 @@
       background: rgba(245, 244, 240, 0.84);
       backdrop-filter: blur(10px);
       border: 1px solid rgba(13, 13, 13, 0.08);
-      border-radius: 36px;
+      border-radius: 30px;
+      width: 100%;
       min-height: 0;
-      padding: 30px 32px;
+      padding: 42px 44px;
       box-shadow: var(--shadow);
       display: flex;
       flex-direction: column;
@@ -324,13 +328,13 @@
     .option-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-      margin-top: 24px;
+      gap: 16px;
+      margin-top: 30px;
+      align-items: stretch;
     }
 
-    .option-grid.grid-five .option-card:last-child {
-      grid-column: 1 / 2;
-    }
+    .option-grid.grid-six { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .other-business-field { margin-top: 18px; max-width: 560px; }
 
     .option-card {
       width: 100%;
@@ -338,7 +342,7 @@
       border: 1px solid rgba(13, 13, 13, 0.08);
       border-radius: var(--radius);
       padding: 20px 22px;
-      min-height: 132px;
+      min-height: 124px;
       display: flex;
       align-items: center;
       gap: 16px;
@@ -454,6 +458,7 @@
     }
 
     .field input {
+      width: 100%;
       height: 60px;
       border-radius: 18px;
       border: 1px solid rgba(13, 13, 13, 0.1);
@@ -682,48 +687,42 @@
       background: var(--accent);
     }
 
-    @media (max-width: 1100px) {
-      .option-grid,
-      .form-grid {
-        grid-template-columns: 1fr;
-      }
+    @media (max-width: 980px) {
+      .option-grid.grid-six { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .card { padding: 34px; }
+    }
 
-      .option-grid.grid-five .option-card:last-child {
-        grid-column: auto;
-      }
-
-      .footer {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .btn {
-        width: 100%;
-      }
+    @media (max-width: 720px) {
+      .option-grid, .option-grid.grid-six, .form-grid { grid-template-columns: 1fr; }
+      .footer { flex-direction: column; align-items: stretch; }
+      .btn { width: 100%; }
     }
 
     @media (max-width: 720px) {
       .page {
-        width: 100%;
-        padding-top: 92px;
-        padding-left: 12px;
-        padding-right: 12px;
+        width: calc(100% - 28px);
+        min-height: auto;
+        padding-top: 100px;
+        padding-bottom: 28px;
       }
 
       .topbar {
         flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
       }
+      .step-label { padding-top: 0; }
 
       .card,
       .card.success-card {
         min-height: auto;
-        padding: 28px 22px;
-        border-radius: 28px;
+        padding: 26px 20px;
+        border-radius: 24px;
       }
 
       .option-card {
-        min-height: auto;
-        padding: 22px;
+        min-height: 104px;
+        padding: 18px;
       }
 
       .option-icon {
@@ -806,7 +805,7 @@
 </head>
 <body>
   <nav>
-    <a href="./KJS Creative - Get Started_files/index.html" class="nav-logo">KJS Creative</a>
+    <a href="../" class="nav-logo">KJS Creative</a>
     <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="navRight">
       <span></span>
       <span></span>
@@ -817,9 +816,9 @@
         <li><a href="./KJS Creative - Get Started_files/index.html">Work</a></li>
         <li><a href="./KJS Creative - Get Started_files/index.html">About</a></li>
         <li><a href="./KJS Creative - Get Started_files/index.html">Services</a></li>
-        <li><a href="./KJS Creative - Get Started_files/blog/">Blog</a></li>
+        <li><a href="../blog/">Blog</a></li>
       </ul>
-      <a href="get-started/" class="nav-cta">Get Started</a>
+      <a href="./" class="nav-cta">Get Started</a>
     </div>
   </nav>
 
@@ -970,6 +969,7 @@
 
     const formState = {
       businessType: null,
+      otherBusiness: "",
       budget: null,
       services: [],
       goals: [],
@@ -1044,13 +1044,17 @@
         subheading: "This gives us the right creative and strategic lens from the very beginning.",
         selectionKey: "businessType",
         multi: false,
-        gridClass: "grid-five",
+        gridClass: "grid-six",
         options: [
           { id: "retail", title: "Retail & E-commerce", desc: "Online stores, product launches, customer growth", icon: "shopping" },
           { id: "real-estate", title: "Real Estate", desc: "Agents, brokers, properties, listing visibility", icon: "home" },
           { id: "artists", title: "Artists & Creators", desc: "Musicians, creators, talent brands, audience building", icon: "palette" },
           { id: "services", title: "Professional Services", desc: "Consultants, firms, experts, trust-led positioning", icon: "target" },
-          { id: "technology", title: "Technology", desc: "Apps, SaaS, startups, modern product storytelling", icon: "globe" }
+          { id: "technology", title: "Technology", desc: "Apps, SaaS, startups, modern product storytelling", icon: "globe" },
+          { id: "food-hospitality", title: "Food & Hospitality", desc: "Restaurants, cafés, hotels and experiences", icon: "shopping" },
+          { id: "education", title: "Education", desc: "Schools, courses, coaching and learning brands", icon: "target" },
+          { id: "health-wellness", title: "Healthcare & Wellness", desc: "Clinics, fitness, wellness and care brands", icon: "home" },
+          { id: "other", title: "Other", desc: "A different industry or a unique business idea", icon: "globe" }
         ]
       },
       {
@@ -1060,10 +1064,10 @@
         multi: false,
         gridClass: "budget-grid",
         options: [
-          { id: "1k-5k", title: "$1,000 - $5,000", desc: "Monthly investment" },
-          { id: "5k-10k", title: "$5,000 - $10,000", desc: "Monthly investment" },
-          { id: "10k-25k", title: "$10,000 - $25,000", desc: "Monthly investment" },
-          { id: "25k-plus", title: "$25,000+", desc: "Monthly investment" }
+          { id: "5k-15k", title: "₹5,000 – ₹15,000", desc: "Monthly investment" },
+          { id: "15k-30k", title: "₹15,000 – ₹30,000", desc: "Monthly investment" },
+          { id: "30k-50k", title: "₹30,000 – ₹50,000", desc: "Monthly investment" },
+          { id: "50k-plus", title: "₹50,000+", desc: "Monthly investment" }
         ]
       },
       {
@@ -1164,6 +1168,12 @@
           <div class="option-grid ${step.gridClass || ""}">
             ${cards}
           </div>
+          ${step.selectionKey === "businessType" && formState.businessType === "other" ? `
+            <div class="field other-business-field">
+              <label for="other-business">Tell us about your business *</label>
+              <input id="other-business" name="otherBusiness" type="text" placeholder="e.g. Manufacturing, finance, events..." value="${escapeHtml(formState.otherBusiness)}" />
+            </div>
+          ` : ""}
         </div>
       `;
     }
@@ -1189,7 +1199,7 @@
             </div>
             <div class="field">
               <label for="contact-phone">Phone</label>
-              <input id="contact-phone" name="phone" type="tel" placeholder="(555) 123-4567" value="${escapeHtml(formState.contact.phone)}" />
+              <input id="contact-phone" name="phone" type="tel" placeholder="+91 98765 43210" value="${escapeHtml(formState.contact.phone)}" />
             </div>
           </div>
         </div>
@@ -1244,6 +1254,7 @@
         document.getElementById("homeButton").addEventListener("click", () => {
           currentStep = 0;
           formState.businessType = null;
+          formState.otherBusiness = "";
           formState.budget = null;
           formState.services = [];
           formState.goals = [];
@@ -1254,6 +1265,13 @@
       }
 
       if (!step.type) {
+        const otherBusinessInput = stepContent.querySelector("#other-business");
+        if (otherBusinessInput) {
+          otherBusinessInput.addEventListener("input", () => {
+            formState.otherBusiness = otherBusinessInput.value;
+            nextButton.disabled = !canAdvance(step);
+          });
+        }
         stepContent.querySelectorAll("[data-option-id]").forEach((button) => {
           button.addEventListener("click", () => {
             toggleSelection(step, button.dataset.optionId);
@@ -1293,6 +1311,9 @@
       }
 
       const value = formState[step.selectionKey];
+      if (step.selectionKey === "businessType" && value === "other") {
+        return formState.otherBusiness.trim().length > 0;
+      }
       return Array.isArray(value) ? value.length > 0 : Boolean(value);
     }
 
