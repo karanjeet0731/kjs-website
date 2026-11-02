@@ -4922,8 +4922,10 @@ if (kineticBar) { kineticNums.forEach(n => { n.style.opacity='0'; n.style.transf
   const elements=[...new Set(document.querySelectorAll(selectors.join(',')))]
     .filter(el=>!el.closest('#kjs-chat-panel,#kpg-board,.hero,nav,.intro-overlay'));
   if(!elements.length)return;
-  const observer=new IntersectionObserver((entries,obs)=>{
-    entries.forEach(entry=>{if(!entry.isIntersecting)return;entry.target.classList.add('kjs-revealed');obs.unobserve(entry.target)});
+  const observer=new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      entry.target.classList.toggle('kjs-revealed',entry.isIntersecting);
+    });
   },{threshold:.12,rootMargin:'0px 0px -48px 0px'});
   elements.forEach(el=>{
     el.classList.add('kjs-reveal');
