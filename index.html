@@ -4557,7 +4557,7 @@ if (kineticBar) { kineticNums.forEach(n => { n.style.opacity='0'; n.style.transf
       });
       cam.position.x += (mouse.x * .22 - cam.position.x) * .06;
       cam.position.y += (.35 + mouse.y * .1 - cam.position.y) * .06;
-      cam.lookAt(0, 0, -DC);
+      cam.lookAt(0, 1.05, -DC);
       renderer.render(scene, cam);
     }
     gsap.ticker.add(frame);
@@ -4956,14 +4956,14 @@ if (kineticBar) { kineticNums.forEach(n => { n.style.opacity='0'; n.style.transf
 
 <style id="kx-gallery-heading-style">
 /* This heading belongs to the gallery section: it scrolls away with the section. */
-.kx-gallery-heading{position:absolute;z-index:3;top:7.35rem;left:50%;width:min(820px,calc(100% - 2.5rem));transform:translateX(-50%);text-align:center;pointer-events:none}
+.kx-gallery-heading{position:absolute;z-index:3;top:3.35rem;left:50%;width:min(820px,calc(100% - 2.5rem));transform:translateX(-50%);text-align:center;pointer-events:none}
 .kx-heading-arc{display:block;width:min(310px,66vw);height:auto;margin:0 auto -1rem;overflow:visible;transform:perspective(600px) rotateX(18deg);filter:drop-shadow(0 9px 15px rgba(255,100,72,.16))}
 .kx-heading-arc-shadow{fill:none;stroke:rgba(0,0,0,.8);stroke-width:10;stroke-linecap:round;transform:translateY(5px);filter:blur(5px)}
 .kx-heading-arc-line{fill:none;stroke:url(#kxHeadingArc);stroke-width:2.3;stroke-linecap:round;filter:drop-shadow(0 0 7px rgba(255,125,100,.6))}
 .kx-gallery-heading p{margin:0 0 .55rem;color:rgba(255,255,255,.48);font-size:.58rem;letter-spacing:.23em;text-transform:uppercase}
 .kx-gallery-heading h2{max-width:780px;margin:0 auto;color:#fff;font:500 clamp(1.45rem,2.65vw,2.55rem)/1.08 'Archivo',sans-serif;letter-spacing:-.05em;text-wrap:balance;text-shadow:0 8px 30px rgba(0,0,0,.4)}
 .kx-gallery-heading h2 span{color:rgba(255,255,255,.72);font-weight:300;font-style:italic}
-@media(max-width:767px){.kx-gallery-heading{top:6.8rem;width:calc(100% - 1.8rem)}.kx-heading-arc{width:min(235px,65vw);margin-bottom:-.65rem}.kx-gallery-heading p{font-size:.5rem;letter-spacing:.17em}.kx-gallery-heading h2{font-size:clamp(1.3rem,5.4vw,1.85rem);max-width:24ch}}
+@media(max-width:767px){.kx-gallery-heading{top:3.1rem;width:calc(100% - 1.8rem)}.kx-heading-arc{width:min(235px,65vw);margin-bottom:-.65rem}.kx-gallery-heading p{font-size:.5rem;letter-spacing:.17em}.kx-gallery-heading h2{font-size:clamp(1.3rem,5.4vw,1.85rem);max-width:24ch}}
 </style>
 
 </body>
