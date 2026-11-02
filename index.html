@@ -4418,8 +4418,11 @@ if (kineticBar) { kineticNums.forEach(n => { n.style.opacity='0'; n.style.transf
     const SHOW_NAMES = false; // service names on cards hidden for now
     const PORTRAIT = innerWidth / innerHeight < .9;           // phones held upright
     const PHONE_CARD_HEIGHT = 3.0; // phone only: card height (laptop stays 2.2). Higher = taller, e.g. 3.4
-    const CW = 2.4, CH = PORTRAIT ? PHONE_CARD_HEIGHT : 2.2, R = 4.2, DC = 5.2, GAP = .14, STEP = (CW + GAP) / R;
-    const scene = new THREE.Scene(); scene.fog = new THREE.Fog(0x0d0d0d, 7, 24);
+    const CW = 2.55, CH = PORTRAIT ? PHONE_CARD_HEIGHT : 2.35, R = 3.05, DC = 4.65, GAP = .18, STEP = (CW + GAP) / R;
+    const scene = new THREE.Scene(); scene.fog = new THREE.Fog(0x0d0d0d, 6, 20);
+    scene.add(new THREE.AmbientLight(0xffffff, .82));
+    const keyLight = new THREE.DirectionalLight(0xffffff, 1.25); keyLight.position.set(-3, 5, 7); scene.add(keyLight);
+    const rimLight = new THREE.DirectionalLight(0xff6848, .5); rimLight.position.set(5, 1, -2); scene.add(rimLight);
     const cam = new THREE.PerspectiveCamera(38, 1, .1, 60);
     const grid = new THREE.GridHelper(80, 80, 0x242424, 0x1a1a1a); grid.position.y = -1.5; scene.add(grid);
     const wall = new THREE.Group(); wall.position.z = R - DC; scene.add(wall);
@@ -4435,7 +4438,7 @@ if (kineticBar) { kineticNums.forEach(n => { n.style.opacity='0'; n.style.transf
       const tex = new THREE.CanvasTexture(cv); tex.anisotropy = 4; tex.minFilter = THREE.LinearFilter;
       const geo = new THREE.PlaneGeometry(CW, CH, 48, 1), p = geo.attributes.position;
       for (let v = 0; v < p.count; v++) { const th = p.getX(v) / R; p.setXYZ(v, R * Math.sin(th), p.getY(v), -R * Math.cos(th)); }
-      const mat = new THREE.MeshBasicMaterial({ map: tex, transparent: true, side: THREE.FrontSide, fog: false });
+      const mat = new THREE.MeshStandardMaterial({ map: tex, transparent: true, side: THREE.DoubleSide, fog: false, roughness: .52, metalness: .08, emissive: 0x111111, emissiveMap: tex });
       const mesh = new THREE.Mesh(geo, mat); mesh.rotation.y = -i * STEP; wall.add(mesh);
       const c = { i, cv, g: cv.getContext('2d'), tex, mesh, mat, items: [], k: 0, dirty: true, hov: 0,
         title: li.querySelector('h3').textContent, no: li.dataset.no, a: li.dataset.a, b: li.dataset.b, pts: li.dataset.pts,
@@ -4465,6 +4468,13 @@ if (kineticBar) { kineticNums.forEach(n => { n.style.opacity='0'; n.style.transf
         g.font = '24px ' + F; g.fillStyle = 'rgba(255,255,255,.6)'; g.fillText('Add ' + c.files, W / 2, H / 2 + 130);
       }
       
+      /* dimensional glass edge, soft highlight and inset frame */
+      const edge = g.createLinearGradient(0, 0, W, H);
+      edge.addColorStop(0, 'rgba(255,255,255,.34)'); edge.addColorStop(.35, 'rgba(255,255,255,.035)'); edge.addColorStop(1, 'rgba(0,0,0,.28)');
+      g.strokeStyle = edge; g.lineWidth = 10; rr(g, 8, 8, W - 16, H - 16, 38); g.stroke();
+      const gloss = g.createLinearGradient(0, 0, W * .65, H * .5);
+      gloss.addColorStop(0, 'rgba(255,255,255,.22)'); gloss.addColorStop(.24, 'rgba(255,255,255,.055)'); gloss.addColorStop(.6, 'rgba(255,255,255,0)');
+      g.fillStyle = gloss; g.fillRect(0, 0, W, H);
       g.textAlign = 'left'; g.fillStyle = '#fff'; if (SHOW_NAMES) { g.font = '500 56px ' + F; g.fillText(c.title, 52, H - 92); }
       
       g.fillStyle = '#0d0d0d'; g.beginPath(); g.arc(W - 86, H - 86, 38, 0, 7); g.fill();
@@ -4537,13 +4547,13 @@ if (kineticBar) { kineticNums.forEach(n => { n.style.opacity='0'; n.style.transf
         const a = ease(Math.min(Math.abs(rel), 1));
         c.hov += ((c.i === hover ? 1 : 0) - c.hov) * .12;
         c.mesh.visible = Math.abs(rel * STEP) < 1.7;
-        const s = 1 + .05 * (1 - a) + .025 * c.hov; c.mesh.scale.set(s, s, 1);
+        const s = 1 + .09 * (1 - a) + .055 * c.hov; c.mesh.scale.set(s, s, 1);
         c.mat.color.setScalar(.5 + .5 * (1 - a));
         const vid = c.items[c.k] && c.items[c.k].tagName === 'VIDEO' && cd(c.i, cur) <= 1;
         if (c.dirty || vid) draw(c);
       });
       cam.position.x += (mouse.x * .22 - cam.position.x) * .06;
-      cam.position.y += (.35 + mouse.y * .1 - cam.position.y) * .06;
+      cam.position.y += (.42 + mouse.y * .16 - cam.position.y) * .06;
       cam.lookAt(0, 0, -DC);
       renderer.render(scene, cam);
     }
