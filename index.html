@@ -2962,19 +2962,7 @@ button, input, select, textarea { min-width: 0; }
 <!-- SERVICES (Three.js curved 3D gallery) -->
 <section class="kx-services" id="projects" aria-label="Our Projects">
   <div class="kx-gl" aria-hidden="true"></div>
-  <div class="kx-gallery-heading">
-    <svg class="kx-heading-arc" viewBox="0 0 520 118" aria-hidden="true">
-      <defs><linearGradient id="kxHeadingArc" x1="0" y1="0" x2="1" y2="0">
-        <stop offset="0" stop-color="#ff6548" stop-opacity="0"/>
-        <stop offset=".5" stop-color="#fff" stop-opacity=".95"/>
-        <stop offset="1" stop-color="#ff6548" stop-opacity="0"/>
-      </linearGradient></defs>
-      <path class="kx-heading-arc-shadow" d="M24 91 C132 -12 388 -12 496 91"/>
-      <path class="kx-heading-arc-line" d="M24 91 C132 -12 388 -12 496 91"/>
-    </svg>
-    <p>Ideas, shaped into impact</p>
-    <h2>We turn bold ideas into <span>powerful digital experiences.</span></h2>
-  </div>
+
   <div class="kx-top"><h2 class="kx-label">Our Projects</h2><p class="kx-hint">Hover a card to pause</p></div>
   <ol class="kx-list">
     <li class="kx-item" data-no="01" data-a="#3b2f4a" data-b="#d9a07a" data-media="No-Drama-llama.jpg" data-pts="AI product visuals, Campaign concepts, Product films, Ad creatives" data-cta="View services">
@@ -4557,7 +4545,7 @@ if (kineticBar) { kineticNums.forEach(n => { n.style.opacity='0'; n.style.transf
       });
       cam.position.x += (mouse.x * .22 - cam.position.x) * .06;
       cam.position.y += (.35 + mouse.y * .1 - cam.position.y) * .06;
-      cam.lookAt(0, 1.05, -DC);
+      cam.lookAt(0, 0, -DC);
       renderer.render(scene, cam);
     }
     gsap.ticker.add(frame);
@@ -4954,17 +4942,7 @@ if (kineticBar) { kineticNums.forEach(n => { n.style.opacity='0'; n.style.transf
 
 
 
-<style id="kx-gallery-heading-style">
-/* This heading belongs to the gallery section: it scrolls away with the section. */
-.kx-gallery-heading{position:absolute;z-index:3;top:2.35rem;left:50%;width:96%;transform:translateX(-50%);text-align:center;pointer-events:none}
-.kx-heading-arc{display:block;width:min(270px,45vw);height:auto;margin:0 auto -.15rem;overflow:visible;transform:perspective(520px) rotateX(28deg) rotateZ(-1deg);filter:drop-shadow(0 12px 10px rgba(255,100,72,.22))}
-.kx-heading-arc-shadow{fill:none;stroke:rgba(0,0,0,.8);stroke-width:10;stroke-linecap:round;transform:translateY(5px);filter:blur(5px)}
-.kx-heading-arc-line{fill:none;stroke:url(#kxHeadingArc);stroke-width:2.3;stroke-linecap:round;filter:drop-shadow(0 0 7px rgba(255,125,100,.6))}
-.kx-gallery-heading p{margin:0 0 .55rem;color:rgba(255,255,255,.48);font-size:.58rem;letter-spacing:.23em;text-transform:uppercase}
-.kx-gallery-heading h2{max-width:none;width:100%;white-space:nowrap;margin:0 auto;color:#fff;font:600 clamp(1.35rem,3vw,2.8rem)/1.05 'Archivo',sans-serif;letter-spacing:-.045em;text-shadow:0 8px 30px rgba(0,0,0,.4)}
-.kx-gallery-heading h2 span{color:rgba(255,255,255,.72);font-weight:300;font-style:italic}
-@media(max-width:767px){.kx-gallery-heading{top:2.6rem;width:calc(100% - 1.2rem)}.kx-heading-arc{width:min(190px,54vw);margin-bottom:-.1rem}.kx-gallery-heading p{font-size:.46rem;letter-spacing:.15em}.kx-gallery-heading h2{white-space:normal;font-size:clamp(1.2rem,5vw,1.65rem);max-width:24ch;line-height:1.08}}
-</style>
+
 
 </body>
 </html>
