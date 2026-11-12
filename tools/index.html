@@ -2911,5 +2911,13 @@ function downloadText(text) {
   a.click();
 }
 </script>
+
+<script>
+(function(){
+ const standalonePages={brandScore:'brand-score-ai.html',colorPalette:'ai-color-palettes.html',fontPair:'font-text-pairs.html',bgRemover:'background-remover.html',compressor:'image-compressor.html',converter:'file-converter.html',textGen:'ai-text-generator.html'};
+ const originalOpenModal=window.openModal;
+ window.openModal=function(id){ if(standalonePages[id]){ window.location.href=standalonePages[id]; return; } if(originalOpenModal) return originalOpenModal.apply(this,arguments); };
+})();
+</script>
 </body>
 </html>
